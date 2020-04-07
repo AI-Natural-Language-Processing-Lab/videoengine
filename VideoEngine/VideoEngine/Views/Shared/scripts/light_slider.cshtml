@@ -1,0 +1,19 @@
+﻿<script src="~/plugins/lightslider-master/dist/js/lightslider.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.blogGallery').lightSlider({
+            gallery:true,
+            item:1,
+            loop:true,
+            thumbItem:9,
+            slideMargin:0,
+            enableDrag: false,
+            currentPagerPosition:'left',
+            onSliderLoad: function(el) {
+                el.lightGallery({
+                    selector: '.blogGallery .lslide'
+                });
+            }   
+        });  
+  });
+</script>

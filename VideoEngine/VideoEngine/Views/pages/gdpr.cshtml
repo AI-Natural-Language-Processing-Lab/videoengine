@@ -1,0 +1,121 @@
+﻿@inject IStringLocalizer<GeneralResource> GeneralResource
+
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+@{
+
+    var _bModel = new List<BreadItem>();
+    _bModel.Add(new BreadItem()
+    {
+        title = GeneralResource["_home"].Value,
+        url = Config.GetUrl()
+    });
+    _bModel.Add(new BreadItem()
+    {
+        title = GeneralResource["_security"].Value,
+        url = Config.GetUrl("security")
+    });
+    _bModel.Add(new BreadItem()
+    {
+        title = GeneralResource["_gdpr_faq"].Value,
+        isActive = true
+    });
+    var BreadCrumbViewModel = new BreadViewModel()
+    {
+        BreadItems = _bModel
+    };
+}
+<partial name="~/Views/Shared/_BreadCrumb.cshtml" model="BreadCrumbViewModel" />
+
+
+<div class="row">
+    <div class="col-md-8">
+        <h2 class="m-b-10">@GeneralResource["_gdpr_faq"].Value</h2>
+        <p>
+            This page is intended to provide information about @generalSettings.Value.website_title's GDPR compliance.
+        </p>
+
+        <h3>What is the GDPR?</h3>
+        <p>
+            The General Data Protection Regulation (GDPR) is a new European privacy
+            law that goes into effect on May 25, 2018. The GDPR will replace the EU Data Protection
+            Directive and will apply a single data protection law throughout the EU.
+            <br><br>
+            Data protection laws govern the way that businesses collect,
+            use, and share personal data about individuals.
+            Among other things, they require businesses to process an individual’s
+            personal data fairly and lawfully, allow individuals to exercise legal rights in
+            respect of their personal data (for example, to access, correct or delete their personal data),
+            and ensure appropriate security protections are put in place to protect the personal data they process.
+            <br><br>
+            We have taken steps to ensure that we are compliant with the GDPR as of Nov 1, 2018.
+        </p>
+
+        <h3>What is @generalSettings.Value.website_title role under GDPR?</h3>
+        <p>
+            We act as a data controller under GDPR for the EU customer information
+            we collect to provide our services and to provide timely customer support.
+            This customer information may include things such as customer name, contact and billing information.
+        </p>
+
+        <h3>What personal data does @generalSettings.Value.website_title collect?</h3>
+        <p>
+            We store data that customers have given us voluntarily.
+            For example we collect and store contact information, such as name and email address,
+            when customers sign up for our products and services or seek support help.
+            We may also collect other identifying information from our customers, such as IP addresses.
+        </p>
+
+        <p>
+            For further details on the information we collect, please visit our
+            <a href="/privacy">Privacy Policy</a>.
+        </p>
+
+        <h3>How do I remove my personal data?</h3>
+        <p>
+            To exercise your Right to Erasure or desire to Opt-out,
+            you can delete your Slides account at any time.
+            This will remove our record of your email address, name, and all other personal data including
+            all of your presentations. This action is immediate and not reversible.
+            <br><br>
+            To delete your account and all personal data please follow the instructions here:
+            <ul>
+                <li>Login to your account</li>
+                <li>
+                    Under manage account section, click on "delete account" button to delete your account and all data associate
+                    with your account.
+                </li>
+            </ul>
+        </p>
+
+        <h3>How do I access and export my personal data?</h3>
+        <p>
+            You can download all of the personal data associated with your @generalSettings.Value.website_title account at any time.
+            The data is exported in a machine-readable format. To download your data, please <a href="/contact">contact us</a> for instruction.
+        </p>
+
+        <h3>Contact information</h3>
+        <p>
+            Questions and concerns can be directed via email to <a href="mailto:@generalSettings.Value.admin_mail?subject=GDPR">support@mediasoftpro.com</a>.
+        </p>
+
+        <small>
+            Effective as of 12-01-2019
+        </small>
+    </div>
+    <div class="col-md-4">
+        <ul>
+            <li><a href="/terms-of-use">@GeneralResource["_terms_of_service"].Value</a></li>
+            <li><a href="/privacy">@GeneralResource["_privacy_policy"].Value</a></li>
+        </ul>
+        <hr />
+        <ul>
+            <li><a href="~/security">@GeneralResource["_security"].Value</a></li>
+            <li><a href="/gdpr">@GeneralResource["_gdpr_faq"].Value</a></li>
+            <li><a href="/cookies">@GeneralResource["_cookies"].Value</a></li>
+            <li><a href="/thirdparties">@GeneralResource["_thirdparty_policy"].Value</a></li>
+        </ul>
+    </div>
+</div>
+
+
+

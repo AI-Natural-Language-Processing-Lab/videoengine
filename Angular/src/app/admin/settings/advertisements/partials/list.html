@@ -1,0 +1,90 @@
+<app-loader *ngIf="loading$ | async"></app-loader>
+
+<div style="padding:15px 10px;">
+  <alert></alert>
+
+  <div *ngIf="!(loading$ | async)">
+    <div class="row row-wrap" *ngIf="(Data$ | async).length > 0">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Title</th>
+
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of Data$ | async; trackBy: getKey">
+            <td style="width:80%;">
+              <div *ngIf="item.editview">
+                <div class="card">
+                  <div class="card-body">
+                    <div>
+                      <strong class="m-b-3">{{ item.name }}</strong
+                      ><br />
+                      <textarea
+                        rows="4"
+                        [(ngModel)]="item.adscript"
+                        class="form-control"
+                        placeholder="enter script here"
+                      ></textarea>
+                    </div>
+                    <div class="m-t-5">
+                      <button
+                        class="btn btn-sm btn-success"
+                        (click)="_UpdateRecord(item)"
+                      >
+                        Save
+                      </button>
+                      <button
+                        class="btn btn-sm btn-danger"
+                        (click)="toggleEditView(item, $event)"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="!item.editview">
+                <a href (click)="toggleEditView(item, $event); (false)">{{
+                  item.name
+                }}</a>
+              </div>
+            </td>
+
+            <td style="width:20%;">
+              <span
+                *ngIf="item.type == 1"
+                class="badge badge-danger m-r-5 m-b-5"
+                >Adult</span
+              >
+              <span
+                *ngIf="item.type == 0"
+                class="badge badge-success m-r-5 m-b-5"
+                >Non Adult</span
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row" *ngIf="(Data$ | async).length == 0">
+      <div class="col-md-12">
+        <div style="padding:80px 0px;">
+          <h3 style="text-align:center;">No Records Found!</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center content-group-lg pt-20">
+  <pagination
+    [currentPage]="(pagination$ | async).currentPage"
+    [totalRecords]="(pagination$ | async).totalRecords"
+    [pageSize]="(pagination$ | async).pageSize"
+    (OnSelection)="PaginationChange($event)"
+  >
+  </pagination>
+</div>

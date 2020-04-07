@@ -1,0 +1,35 @@
+<div *ngIf="!isAccessGranted">
+  <h2 class="m-b-40 m-t-40 text-center">Access Denied</h2>
+</div>
+<div *ngIf="isAccessGranted">
+  <div class="row">
+    <div class="col-md-12">
+      <app-loader *ngIf="showLoader"></app-loader>
+      <div class="card" *ngIf="!showLoader">
+        <div class="card-header">
+          <h4 class="m-b-0">{{ formHeading }}</h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div
+              class="col-md-3 m-b-10"
+              *ngFor="let thumb of Info.video_thumbs"
+            >
+              <a href="#" (click)="updateSelectedThumb(thumb, $event); (false)">
+                <img
+                  [ngClass]="thumb.selected ? 'selected' : ''"
+                  src="{{ thumb.filename }}"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <button (click)="updateThumb()" class="btn btn-primary">
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

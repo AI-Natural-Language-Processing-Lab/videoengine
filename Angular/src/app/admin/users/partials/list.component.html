@@ -1,0 +1,99 @@
+<app-loader *ngIf="loading$ | async"></app-loader>
+
+<div style="padding:15px 10px;">
+  <app-alert></app-alert>
+
+  <div *ngIf="!(loading$ | async)">
+    <div class="row" *ngIf="(Data$ | async).length > 0">
+      <div
+        class="col-md-3 col-xs-6 videolist"
+        [hidden]="item.isdeleted"
+        *ngFor="let item of Data$ | async; trackBy: getKey"
+      >
+        <div class="card-img-top img-responsive">
+          <a
+            *ngIf="isAdmin && !PublicView"
+            [routerLink]="[route_path + 'profile/' + item.id]"
+          >
+            <img
+              class="img-responsive"
+              style="cursor: pointer;"
+              src="{{ item.img_url }}"
+              alt="{{ item.title }}"
+            />
+          </a>
+          <a *ngIf="!isAdmin || PublicView" href="{{item.url}}">
+            <img
+              class="img-responsive"
+              style="cursor: pointer;"
+              src="{{ item.img_url }}"
+              alt="{{ item.title }}"
+            />
+          </a>
+
+          <div class="m-t-10">
+            <p class="title m-b-0 truncate" *ngIf="item.firstname !== ''">
+              {{ item.firstname }} {{ item.lastname }}
+            </p>
+            <p
+              class="title m-b-0 truncate"
+              *ngIf="item.firstname === '' || item.firstname === null"
+            >
+              {{ item.userName }}
+            </p>
+            <p class="light-item">
+              Created: {{ item.created_at | date: "mediumDate" }}
+            </p>
+            <p class="card-text" *ngIf="!PublicView">
+              <span
+                class="badge badge-danger m-r-5 m-b-5"
+                *ngIf="!item.emailConfirmed"
+                >Inactive</span
+              >
+              <span
+                class="badge badge-success m-r-5 m-b-5"
+                *ngIf="item.emailConfirmed"
+                >Active</span
+              >
+              <span
+                class="badge badge-info m-r-5 m-b-5"
+                *ngIf="item.isenabled === 0"
+                >Blocked</span
+              >
+            </p>
+
+            <div class="mx-auto" style="width: 50px;" *ngIf="!PublicView">
+              <div class="form-check">
+                <label for="{{ item.id }}">
+                  <input
+                    [(ngModel)]="item.Selected"
+                    (ngModelChange)="checkChange()"
+                    type="checkbox"
+                    id="{{ item.id }}"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="(Data$ | async).length == 0">
+      <div class="col-md-12">
+        <div style="padding:80px 0px;">
+          <h3 style="text-align:center;">{{NoRecordText}}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center content-group-lg pt-20">
+  <pagination
+    [currentPage]="(pagination$ | async).currentPage"
+    [totalRecords]="(pagination$ | async).totalRecords"
+    [pageSize]="(pagination$ | async).pageSize"
+    (OnSelection)="PaginationChange($event)"
+  >
+  </pagination>
+</div>

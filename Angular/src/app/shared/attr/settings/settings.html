@@ -1,0 +1,162 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="m-b-0">{{ formHeading }}</h4>
+    </div>
+    <div class="card-body">
+      <app-loader *ngIf="showLoader"></app-loader>
+      <div *ngIf="!showLoader">
+        <div *ngIf="!Skip_Template">
+          <div class="m-b-10 m-t-10">
+            <button (click)="AddTemplate()" class="btn btn-primary">
+              Add Template
+            </button>
+          </div>
+          <hr />
+          <div *ngIf="Settings.length > 0">
+            <div
+              class="card m-b-10"
+              *ngFor="let item of Settings; let i = index"
+            >
+              <div class="card-body">
+                <h4 class="card-title">{{item.title}}</h4>
+
+                <div class="card-text">
+                  <div
+                    class="m-b-10 text=center"
+                    *ngIf="item.sections.length === 0"
+                    style="padding:30px 0px;"
+                  >
+                    <p>No Sections</p>
+                  </div>
+                  <div *ngIf="item.sections.length > 0">
+                    <div class="table-responsive">
+                      <table
+                        class="table table-bordered table-hover table-striped no-wrap"
+                      >
+                        <tbody>
+                          <tr
+                            *ngFor="let section of item.sections; let j = index"
+                          >
+                            <td>
+                              {{ section.title }}
+                            </td>
+                            <td>
+                              {{ section.priority }}
+                            </td>
+
+                            <td class="text-nowrap">
+                              <a
+                                [routerLink]="['/classified/ads/attributes/' + section.id]"
+                                ><i
+                                  class="fa fa-database text-inverse m-r-10"
+                                  aria-hidden="true"
+                                ></i
+                              ></a>
+                              <a
+                                href="#"
+                                (click)="EditSection(section, $event); false"
+                                ><i class="fa fa-pencil text-inverse m-r-10"></i
+                              ></a>
+                              <a
+                                *ngIf="section.id > 0"
+                                href="#"
+                                (click)="RemoveSection(section, item.sections, j, $event); false"
+                              >
+                                <i class="fa fa-close text-danger m-r-10"></i
+                              ></a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <a
+                  href="#"
+                  (click)="AddSection(item.id, $event); false"
+                  class="card-link"
+                  >Add Section</a
+                >
+                <a
+                  href="#"
+                  (click)="EditTemplate(item, $event); false"
+                  class="card-link"
+                  >Edit</a
+                >
+                <a
+                  href="#"
+                  *ngIf="item.id > 0"
+                  (click)="RemoveTemplate(item, i, $event); false"
+                  class="card-link"
+                  >Remove</a
+                >
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="Settings.length === 0" style="padding:80px 0px;">
+            <h3 style="text-align:center;">No Templates Found!</h3>
+          </div>
+        </div>
+        <div *ngIf="Skip_Template">
+                <div class="m-b-10 m-t-10">
+                        <button (click)="AddSection(0, $event)" class="btn btn-primary">
+                          Add Section
+                        </button>
+                      </div>
+                      <hr />
+                <div
+                class="m-b-10 text=center"
+                *ngIf="Settings.length === 0"
+                style="padding:30px 0px;"
+              >
+                <p>No Sections</p>
+              </div>
+              <div *ngIf="Settings.length > 0">
+                <div class="table-responsive">
+                  <table
+                    class="table table-bordered table-hover table-striped no-wrap"
+                  >
+                    <tbody>
+                      <tr
+                        *ngFor="let section of Settings; let j = index"
+                      >
+                        <td>
+                          {{ section.title }}
+                        </td>
+                        <td>
+                          {{ section.priority }}
+                        </td>
+
+                        <td class="text-nowrap">
+                          <a
+                            [routerLink]="[Url + section.id]"
+                            ><i
+                              class="fa fa-database text-inverse m-r-10"
+                              aria-hidden="true"
+                            ></i
+                          ></a>
+                          <a
+                            href="#"
+                            (click)="EditSection(section, $event); false"
+                            ><i class="fa fa-pencil text-inverse m-r-10"></i
+                          ></a>
+                          <a
+                            *ngIf="section.id > 0"
+                            href="#"
+                            (click)="RemoveSection(section, Settings, j, $event); false"
+                          >
+                            <i class="fa fa-close text-danger m-r-10"></i
+                          ></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

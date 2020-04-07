@@ -1,0 +1,21 @@
+<div class="login-register">
+  <div class="login-box card">
+    <div class="card-body">
+      <div class="form-horizontal form-material">
+        <h3 class="box-title m-b-20">Sign In</h3>
+        <app-loader *ngIf="showLoader"></app-loader>
+        <dynamic-modal-form
+          *ngIf="!showLoader"
+          [controls]="controls"
+          [showLoader]="showLoader"
+          [showCancel]="false"
+          [showModal]="false"
+          [submitText]="submitText"
+          [submitCss]="submitCss"
+          (OnSubmit)="SubmitForm($event)"
+        >
+        </dynamic-modal-form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+﻿
+@{
+    Layout = null;
+}
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+@{
+
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/installation/">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.png">
+    <title>Database Setup</title>
+
+    <link rel="stylesheet" href="~/css/bootswatch/lumen/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/bootswatch/lumen/theme.css">
+    <link rel="stylesheet" href="~/css/style.css">
+
+</head>
+
+<body>
+   
+    <script>
+        var URL = "@SiteConfiguration.URL"; // API URL
+        var Ang_UID = '';
+        var Ang_UserName = '';
+        var Ang_AppMessage = '';
+        var Ang_Culture = '@requestCulture.RequestCulture.UICulture.Name';
+        var Ang_VideoUploaderOption = 0; // 0: ffmpeg upload, 1: youtube, 2: direct, 3: aws
+        var AppType = 'setup'; // account, admin, setup, search
+        var setupType = 0; // 0: database setup, 1: user, data & configuration setup
+
+        var ImageDirectory = '/images/'; // /assets/images/
+        var AppTitle = 'jMedia Framework';
+        // search parameters
+        var SearchParams = {
+            term: '',
+            type: ''
+        };
+        var SerachContentType = 0; // 0: videos etc...
+    </script>
+    <app-root>
+        <div id="loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="loading"></div>
+        </div>
+    </app-root>
+
+    <script src="/app/angular/runtime-es2015.js" type="module"></script>
+    <script src="/app/angular/runtime-es5.js" nomodule defer></script>
+    <script src="/app/angular/polyfills-es5.js" nomodule defer></script>
+    <script src="/app/angular/polyfills-es2015.js" type="module"></script>
+    <script src="/app/angular/scripts.js" defer></script>
+    <script src="/app/angular/main-es2015.js" type="module"></script>
+    <script src="/app/angular/main-es5.js" nomodule defer></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1>FFMPEG Uploader</h1>
+    <div class="card" *ngIf="Panel === 0">
+      <div class="card-header">
+        <h4 class="m-b-0">{{ formHeading }}</h4>
+      </div>
+      <div class="card-body">
+        <div *ngIf="(uploadedfiles$ | async).length == 0">
+          <app-uploader
+            [extensions]="extensions"
+            [max_concurrent_uploads]="max_concurrent_uploads"
+            [filesize]="filesize"
+            [Info]="Auth.User"
+            [uploadedFiles]="[]"
+            (OnUploaded)="OnUploadedVideos($event)"
+          ></app-uploader>
+        </div>
+
+        <div *ngIf="(uploadedfiles$ | async).length > 0">
+          <div class="row m-b-20" *ngFor="let file of uploadedfiles$ | async">
+            <div class="col-md-12" *ngIf="file.panelstatus === 0">
+              <h4 class="m-b-5">{{ file.pf }}</h4>
+              <p class="m-b-5" ng-if="file.errorcode > 0">{{ file.edesc }}</p>
+              <div class="progress m-b-10">
+                <div
+                  [ngClass]="
+                    file.isenabled === 'completed'
+                      ? 'progress-bar bg-success'
+                      : 'progress-bar bg-danger'
+                  "
+                  role="progressbar"
+                  [ngStyle]="file.progressStyle"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                ></div>
+              </div>
+            </div>
+            <div class="col-md-12" *ngIf="file.panelstatus === 1">
+              <p>processing video data...</p>
+            </div>
+            <div class="col-md-12" *ngIf="file.panelstatus === 2">
+              <div class="row m-b-10">
+                <div class="col-md-4">
+                  <img
+                    class="img-responsive"
+                    src="{{ file.img_url }}{{ file.defaultImg }}"
+                  />
+                </div>
+                <div class="col-md-8">
+                  <div class="form-group">
+                    <input
+                      type="text"
+                      [(ngModel)]="file.title"
+                      class="form-control"
+                      placeholder="Enter title (optional)"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <textarea
+                      rows="3"
+                      [(ngModel)]="file.description"
+                      class="form-control"
+                      placeholder="Enter description (optional)"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="row" *ngIf="file.video_thumbs.length > 0">
+                <div class="col-md-12">
+                  <div class="scrolling-wrapper">
+                    <div
+                      class="scroll-card m-r-5"
+                      *ngFor="let thumb of file.video_thumbs"
+                    >
+                      <a
+                        href="#"
+                        (click)="
+                          updateSelectedThumb(thumb, file, $event); (false)
+                        "
+                      >
+                        <img
+                          style="width:200px; height:auto;"
+                          [ngClass]="thumb.selected ? 'selected' : ''"
+                          src="{{ file.img_url }}{{ thumb.filename }}"
+                        />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer" *ngIf="showSubmitBtn">
+        <button class="btn btn-primary" (click)="nextPanel()">Next</button>
+      </div>
+    </div>
+    <div class="card" *ngIf="Panel === 1 && !(loading$ | async)">
+      <div class="card-header">
+        <h4>Update Information</h4>
+      </div>
+      <div class="card-body">
+        <app-loader *ngIf="showLoader"></app-loader>
+        <dynamic-modal-form
+          *ngIf="!showLoader"
+          [controls]="controls"
+          [showLoader]="showLoader"
+          [showCancel]="showCancel"
+          [cancelText]="cancelText"
+          [showModal]="false"
+          [submitText]="submitText"
+          (OnSubmit)="SubmitForm($event)"
+        >
+        </dynamic-modal-form>
+        <!--<div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="VideoInfo.tags"
+            placeholder="Enter one or more tags separated by comma (,)"
+          />
+        </div>
+        <select ng-model="VideoInfo.category" class="form-control">
+          <option value="">Select Category</option>
+          <option
+            *ngFor="let item of categories$ | async"
+            value="{{ item.id }}"
+            >{{ item.title }}</option
+          >
+        </select>-->
+      </div>
+      <!--<div class="card-footer">
+        <button class="btn btn-primary" (click)="saveChanges()">
+          saveChanges
+        </button>
+      </div>-->
+    </div>
+  </div>
+</div>

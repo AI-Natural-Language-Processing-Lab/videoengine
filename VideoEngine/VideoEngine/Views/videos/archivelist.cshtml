@@ -1,0 +1,32 @@
+﻿@model ArchiveListModelView
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@{
+    // activate header tab
+    ViewBag.VideoTabCss = "active";
+    // setup search with videos
+    ViewBag.SearchType = 0;
+}
+<partial name="~/Views/Shared/_BreadCrumb.cshtml" model="new BreadViewModel() { BreadItems = Model.BreadItems }" />
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="m-b-10">
+            @await Html.PartialAsync("~/Views/videos/partials/_Archives.cshtml")
+        </div>
+
+        @await Html.PartialAsync("~/Views/partials/ads/ad_728.cshtml", new AdsModelView() { isAdult = false })
+    </div>
+    <div class="col-md-4">
+        @await Html.PartialAsync("~/Views/videos/partials/_Nav.cshtml", new Jugnoon.Videos.Models.MediaNavViewModel()
+       {
+           hideAds = false,
+           hideSearch = false,
+           hideArchives = true,
+           hideCategories = false,
+           hideTags = false,
+           MediaType = (int)Jugnoon.Videos.MediaType.Videos,
+           Path = "videos/"
+       })
+    </div>
+</div>
+

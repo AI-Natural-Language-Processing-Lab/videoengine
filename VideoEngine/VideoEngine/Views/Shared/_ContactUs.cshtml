@@ -1,0 +1,88 @@
+﻿@model ContactUsViewModel
+@inject IStringLocalizer<GeneralResource> GeneralResource
+
+<h2 class="m-b-10">@GeneralResource["_contact_us"].Value</h2>
+<p>@GeneralResource["_contactus_form_msg"].Value</p>
+@if (Model.Message != null && Model.Message != "")
+{
+    @Html.Raw(Alerts.Prepare(Model.Message, Model.AlertType));
+}
+@using (Html.BeginForm("contact", "Home", FormMethod.Post, new { role = "form", @class = "form-box" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="@Model.SenderName">
+                    @GeneralResource["_full_name"].Value:
+                </label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.SenderName, new { @class = "form-control", placeholder = GeneralResource["_enter_full_name"].Value })
+                @Html.ValidationMessageFor(m => m.SenderName)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="@Model.PhoneNumber">
+                    @GeneralResource["_phone_number"].Value:
+                </label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = GeneralResource["_enter_phone"].Value })
+                @Html.ValidationMessageFor(m => m.PhoneNumber)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="@Model.EmailAddress">
+                    @GeneralResource["_email_address"].Value:
+                </label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", placeholder = GeneralResource["_enter_email"].Value })
+                @Html.ValidationMessageFor(m => m.EmailAddress)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label for="@Model.Body">
+                    @GeneralResource["_message"].Value:
+                </label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.TextAreaFor(m => m.Body, new { @class = "form-control", placeholder = GeneralResource["_enter_message"].Value, @rows = "10" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" id="sendMessage" name="sendMessage" value="@GeneralResource["_send_message"].Value" />
+            </div>
+        </div>
+    </div>
+
+
+}
+
+

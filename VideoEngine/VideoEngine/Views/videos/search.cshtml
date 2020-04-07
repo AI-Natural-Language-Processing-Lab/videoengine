@@ -1,0 +1,66 @@
+﻿@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+@model Jugnoon.Videos.Models.VideoListViewModel
+@{
+
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+}
+<partial name="~/Views/Shared/_BreadCrumb.cshtml" model="new BreadViewModel() { BreadItems = Model.BreadItems }" />
+
+
+<div class="row">
+    <div class="col-md-8 m-b-10" style="min-height: 500px;">
+        <div class="m-b-10">
+            <script>
+                var URL = '@SiteConfiguration.URL'; // API URL
+                var Ang_UID = '';
+                var Ang_UserName = '';
+                var Ang_AppMessage = '';
+                var Ang_Culture = '@requestCulture.RequestCulture.UICulture.Name'
+                var Ang_VideoUploaderOption = 0;
+                var AppType = 'search'; // account, admin, setup, search
+                var setupType = 0; // 0: database setup, 1: user, data & configuration setup
+                var ImageDirectory = '/images/'; // /assets/images/
+                var AppTitle = '@generalSettings.Value.website_title';
+                // search parameters
+                var SearchParams = {
+                    term: '@Model.QueryOptions.term',
+                    type: 'videos'
+                };
+                var SerachContentType = 0;
+            </script>
+            <app-root></app-root>
+        </div>
+
+        @await Html.PartialAsync("~/Views/partials/ads/ad_728.cshtml", new AdsModelView() { isAdult = false })
+
+    </div>
+    <div class="col-md-4">
+       @await Html.PartialAsync("~/Views/videos/partials/_Nav.cshtml", new Jugnoon.Videos.Models.MediaNavViewModel()
+       {
+           hideAds = false,
+           hideSearch = false,
+           hideArchives = true,
+           hideCategories = false,
+           hideTags = false,
+           MediaType = (int)Jugnoon.Videos.MediaType.Videos,
+           Path = "videos/"
+       })
+    </div>
+</div>
+
+
+
+@section Styles {
+    <base href="/videos/search/@Model.QueryOptions.term">
+}
+
+@section Scripts {
+    <script src="/app/angular/runtime-es2015.js" type="module"></script>
+    <script src="/app/angular/runtime-es5.js" nomodule defer></script>
+    <script src="/app/angular/polyfills-es5.js" nomodule defer></script>
+    <script src="/app/angular/polyfills-es2015.js" type="module"></script>
+    <script src="/app/angular/scripts.js" defer></script>
+    <script src="/app/angular/main-es2015.js" type="module"></script>
+    <script src="/app/angular/main-es5.js" nomodule defer></script>
+}

@@ -1,0 +1,45 @@
+﻿@model ArchiveListModelView
+@inject Jugnoon.Framework.ApplicationDbContext _context
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Features> featureSettings
+@inject IStringLocalizer<GeneralResource> GeneralResource
+
+@using Jugnoon.Videos
+@if (featureSettings.Value.enable_archives)
+{
+    <div class="box">
+        @{
+            var _list = VideoBLL.Load_Arch_List(_context, Model.Mediatype, Model.TotalRecords, Model.isAll);
+            var count = 1;
+
+            if (_list.Count == 0)
+            {
+                <h3 class="m-b-20">@Model.HeadingTitle</h3>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3 class="m-b-20">@Model.HeadingTitle</h3>
+                    </div>
+                    <div class="col-md-4">
+                        @if (_list.Count > Model.TotalRecords)
+                        {
+                            <a class="pull-right m-t-5" href="@CategoryUrlConfig.BrowseAllUrl(Model.Path)">@GeneralResource["_see_all"].Value</a>
+                        }
+                    </div>
+                </div>
+                <ul class="horizontal_nav">
+                    @foreach (var Item in _list)
+                    {
+                        if (Model.TotalRecords > 0 && count < Model.TotalRecords)
+                        {
+                            <li><a href="@ArchiveUrlConfig.PrepareUrl(Item.MonthName, Item.Year, Model.Path)">@Item.MonthName @Item.Year</a></li>
+                        }
+                        count++;
+                    }
+                </ul>
+            }
+        }
+
+    </div>
+}

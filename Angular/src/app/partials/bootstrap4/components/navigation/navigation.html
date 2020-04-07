@@ -1,0 +1,170 @@
+<div class="card-body border-secondary" *ngIf="isAdmin">
+
+  <div *ngIf="Options.showSearchPanel">
+    <div class="form-group">
+      <input
+        [(ngModel)]="Options.term"
+        type="text"
+        class="form-control"
+        placeholder="Search..."
+      />
+      <a
+        *ngIf="Options.showAdvanceSearchLink"
+        (click)="toggleSearch($event); (false)"
+        href="#"
+        >{{ AdvanceText }}</a
+      >
+    </div>
+    
+    <div *ngIf="showAdvanceOptions">
+      <div class="m-b-10" *ngIf="Options.filters.length > 0">
+        <div
+          class="form-check  p-l-0 p-r-0 m-b-5"
+          *ngFor="let filter of Options.filters"
+        >
+          <label class="form-check-label">
+            <input [(ngModel)]="filter.selected" type="checkbox" />
+            {{ filter.title }}
+          </label>
+        </div>
+        <hr />
+      </div>
+
+      <div class="m-b-10" *ngIf="Options.checkFilters.length > 0">
+        <div class="m-b-10" *ngFor="let filter of Options.checkFilters">
+          <div class="m-b-10">
+            <strong>{{ filter.caption }}</strong>
+          </div>
+          <div
+            class="form-check p-l-0 p-r-0 m-b-5"
+            *ngFor="let option of filter.options"
+          >
+            <label class="form-check-label">
+              <input
+                type="radio"
+                value="{{ option.value }}"
+                name="{{ filter.group }}"
+                [checked]="filter.value == option.value"
+                (change)="choose(filter, $event)"
+              />
+              {{ option.title }}
+            </label>
+          </div>
+        </div>
+        <hr />
+      </div>
+      <div *ngIf="Options.dropdownFilters.length > 0">
+        <div *ngFor="let filter of Options.dropdownFilters">
+          <div class="form-group">
+            <label>{{ filter.caption }}</label>
+            <select
+              class="form-control form-control-line"
+              [(ngModel)]="filter.value"
+            >
+              <option
+                [value]="option.value"
+                *ngFor="let option of filter.options"
+                >{{ option.title }}</option
+              >
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group" *ngIf="Options.categories.length > 0">
+          <ng-multiselect-dropdown
+            [placeholder]="Options.multiselectOptions.placeholder"
+            [data]="Options.categories"
+            [(ngModel)]="Options.selectedcategory"
+            [settings]="Options.multiselectOptions.dropdownSettings"
+          >
+          </ng-multiselect-dropdown>
+      </div>
+    </div>
+
+    <div class="form-group m-t-10">
+      <button
+        (click)="FindRecords()"
+        class="btn btn-danger m-b-5 p-10 btn-block"
+      >
+        <i class="icon-search4 text-size-base position-left"></i>
+        {{SearchBtnText}}
+      </button>
+    </div>
+    <hr />
+  </div>
+
+  <div class="m-t-10" *ngIf="Options.actions.length > 0">
+    <div class="m-b-10">Actions</div>
+    <button
+      *ngFor="let action of Options.actions"
+      (click)="toolbaraction(action.event, action.options, $event); (false)"
+      class="{{ action.css }}"
+    >
+      {{ action.title }}
+    </button>
+    <!-- <button *ngIf="action.event!='add'" (click)="toolbaraction(action.event, action.value, $event); false" class="btn  btn-block btn-success">{{action.title}}</button> -->
+  </div>
+  <div class="m-t-10" *ngIf="Options.navList.length > 0">
+    <div class="m-b-10">Navigation</div>
+    <ul class="list-group list-group-full">
+      <li
+        *ngFor="let item of Options.navList"
+        class="list-group-item"
+        routerLinkActive="active"
+      >
+        <a
+          *ngIf="!item.clickevent"
+          routerLink="{{ item.url }}"
+          title="{{ item.title }}"
+        >
+          <i *ngIf="item.css != ''" class="{{ item.css }}"></i> {{ item.title }}
+        </a>
+        <a
+          *ngIf="item.clickevent"
+          href="#"
+          (click)="toolbaraction(item.event, item.options, $event); (false)"
+          title="{{ item.title }}"
+        >
+          <i *ngIf="item.css != ''" class="{{ item.css }}"></i> {{ item.title }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="m-b-10" *ngIf="!isAdmin">
+  <div class="row">
+      <div class="col">
+          <div class="input-group mb-3" *ngIf="Options.showSearchPanel">
+            <input type="text"  [(ngModel)]="Options.term" class="form-control" placeholder="Search ..." aria-label="Search ..." aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button (click)="FindRecords()" class="btn btn-outline-secondary" type="button">Go</button>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-auto" *ngFor="let filter of Options.dropdownFilters">
+            <select
+              (change)= "FindRecords()"
+              class="form-control"
+              [(ngModel)]="filter.value"
+            >
+              <option
+                [value]="option.value"
+                *ngFor="let option of filter.options"
+                >{{ option.title }}</option
+              >
+            </select>
+      </div>
+      <div class="col-md-auto">
+        
+        <button
+        *ngFor="let action of Options.actions"
+        title = {{action.tooltip}}
+        (click)="toolbaraction(action.event, action.options, $event); (false)"
+        class="btn btn-primary m-l-5"
+      >
+        {{ action.title }}
+      </button>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+/* comment application css classes */
+.jcomment { padding: 0px; margin: 0px; font-size:12px; }
+.jcomment .heading {font-size:116%; font-weight:bold; }
+.jcomment .postcss {text-align:left; padding-top:7px;}
+.jcomment .btncss {text-align: right; padding:4px 0px;}
+.jcomment .citem { margin-bottom:5px; padding:0px;}
+.jcomment .citem-inner { padding:5px; border: solid 1px #ccc;  -moz-border-radius: 6px; -webkit-border-radius: 6px;  position:relative;}
+.jcomment .citem-inner:hover { background-color:#f4f4f4; border:solid 1px #d2d2d2; }
+.jcomment .loader { text-align:center; padding:50px 0px; }
+.jcomment .loadersm { text-align:left; padding:5px; }
+.jcomment .avator { width:65px; }
+.jcomment .cavator { width:45px; }
+.jcomment .author { font-size:100%; color:#990066; font-weight:bold; }
+.jcomment .pdate { font-size:93%; color:#999;}
+.jcomment .pcomment {font-size: 108%; color:#666666;}
+.jcomment a.preply {font-size: 100%; font-weight:bold; color:#FF99CC; padding-right:5px; }
+.jcomment a.preply:hover { color:#990066; }
+.jcomment .voteup {color:#009933; font-size: 93%; font-weight:bold; padding-left:5px;}
+.jcomment .votedown {color:#FF0000; font-size: 93%; font-weight:bold; padding-left:5px;}
+.jcomment .vote {color:#FF99CC; padding-left:5px; font-size: 116%;}
+.jcomment .voteh {color:#990066; padding-left:5px; font-size: 116%;}
+.jcomment .voteactive {color:#009933; padding-left:5px; font-size: 116%;}
+.jcomment .voteerror {color:#FF0000; padding-left:5px; font-size: 116%;}
+.jcomment .remove {color:#666666; right:5px; top:5px; position:absolute;}
+
+.jcomment #jct_pcnt { }
+.jcomment #jct_list { padding: 9px 0px; }
+

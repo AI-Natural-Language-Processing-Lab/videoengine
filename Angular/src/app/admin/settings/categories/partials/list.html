@@ -1,0 +1,125 @@
+<alert></alert>
+<app-loader *ngIf="loading$ | async"></app-loader>
+<div *ngIf="!(loading$ | async)">
+  <div *ngIf="(Data$ | async).length > 0">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-striped no-wrap">
+        <thead>
+          <tr>
+            <th>
+              <div class="checkbox">
+                <input
+                  [(ngModel)]="selectall"
+                  (ngModelChange)="processChange()"
+                  id="selectall"
+                  type="checkbox"
+                />
+                <label class="p-b-0 p-t-0" for="selectall"></label>
+              </div>
+            </th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Term</th>
+            <th>Type</th>
+            <th>Mode</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            [@fadeIn]="''"
+            [hidden]="item.isdeleted"
+            *ngFor="let item of Data$ | async; trackBy: getKey; let i = index"
+          >
+            <td style="width:5%;">
+              <div class="checkbox">
+                <input
+                  [(ngModel)]="item.Selected"
+                  id="{{ item.id }}"
+                  (ngModelChange)="checkChange()"
+                  type="checkbox"
+                />
+                <label for="{{ item.id }}"></label>
+              </div>
+            </td>
+            <td>
+              {{ item.id }}
+            </td>
+            <td>
+              <i *ngIf="item.icon != ''" class="{{ item.icon }}"></i>
+              {{ item.clevel }}
+              <a [routerLink]="['/settings/categories/process/' + item.id]">{{
+                item.title
+              }}</a>
+            </td>
+            <td>
+              <span *ngIf="item.term == ''">{{ item.title }}</span>
+              <span *ngIf="item.term != ''">{{ item.term }}</span>
+            </td>
+            <td>
+              <span *ngFor="let type of category_types">
+                <span
+                  *ngIf="item.type === type.id"
+                  class="badge badge-danger"
+                  >{{ type.title }}</span
+                >
+              </span>
+            </td>
+            <td>
+              <span *ngIf="item.mode == 0" class="badge badge-success"
+                >Normal</span
+              >
+            </td>
+            <td>
+              <span *ngIf="item.isenabled == 1" class="badge badge-success"
+                >Active</span
+              >
+              <span *ngIf="item.isenabled == 0" class="badge badge-danger"
+                >Inactive</span
+              >
+            </td>
+
+            <td class="text-nowrap">
+              <a
+                [routerLink]="['/settings/categories/process/add/' + item.id]"
+                data-toggle="tooltip"
+                title="Add child category"
+                data-original-title="Add"
+              >
+                <i class="fa fa-plus text-inverse m-r-10"></i>
+              </a>
+              <a
+                [routerLink]="['/settings/categories/process/' + item.id]"
+                data-toggle="tooltip"
+                title="Edit category"
+                data-original-title="Edit"
+              >
+                <i class="fa fa-pencil text-inverse m-r-10"></i>
+              </a>
+              <a
+                (click)="delete(item, i, $event); (false)"
+                href="#"
+                data-toggle="tooltip"
+                data-original-title="Close"
+              >
+                <i class="fa fa-close text-danger"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <app-norecord *ngIf="(Data$ | async).length === 0"></app-norecord>
+</div>
+
+<div class="text-center content-group-lg pt-20">
+  <pagination
+    [currentPage]="(pagination$ | async).currentPage"
+    [totalRecords]="(pagination$ | async).totalRecords"
+    [pageSize]="(pagination$ | async).pageSize"
+    (OnSelection)="PaginationChange($event)"
+  >
+  </pagination>
+</div>

@@ -1,0 +1,19 @@
+<div *ngIf="files.length > 1">
+  <h2>Uploaded Files</h2>
+  <hr />
+</div>
+<table class="table">
+  <tr *ngFor="let file of files; let i = index">
+    <td>
+      {{ i + 1 }}
+    </td>
+    <td>
+      <a href="{{ file.url }}" target="_blank">{{ file.filename }}</a>
+    </td>
+    <td>
+      <a (click)="remove(file, i, $event); (false)"
+        ><i class="fa fa-close text-danger" aria-hidden="true"></i
+      ></a>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,178 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="m-b-0">{{ formHeading }}</h4>
+      </div>
+      <div class="card-body">
+        <app-loader *ngIf="loading$ | async"></app-loader>
+        <div *ngIf="!(loading$ | async)">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="YoutubeQuery.term"
+                  placeholder="Enter youtube url or search term"
+                />
+                <span class="input-group-btn">
+                  <button
+                    (click)="submitYoutube()"
+                    class="btn btn-success"
+                    type="button"
+                  >
+                    Search
+                  </button>
+                </span>
+              </div>
+              <a
+                href
+                *ngIf="!YoutubeQuery.advanceoption"
+                (click)="showAdvanceOptions($event); (false)"
+                >Advance Options</a
+              >
+            </div>
+          </div>
+          <div class="row m-t-10" *ngIf="YoutubeQuery.advanceoption">
+            <div class="col-md-12">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="YoutubeQuery.username"
+                  placeholder="Enter username"
+                />
+              </div>
+              <!-- ng-options="item.ID as item.Title for item in YoutubeOptions.YoutubeCategories" -->
+              <div class="form-group">
+                <select
+                  chosen="{width: '100%'}"
+                  [(ngModel)]="YoutubeQuery.youtubecategory"
+                  class="form-control"
+                >
+                  <option value="">Select Youtube Category</option>
+                  <option
+                    *ngFor="
+                      let item of (YoutubeCategories$ | async).youtubeCategories
+                    "
+                    value="{{ item.id }}"
+                    >{{ item.title }}</option
+                  >
+                </select>
+              </div>
+
+              <div class="form-group">
+                <select ng-model="YoutubeQuery.order" class="form-control">
+                  <option
+                    *ngFor="let item of YoutubeOrderList"
+                    value="{{ item.id }}"
+                    >{{ item.title }}</option
+                  >
+                </select>
+              </div>
+
+              <div class="form-group">
+                <select ng-model="YoutubeQuery.date" class="form-control">
+                  <option
+                    *ngFor="let item of YoutubeDateList"
+                    value="{{ item.id }}"
+                    >{{ item.title }}</option
+                  >
+                </select>
+              </div>
+              <div class="form-group">
+                <button
+                  (click)="submitYoutube()"
+                  class="btn btn-primary"
+                >
+                  Search
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" *ngIf="YoutubeSearchResult.length > 0">
+  <div class="card-header">
+    <h4 class="m-b-0">Search Result</h4>
+  </div>
+  <div class="card-body" *ngIf="step1">
+    <div class="row" *ngFor="let item of YoutubeSearchResult; let i = index">
+      <div class="col-md-4">
+        <img class="img-responsive" src="{{ item.preview_url }}" />
+      </div>
+      <div class="col-md-8">
+        <button
+          (click)="removeYt_Video(i, $event); (false)"
+          class="float-right"
+        >
+          <i class="fa fa-times"></i>
+        </button>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="item.title"
+            placeholder="Enter title"
+          />
+        </div>
+        <div class="form-group">
+          <textarea
+            rows="3"
+            class="form-control"
+            [(ngModel)]="item.description"
+            placeholder="Enter description"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="item.duration"
+            placeholder="Enter duration"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body" *ngIf="step2">
+      <app-loader *ngIf="showLoader"></app-loader>
+      <dynamic-modal-form
+        *ngIf="!showLoader"
+        [controls]="controls"
+        [showLoader]="showLoader"
+        [showCancel]="false"
+        [showModal]="false"
+        [submitText]="submitText"
+        (OnSubmit)="SubmitForm($event)"
+      >
+      </dynamic-modal-form>
+    <!--<div class="form-group">
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="YoutubeResult.tags"
+        placeholder="Enter one or more tags separated by comma (,)"
+      />
+    </div>
+    <select ng-model="YoutubeResult.category" class="form-control">
+      <option value="">Select Category</option>
+      <option *ngFor="let item of categories$ | async" value="{{ item.id }}">{{
+        item.title
+      }}</option>
+    </select>-->
+  </div>
+  <div class="card-footer">
+    <button class="btn btn-primary" *ngIf="step1" (click)="nextstep()">
+      Next
+    </button>
+    <!--<button class="btn btn-primary" *ngIf="step2" (click)="saveChanges()">
+      Save Changes
+    </button>-->
+  </div>
+</div>

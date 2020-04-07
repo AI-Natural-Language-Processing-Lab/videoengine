@@ -1,0 +1,111 @@
+﻿@model PaginationViewModel
+@using Jugnoon.Utility.Helper
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+
+<nav aria-label="...">
+
+    <ul class="pagination">
+        @{
+
+            int TotalPages = (int)Math.Ceiling((double)Model.TotalRecords / Model.PageSize);
+            int firstbound = 0;
+            int lastbound = 0;
+            string _rooturl = Config.GetUrl();
+            string ToolTip = "";
+            if (Model.pagenumber > 1)
+            {
+                firstbound = 1;
+                lastbound = firstbound + Model.PageSize - 1;
+                ToolTip = "Showing " + firstbound + " - " + lastbound + " records of " + Model.TotalRecords + " records";
+                if (Model.ShowFirst)
+                {
+                    // First Link
+                    string FirstLinkUrl = Model.Default_Url;
+
+                    <li class="page-item"><a id="p_1" class="page-link" href="@FirstLinkUrl" title="@ToolTip"><i class="fa fa-backward"></i></a></li>
+                }
+                firstbound = (TotalPages - 1) * Model.PageSize;
+                lastbound = firstbound + Model.PageSize - 1;
+                if (lastbound > Model.TotalRecords)
+                {
+                    lastbound = Model.TotalRecords;
+                }
+                ToolTip = "Showing " + firstbound + " - " + lastbound + " records of " + Model.TotalRecords + " records";
+                // Previous Link Enabled
+                string PreviousNavigationUrl = "";
+                int _prevpage = Model.pagenumber - 1;
+                if (Model.isFilter)
+                {
+                    if (Model.pagenumber > 2)
+                    {
+                        PreviousNavigationUrl = UtilityBLL.Add_pagenumber(Model.Filter_Pagination_url, _prevpage.ToString());
+                    }
+                    else
+                    {
+                        PreviousNavigationUrl = Model.Filter_Default_Url;
+                    }
+                }
+                else
+                {
+                    if (Model.pagenumber > 2)
+                    {
+                        PreviousNavigationUrl = UtilityBLL.Add_pagenumber(Model.Pagination_Url, _prevpage.ToString());
+                    }
+                    else
+                    {
+                        PreviousNavigationUrl = Model.Default_Url;
+                    }
+                }
+                int pid = Model.pagenumber - 1;
+                if (pid < 1)
+                {
+                    pid = 1;
+                }
+
+                @:
+                <li class="page-item"><a class="page-link" id="pp_@pid" href="@PreviousNavigationUrl" title="@ToolTip"><i class="fa fa-angle-left"></i></a></li>
+
+
+                // Normal Links
+                var links = Pagination.PrepareLinks(TotalPages,
+                    _rooturl, Model.pagenumber, Model.PageSize,
+                    Model.TotalRecords, Model.isFilter, Model.Filter_Default_Url,
+                    Model.Default_Url, Model.Filter_Pagination_url, Model.Pagination_Url,
+                    (Jugnoon.Utility.PaginationUtil.Types)generalSettings.Value.pagination_type);
+
+                foreach (var link in links)
+                {
+                    <li class="page-item @link.css"><a class="page-link" id="pg_@link.id" href="@link.url" title="@link.tooltip">@link.id</a></li>
+                }
+
+
+                if (Model.pagenumber < TotalPages)
+                {
+                    var last_links = Pagination.LastLinks(TotalPages, _rooturl, Model.pagenumber, Model.PageSize, Model.TotalRecords, Model.isFilter, Model.Filter_Default_Url, Model.Default_Url, Model.Filter_Pagination_url, Model.Pagination_Url, Model.ShowLast);
+                    foreach (var link in last_links)
+                    {
+                        <li class="page-item @link.css"><a class="page-link" id="pg_@link.id" href="@link.url" title="@link.tooltip">@link.id</a></li>
+                    }
+                }
+            }
+            else
+            {
+                // Normal Links
+                var links = Pagination.PrepareLinks(TotalPages, _rooturl, Model.pagenumber,
+                    Model.PageSize, Model.TotalRecords, Model.isFilter, Model.Filter_Default_Url,
+                    Model.Default_Url, Model.Filter_Pagination_url, Model.Pagination_Url,
+                    (Jugnoon.Utility.PaginationUtil.Types)generalSettings.Value.pagination_type);
+                foreach (var link in links)
+                {
+                    <li class="page-item @link.css"><a class="page-link" id="pg_@link.id" href="@link.url" title="@link.tooltip">@link.id</a></li>
+                }
+                var last_links = Pagination.LastLinks(TotalPages, _rooturl, Model.pagenumber, Model.PageSize, Model.TotalRecords, Model.isFilter, Model.Filter_Default_Url, Model.Default_Url, Model.Filter_Pagination_url, Model.Pagination_Url, Model.ShowLast);
+                foreach (var link in last_links)
+                {
+                    <li class="page-item @link.css"><a class="page-link" id="pg_@link.id" href="@link.url" title="@link.tooltip"><i class="@link.icon"></i></a></li>
+                }
+            }
+        }
+    </ul>
+</nav>

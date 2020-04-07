@@ -1,0 +1,100 @@
+<app-loader *ngIf="loaddata"></app-loader>
+<div class="card m-b-10" *ngIf="!loaddata && Data.length > 0">
+  <div class="card-body">
+    <div class="row m-b-5">
+      <div class="col-md-10">
+        <h4 class="card-title">
+          {{title}} <span *ngIf="stats > 0">({{stats}})</span>
+        </h4>
+      </div>
+      <div class="col-md-2">
+         <!--<a [routerLink]="[browse_url + '/uploads']" class="btn btn-primary" title="Upload Videos">Upload</a> -->
+      </div>
+    </div>
+
+    <div class="row m-b-10" *ngIf="Data.length > 0">
+      <div class="{{row_class}} videolist m-b-10" *ngFor="let item of Data;">
+        <div class="card-img-top img-responsive">
+          <a
+            *ngIf="isAdmin"
+            [routerLink]="[rout_url + 'profile/' + item.enc_id]"
+            ><img
+              style="cursor: pointer;"
+              class="card-img-top"
+              src="{{ item.picturename }}"
+              alt="{{ item.title }}"
+          /></a>
+          <a *ngIf="!isAdmin" href="{{item.url}}"
+            ><img
+              style="cursor: pointer;"
+              class="img-responsive"
+              src="{{ item.picturename }}"
+              alt="{{ item.title }}"
+          /></a>
+          <div class="m-t-10">
+            <p class="title m-b-0 truncate">{{ item.title }}</p>
+            <p class="light-item">Created: {{ item.customize_date }}</p>
+            <p class="light-item">Views: {{ item.views | number:'.2' }}</p>
+            <p class="card-text">
+              <span
+                class="badge badge-info m-r-5 m-b-5"
+                *ngIf="item.ispublished == 0"
+                >Publishing</span
+              >
+              <span
+                class="badge badge-danger m-r-5 m-b-5"
+                *ngIf="item.isenabled == 0"
+                >Blocked</span
+              >
+              <span
+                class="badge badge-success m-r-5 m-b-5"
+                *ngIf="item.isenabled == 1"
+                >Active</span
+              >
+              <span
+                class="badge badge-info m-r-5 m-b-5"
+                *ngIf="item.isapproved == 1"
+                >Approved</span
+              >
+              <span
+                class="badge badge-warning m-r-5 m-b-5"
+                *ngIf="item.isapproved == 0"
+                >Under Review</span
+              >
+              <span
+                class="badge badge-primary m-r-5 m-b-5"
+                *ngIf="item.isfeatured == 1"
+                >Featured</span
+              >
+              <span
+                class="badge badge-primary m-r-5 m-b-5"
+                *ngIf="item.isprivate == 1"
+                >Private</span
+              >
+              <span
+                class="badge badge-danger m-r-5 m-b-5"
+                *ngIf="item.isadult == 1"
+                >Adult</span
+              >
+              <a
+                *ngIf="type === 0"
+                [routerLink]="[rout_url + 'updatethumbnail/' + item.enc_id]"
+                class="m-l-10 m-b-5 pull-right"
+                ><i class="fa fa-camera" aria-hidden="true"></i
+              ></a>
+              <a
+                *ngIf="type === 0"
+                href="#"
+                [routerLink]="[rout_url + 'process/' + item.enc_id]"
+                class="m-l-10 m-b-5 pull-right"
+                ><i class="fa fa-pencil" aria-hidden="true"></i
+              ></a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a [routerLink]="[browse_url]" class="card-link pull-right">View All</a>
+    <div class="clearfix"></div>
+  </div>
+</div>

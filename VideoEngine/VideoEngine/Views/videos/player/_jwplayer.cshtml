@@ -1,0 +1,80 @@
+﻿@model Jugnoon.Videos.Models.VideoJsModelView
+<script src="https://content.jwplatform.com/libraries/3KgM6aqa.js"></script>
+<div class="m-t-5 m-b-10">
+    <div id="player">Loading the player...</div>
+    @{
+        // "https://s3.amazonaws.com/cloudtech2018/previews/14-New-Game-Trailers-2018/menifest_preview.mp4",
+    }
+
+    @if (Model.enabledAWS)
+    {
+        <script>
+                var playlist = [];
+                var playlist_item = {
+                    "title": @Model.Data.title,
+                    "image": @Model.PictureUrl,
+                    "sources": []
+                };
+                @foreach (var feed in Model.VideoFeed)
+                {
+                    <text>
+
+                    playlist_item.sources.push({
+                        "file": "@feed.src"
+                    });
+
+                    </text>
+                }
+                playlist.push(playlist_item);
+                jwplayer("player").setup({
+                    "file": "@Model.VideoFeed[0].src",
+                    "autostart": true,
+                    "aspectratio": "16:9",
+                    "width": "100%",
+                    "displaytitle": true,
+                });
+
+        </script>
+    }
+    else if (Model.EmbedScript != "")
+    {
+        // youtube video streaming enabled
+        if (Model.EmbedScript.Contains("/watch?v="))
+        {
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/@Model.EmbedScript.Replace("/watch?v=", "")" frameborder="0" allowfullscreen></iframe>
+        }
+        else
+        {
+            @Html.Raw(Model.EmbedScript)
+        }
+    }
+    else
+    {
+        // normal mp4 streaming enabled
+        if (Model.Type == 0)
+        {
+
+            <script>
+               
+                jwplayer("player").setup({
+                    "file": "@Model.VideoUrl",
+                    "title": @Model.Data.title,
+                    "image": @Model.PictureUrl,
+                    "autostart": true,
+                    "aspectratio": "16:9",
+                    "width": "100%",
+                    "displaytitle": true,
+                });
+
+            </script>
+        }
+        else
+        {
+            <!-- audio player -->
+            <audio id="player2" preload="none" controls style="max-width: 100%">
+                <source src="@Model.VideoUrl" type="audio/mp3">
+            </audio>
+        }
+    }
+
+</div>

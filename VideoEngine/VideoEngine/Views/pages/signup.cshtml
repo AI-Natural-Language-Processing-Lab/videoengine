@@ -1,0 +1,120 @@
+﻿@model Jugnoon.Models.RegisterViewModel
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@using Microsoft.Extensions.Options
+@using reCAPTCHA.AspNetCore
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Registration> registrationSettings
+@inject IOptions<RecaptchaSettings> RecaptchaSettings
+
+<section class="h-100 m-t-40 m-b-40">
+    <div class="container h-100">
+        <div class="row justify-content-md-center h-100 login-page">
+            <div class="card-wrapper">
+                <div class="card fat">
+                    <div class="card-body">
+                        @if (registrationSettings.Value.enable)
+                        {
+                            var externalLoginProviderViewModel = new Jugnoon.Models.ExternalLoginProviderViewModel()
+                            {
+                            };
+
+                            <h4 class="card-title">@GeneralResource["_create_new_account"].Value</h4>
+
+                            <partial name="_externalLoginProvider" model="externalLoginProviderViewModel" />
+                            <form asp-controller="auth" asp-action="register" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                                @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+                                {
+                                    <div class="alert alert-danger alert-error">
+                                        <a class="close" data-dismiss="alert">&times;</a>
+                                        @Html.ValidationSummary(true, "Errors: ")
+                                    </div>
+                                }
+                                @if (!registrationSettings.Value.enablePrivacyCheck)
+                                {
+                                    <input type="hidden" asp-for="Agreement" value="true">
+                                }
+                                @if (!registrationSettings.Value.enableNameField)
+                                {
+                                    <input type="hidden" asp-for="FirstName" value="">
+                                    <input type="hidden" asp-for="LastName" value="">
+                                }
+                                @if (registrationSettings.Value.uniqueFieldOption == 0)
+                                {
+                                    <div class="form-group">
+                                        <label asp-for="UserName"></label>
+                                        <input asp-for="UserName" class="form-control" placeholder="@GeneralResource["_enter_username"].Value" />
+                                        <span asp-validation-for="UserName" class="text-danger"></span>
+                                    </div>
+                                }
+
+                                <div class="form-group">
+                                    <label asp-for="Email"></label>
+                                    <input asp-for="Email" class="form-control" placeholder="@GeneralResource["_enter_email"].Value" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Password"></label>
+                                    <input asp-for="Password" class="form-control" placeholder="@GeneralResource["_enter_password"].Value" required data-eye />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="ConfirmPassword"></label>
+                                    <input asp-for="ConfirmPassword" class="form-control" placeholder="@GeneralResource["_confirm_password"].Value" />
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div>
+
+                                @if (!registrationSettings.Value.enableNameField)
+                                {
+                                    <div class="form-group">
+                                        <label asp-for="FirstName"></label>
+                                        <input asp-for="FirstName" class="form-control" placeholder="@GeneralResource["_first_name"].Value" />
+                                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="LastName"></label>
+                                        <input asp-for="LastName" class="form-control" placeholder="@GeneralResource["_last_name"].Value" />
+                                        <span asp-validation-for="LastName" class="text-danger"></span>
+                                    </div>
+                                }
+
+                                @if (registrationSettings.Value.enableChapcha)
+                                {
+                                    <div class="form-group">
+                                        @Html.Recaptcha(RecaptchaSettings?.Value)
+                                    </div>
+                                }
+
+
+                                @if (registrationSettings.Value.enablePrivacyCheck)
+                                {
+                                    <div class="form-group">
+                                        <label asp-for="Agreement">
+                                            <input asp-for="Agreement" />
+                                            @Html.DisplayNameFor(m => m.Agreement)
+                                        </label>
+                                    </div>
+                                }
+
+                                <div class="form-group no-margin">
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        @GeneralResource["_create_account"].Value
+                                    </button>
+                                </div>
+
+                                <div class="margin-top20 text-center">
+                                    @GeneralResource["_already_have_account"].Value <a href="/signin">@GeneralResource["_sign_in"].Value</a>
+                                </div>
+                            </form>
+                        }
+                        else
+                        {
+                            @await Html.PartialAsync("~/Views/partials/utility/_norecord.cshtml", new NoRecordModelView() { Message = GeneralResource["_registeration_not_enabled"].Value })
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

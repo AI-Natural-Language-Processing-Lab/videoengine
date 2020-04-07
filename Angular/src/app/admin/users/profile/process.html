@@ -1,0 +1,274 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div *ngIf="!isAccessGranted">
+      <h2 class="m-b-40 m-t-40 text-center">Access Denied</h2>
+    </div>
+    <div *ngIf="isAccessGranted">
+      <div class="row">
+        <div class="col-md-3 col-sm-4">
+          <div class="card">
+            <app-banneruploader
+              [Info]="Info"
+              [MediaSettings]="(configs$ | async).general.media"
+              (OnCropped)="onImageUploaded($event)"
+            ></app-banneruploader>
+
+            <app-navigation-v2
+              [FilterOptions]="FilterOptions"
+              [Options]="SearchOptions"
+              (Action)="toolbaraction($event)"
+            >
+            </app-navigation-v2>
+          </div>
+        </div>
+        <div class="col-md-9 col-sm-8">
+          <app-loader *ngIf="showLoader"></app-loader>
+          <div *ngIf="!showLoader">
+            <div class="m-b-10">
+              <app-toolbar-v2
+                [Options]="ToolbarOptions"
+                [isItemsSelected]="isItemsSelected"
+                (Action)="toolbaraction($event)"
+              ></app-toolbar-v2>
+            </div>
+            <div *ngIf="ViewType === 0">
+             
+              <div class="card">
+                <div class="card-body">
+                  <h3>{{ FullName }}</h3>
+                  <hr />
+                  <p>
+                    User ID: <strong>{{ Info.id }}</strong>
+                  </p>
+                  <p>
+                    UserName: <strong>{{ Info.userName }}</strong>
+                  </p>
+                  <p>
+                    Email Address: <strong>{{ Info.email }}</strong>
+                  </p>
+                  <p>
+                    Date Registered:
+                    <strong>{{ Info.created_at | date: "fullDate" }}</strong>
+                  </p>
+                  <p>Last Login: {{ Info.last_login | date: "fullDate" }}</p>
+                  <p class="card_text">
+                    <span
+                      class="badge badge-danger m-r-5"
+                      *ngIf="Info.lockoutenabled"
+                      >Lockout Enabled</span
+                    >
+                    <span
+                      class="badge badge-success m-r-5"
+                      *ngIf="!Info.lockoutenabled"
+                      >Lockout Disabled</span
+                    >
+                    <span
+                      class="badge badge-success m-r-5"
+                      *ngIf="Info.emailConfirmed"
+                      >Email Confirmed (Active)</span
+                    >
+                    <span
+                      class="badge badge-danger m-r-5"
+                      *ngIf="!Info.emailConfirmed"
+                      >Email Not Confirmed (Not Active)</span
+                    >
+                    <span
+                      class="badge badge-danger m-r-5"
+                      *ngIf="Info.isenabled === 0"
+                      >Blocked</span
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <app-role
+                [Info]="Info"
+                [isActionGranded]="isActionGranded"
+              ></app-role>
+
+              <div class="card">
+                <div class="card-body">
+                  <h3>User Profile</h3>
+                  <hr />
+                  <div class="m-t-10">
+
+                    <div *ngIf="Info.attr_values.length > 0">
+                        <div class="m-b-10" *ngFor="let option of Info.options">
+                            <div class="m-b-10" *ngFor="let attr of option.attributes">
+                               <div *ngIf="attr.element_type !== 5 && attr.value !== ''">
+                                  <strong class="m-b-5">{{attr.title}}</strong>
+                                  <div>{{attr.value}}</div>
+                               </div>
+                               <div *ngIf="attr.element_type === 5 && attr.value !== ''">
+                                    <strong class="m-b-5">{{attr.title}}</strong>
+                                    <div [innerHTML]="attr.value"></div>
+                               </div>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                  <h3>User Stats</h3>
+                  <hr />
+                  <p class="m-b-5">
+                    Total Videos: {{ Info.stats.stat_videos }}
+                  </p>
+                  <p class="m-b-5">Total Audio: {{ Info.stats.stat_audio }}</p>
+                  <p class="m-b-5">
+                    Total Albums: {{ Info.stats.stat_albums }}
+                  </p>
+                  <p class="m-b-5">
+                    Total Photos: {{ Info.stats.stat_photos }}
+                  </p>
+                  <p class="m-b-5">Total Blogs: {{ Info.stats.stat_blogs }}</p>
+                  <p class="m-b-5">
+                    Total Forum Topics: {{ Info.stats.stat_forum_topics }}
+                  </p>
+                  <p class="m-b-5">Total QA Asked: {{ Info.stats.stat_qa }}</p>
+                  <p class="m-b-5">
+                    Total QA Answered: {{ Info.stats.stat_qaanswers }}
+                  </p>
+                  <p class="m-b-5">Total Polls: {{ Info.stats.stat_polls }}</p>
+                  <p class="m-b-5">
+                    Total Ad Listings: {{ Info.stats.stat_adlistings }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                  <h3>User Settings</h3>
+                  <hr />
+                  <p class="m-b-5">
+                    Enable Receiving Messages:
+                    <span
+                      class="badge badge-danger"
+                      *ngIf="Info.settings.issendmessages == 0"
+                      >Inactive</span
+                    >
+                    <span
+                      class="badge badge-success"
+                      *ngIf="Info.settings.issendmessages == 1"
+                      >Active</span
+                    >
+                  </p>
+                  <p class="m-b-5">
+                    Enable Receiving Emails Messages:
+                    <span
+                      class="badge badge-danger"
+                      *ngIf="Info.settings.isemail == 0"
+                      >Inactive</span
+                    >
+                    <span
+                      class="badge badge-success"
+                      *ngIf="Info.settings.isemail == 1"
+                      >Active</span
+                    >
+                  </p>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-body">
+                  <h3>User Account</h3>
+                  <hr />
+                  <p class="m-b-5">
+                    Total Available Credits: {{ Info.account.credits }}
+                  </p>
+                  <p class="m-b-5">
+                    Lifetime Renewal:
+                    <span
+                      class="badge badge-danger m-r-5"
+                      *ngIf="Info.account.islifetimerenewal == 0"
+                      >Inactive</span
+                    >
+                    <span
+                      class="badge badge-success m-r-5"
+                      *ngIf="Info.account.islifetimerenewal == 1"
+                      >Active</span
+                    >
+                  </p>
+                  <p class="m-b-5">
+                    Last Time Purchased:
+                    <span *ngIf="!Info.account.last_purchased">No Record</span>
+                    <span *ngIf="Info.account.last_purchased">{{
+                      Info.account.membership_expiry | date: "fullDate"
+                    }}</span>
+                  </p>
+                  <p class="m-b-5">
+                    Membership Expiry Time:
+                    <span *ngIf="!Info.account.membership_expiry"
+                      >No Record</span
+                    >
+                    <span *ngIf="Info.account.membership_expiry">{{
+                      Info.account.membership_expiry | date: "fullDate"
+                    }}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="ViewType === 1">
+              <div class="card">
+                <div class="card-body">
+                  <div *ngIf="UserLog.length > 0">
+                    <div class="table-responsive">
+                      <table
+                        class="table table-bordered table-hover table-striped no-wrap"
+                      >
+                        <thead>
+                          <tr>
+                            <th>IP Address</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            [hidden]="item.isdeleted"
+                            *ngFor="let item of UserLog; let i = index"
+                          >
+                            <td style="width:5%;">
+                              {{ item.ipaddress }}
+                            </td>
+                            <td>
+                              {{ item.created_at | date: "fullDate" }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <app-norecord *ngIf="UserLog.length === 0"></app-norecord>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="ViewType === 2">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="m-b-0">{{ formHeading }}</h4>
+                      </div>
+                      <div class="card-body">
+                        <app-loader *ngIf="showLoader"></app-loader>
+                        <dynamic-modal-form
+                          *ngIf="!showLoader"
+                          [controls]="controls"
+                          [showLoader]="showLoader"
+                          [showCancel]="false"
+                          [showModal]="false"
+                          [submitText]="submitText"
+                          (OnSubmit)="SubmitForm($event)"
+                        >
+                        </dynamic-modal-form>
+                      </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

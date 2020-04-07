@@ -1,0 +1,61 @@
+﻿@inject Jugnoon.Framework.ApplicationDbContext _context
+@model Jugnoon.Videos.Models.VideoListViewModel
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Features> featureSettings
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Registration> registrationSettings
+@using Jugnoon.Videos
+@{
+    var isProceed = true;
+   if (Model.QueryOptions.type == MediaType.Videos)
+    {
+        if (!featureSettings.Value.enable_videos)
+        {
+            isProceed = false;
+        }
+    }
+}
+
+@if (isProceed)
+{
+    var _list = await VideoBLL.LoadItems(_context, Model.QueryOptions);
+
+    if (_list.Count > 0)
+    {
+        var PartialPath = "~/Views/videos/partials";
+
+    <div class="box">
+
+        <h2>
+            @Model.HeadingTitle
+        </h2>
+
+
+        <div class="row">
+            @foreach (var Item in _list)
+            {
+                   @await Html.PartialAsync(PartialPath + "/item/Item.cshtml", new Jugnoon.Videos.Models.VideoItemViewModel()
+                   {
+                       Data = Item,
+                       ListObject = Model.ListObject,
+                       AuthorUrl = UserUrlConfig.ProfileUrl(Item.author, registrationSettings.Value.uniqueFieldOption),
+                       ProfileUrl = VideoUrlConfig.PrepareUrl(Item)
+                   });
+            }
+        </div>
+
+        @{
+            if (Model.BrowseUrl != "")
+            {
+                <a class="m-t-5 pull-right" href="@Model.BrowseUrl">@Model.BrowseText</a>
+                <div class="clearfix"></div>
+            }
+        }
+    </div>
+
+    }
+    else if (Model.NoRecordFoundText != "")
+    {
+        @await Html.PartialAsync("~/Views/partials/utility/_norecord.cshtml", new NoRecordModelView() { Message = Model.NoRecordFoundText })
+    }
+
+}
+

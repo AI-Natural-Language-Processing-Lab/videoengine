@@ -1,0 +1,83 @@
+<div *ngIf="!isAccessGranted">
+  <h2 class="m-b-40 m-t-40 text-center">Access Denied</h2>
+</div>
+<div *ngIf="isAccessGranted">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <app-navigation-v2 [Options]="SearchOptions"> </app-navigation-v2>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="m-b-0">{{ formHeading }}</h4>
+        </div>
+        <div class="card-body">
+          <app-loader *ngIf="showLoader"></app-loader>
+          <div *ngIf="!showLoader && Info">
+            <h2>Role: {{ Info.rolename }}</h2>
+            <hr />
+            <h3>Permission List</h3>
+            <div *ngIf="ObjectList.length > 0">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered table-hover table-striped no-wrap"
+                >
+                  <thead>
+                    <tr>
+                      <th style="width: 5%;">
+                        <div class="checkbox">
+                          <input
+                            [(ngModel)]="selectall"
+                            (ngModelChange)="processChange()"
+                            id="selectall"
+                            type="checkbox"
+                          />
+                          <label class="p-b-0 p-t-0" for="selectall"></label>
+                        </div>
+                      </th>
+
+                      <th class="text-nowrap" style="width:45%;">
+                        Permission
+                      </th>
+                      <th class="text-nowrap" style="width:50%;">
+                        Detail
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of ObjectList; let i = index">
+                      <td style="width:5%;">
+                        <div class="checkbox">
+                          <input
+                            [(ngModel)]="item.Selected"
+                            id="{{ i }}"
+                            type="checkbox"
+                          />
+                          <label for="{{ i }}"></label>
+                        </div>
+                      </td>
+                      <td>
+                        {{ item.objectname }}
+                      </td>
+                      <td class="text-nowrap">
+                        {{ item.description }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="m-b-5 m-t-5">
+                <button class="btn btn-primary" (click)="updatePermission()">
+                  Update Permission
+                </button>
+              </div>
+            </div>
+            <app-norecord *ngIf="ObjectList.length === 0"></app-norecord>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

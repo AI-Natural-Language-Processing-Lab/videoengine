@@ -1,0 +1,22 @@
+﻿@model  ListStatViewModels
+
+    <div class="text-right m-t-5">
+        @{
+            if (Model.TotalRecords > 0)
+            {
+                int first_boundary = 0;
+                if (Model.TotalRecords > 0)
+                {
+                    first_boundary = ((Model.pagenumber - 1) * Model.PageSize) + 1;
+                }
+                int second_boundary = ((Model.pagenumber - 1) * Model.PageSize) + Model.PageSize;
+                if (second_boundary > Model.TotalRecords)
+                {
+                    second_boundary = Model.TotalRecords;
+                }
+
+                @: showing <strong>@first_boundary.ToString()</strong> to <strong>@second_boundary.ToString()</strong> of <strong>@Model.TotalRecords</strong> records
+     }
+        }
+    </div>
+

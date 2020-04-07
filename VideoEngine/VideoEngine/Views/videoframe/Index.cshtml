@@ -1,0 +1,47 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Videos.Settings.Player> playerSettings
+@model Jugnoon.Videos.Models.VideoFrameViewModel
+@{
+    Layout = "~/Views/Shared/_emptyLayout.cshtml";
+}
+@if (Model.isAllowed)
+{
+    if (playerSettings.Value.enable_videojs)
+    {
+        @await Html.PartialAsync("~/Views/videos/player/_videojs.cshtml", Model.Player)
+    }
+}
+else
+{
+    @await Html.PartialAsync("~/Views/partials/utility/_norecord.cshtml", new NoRecordModelView() { Message = Model.DetailMessage })
+}
+@section Styles {
+
+    @if (Model.Data.type == 0)
+    {
+        <link href="http://vjs.zencdn.net/5.6.0/video-js.css" rel="stylesheet">
+
+        <!-- If you'd like to support IE8 -->
+        <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    }
+    else
+    {
+        <link href="/assets/mediaelement/build/mediaelementplayer.min.css" rel="stylesheet">
+    }
+
+}
+@section Scripts {
+    @if (Model.Data.type == 0)
+    {
+        <script src="http://vjs.zencdn.net/5.6.0/video.js"></script>
+    }
+    else
+    {
+        <script src="/assets/mediaelement/build/mediaelementplayer.min.js"></script>
+        <script>
+            // using jQuery
+            $('video,audio').mediaelementplayer(/* Options */);
+        </script>
+    }
+}
+
+

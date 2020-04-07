@@ -1,0 +1,20 @@
+﻿@model Jugnoon.Videos.Models.VideoItemViewModel
+@*
+    Grid Item Design
+*@
+@{
+    var hoverCss = "";
+    if (Model.ListObject.isHover)
+    {
+        hoverCss = "item-hover";
+    }
+    var PartialPath = "~/Views/videos/partials";
+
+}
+
+<div class="@Model.ListObject.ColWidth">
+    <div class="card-img-top img-responsive medialist @hoverCss">
+        @await Html.PartialAsync(PartialPath + "/item/thumbnail.cshtml", Model)
+        @await Html.PartialAsync(PartialPath + "/item/content.cshtml", Model)
+    </div>
+</div>

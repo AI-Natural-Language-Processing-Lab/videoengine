@@ -1,0 +1,20 @@
+﻿@model SearchListModel
+@inject IStringLocalizer<GeneralResource> GeneralResource
+
+<div class="m-b-10">
+    <form id="searchForm" action="@Model.Action" method="post">
+        @Html.AntiForgeryToken()
+        @if (Model.Type != null)
+        {
+            @Html.Hidden(Model.Type)
+        }
+        <div class="input-group">
+            @Html.TextBoxFor(m => m.Query, new { @class = "form-control", placeholder = Model.PlaceHolder, required = "required" })
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </form>
+</div>
+
+

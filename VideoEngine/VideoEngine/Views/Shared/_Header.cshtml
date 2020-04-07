@@ -1,0 +1,57 @@
+﻿@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Media> mediaSettings
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+<header>
+    <partial name="_TNav" />
+
+    <div class="container">
+        <div class="row">
+            <div class="col col-lg-3 col-md-4 col-sm-4 align-self-start">
+                <div class="logo">
+                    <a href="@Config.GetUrl()">
+                        <img class="img-responsive" alt="@generalSettings.Value.website_title" src="@mediaSettings.Value.logo_path">
+                    </a>
+                </div>
+            </div>
+            <div class="col col-lg-3 col-md-1 col-sm-2 hidden-xs">
+            </div>
+            <div class="col col-lg-6 col-md-7 col-sm-6 align-self-end">
+                <div class="search-container">
+                    @{
+                        /******************************************
+                        // Main Search Panel Processing Logic
+                        /******************************************/
+                        var SearchType = 0;
+                        var SearchPlaceholder = GeneralResource["_search"].Value;
+                        var SearchIcon = "fa-video";
+                        var showButton = true;
+                        var buttonText = GeneralResource["_upload"].Value;
+                        var buttonIcon = "fa fa-upload";
+                        var buttonUrl = Config.GetUrl("account/my-videos/uploads");
+
+                        var _searchViewModel = new SearchListModel()
+                        {
+                            Controller = "videos",
+                            Action = "queryresult",
+                            PlaceHolder = SearchPlaceholder,
+                            SearchIcon = SearchIcon,
+                            SearchType = SearchType,
+                            showButton = showButton,
+                            ButtonText = buttonText,
+                            ButtonIcon = buttonIcon,
+                            ButtonUrl = buttonUrl
+                        };
+                    }
+                    <partial name="_mainSearch" model="_searchViewModel" />
+
+                </div>
+            </div>
+
+        </div>
+
+        <partial name="_tMenu" />
+
+    </div>
+
+</header>
+

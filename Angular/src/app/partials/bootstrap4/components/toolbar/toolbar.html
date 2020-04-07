@@ -1,0 +1,161 @@
+<div class="">
+  <nav *ngIf="Options.showtoolbar" class="{{ Options.navbarcss }}">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <a class="navbar-brand" href="#">{{ Options.left_caption }}</a>
+      <ul class="navbar-nav mr-auto">
+        <li
+          [ngClass]="grp.ismultiple ? 'nav-item dropdown' : 'nav-item'"
+          *ngFor="let grp of Options.left_options"
+        >
+          <a
+            class="nav-link"
+            *ngIf="!grp.ismultiple"
+            (click)="toolbaraction(grp.clickevent, grp.value, $event); (false)"
+            href="#"
+          >
+            <i class="{{ grp.icon }}"></i> {{ grp.title }}</a
+          >
+          <a
+            *ngIf="grp.ismultiple"
+            href="#"
+            (click)="(false)"
+            class="nav-link dropdown-toggle"
+            data-toggle="dropdown"
+          >
+            <i class="{{ grp.icon }}"></i> {{ grp.title }}
+            <span class="caret"></span
+          ></a>
+          <div
+            *ngIf="grp.ismultiple"
+            class="dropdown-menu"
+            aria-labelledby="navbarDropdown"
+          >
+            <a
+              *ngFor="let option of grp.Options"
+              (click)="
+                toolbaraction(option.clickevent, option.value, $event); (false)
+              "
+              class="dropdown-item"
+              href="#"
+              >{{ option.title }}</a
+            >
+          </div>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li
+          [ngClass]="grp.ismultiple ? 'nav-item dropdown' : 'nav-item'"
+          *ngFor="let grp of Options.right_options"
+        >
+          <a
+            class="nav-link"
+            *ngIf="!grp.ismultiple"
+            (click)="toolbaraction(grp.clickevent, grp.value, $event); (false)"
+            href="#"
+          >
+            <i class="{{ grp.icon }}"></i> {{ grp.title }}</a
+          >
+          <a
+            *ngIf="grp.ismultiple"
+            href="#"
+            (click)="(false)"
+            class="nav-link dropdown-toggle"
+            data-toggle="dropdown"
+          >
+            <i class="{{ grp.icon }}"></i> {{ grp.title }}
+            <span class="caret"></span
+          ></a>
+          <div
+            *ngIf="grp.ismultiple"
+            class="dropdown-menu"
+            aria-labelledby="navbarDropdown"
+          >
+            <a
+              *ngFor="let option of grp.Options"
+              (click)="
+                toolbaraction(option.clickevent, option.value, $event); (false)
+              "
+              class="dropdown-item"
+              href="#"
+              >{{ option.title }}</a
+            >
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div
+  class="card-body m-t-0 m-b-0 p-t-0 p-b-0"
+  *ngIf="
+    Options.showsecondarytoolbar &&
+    ((liststats$ | async).totalrecords > 0 || Options.ProfileView)
+  "
+>
+
+  <div class="row m-t-10">
+    <div class="col-md-1" *ngIf="Options.showcheckAll">
+      <div class="checkbox m-l-10">
+        <input
+          [(ngModel)]="selectall"
+          (ngModelChange)="processChange()"
+          type="checkbox"
+          id="checkbox0"
+          value="check"
+        />
+        <label for="checkbox0"></label>
+      </div>
+    </div>
+    <div [ngClass]="!Options.showcheckAll ? 'col-md-12' : 'col-md-11'">
+      <div class="pull-right" *ngIf="Options.actions.length > 0 && isItemsSelected">
+        <div
+          *ngIf="!Options.actions[0].showOnMainBar"
+          class="btn-group"
+          role="group"
+          aria-label="Button group with nested dropdown"
+        >
+          <button
+            *ngFor="let option of Options.actions[0].Options"
+            (click)="
+              toolbaraction(
+                option.clickevent,
+                {
+                  value: option.value,
+                  attr: option.attr,
+                  actionstatus: option.actionstatus
+                },
+                $event
+              );
+              (false)
+            "
+            type="button"
+            class="{{ option.css }}"
+          >
+            <i class="{{ option.icon }}"></i> {{ option.title }}
+          </button>
+        </div>
+      </div>
+
+      <div class="pull-right" *ngIf="!isItemsSelected && !ProfileView">
+        <p class="text-right m-b-0 m-t-0 p-b-7 p-t-7">
+          Showing <strong>{{ (liststats$ | async).first_boundary }}</strong> to
+          <strong>{{ (liststats$ | async).last_boundary }}</strong> of
+          <strong>{{ (liststats$ | async).totalrecords }}</strong> records
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

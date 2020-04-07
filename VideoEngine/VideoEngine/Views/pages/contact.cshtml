@@ -1,0 +1,78 @@
+﻿@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Social> socialSettings
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Contact> contactSettings
+@{
+
+    var _bModel = new List<BreadItem>();
+    _bModel.Add(new BreadItem()
+    {
+        title = GeneralResource["_home"].Value,
+        url = Config.GetUrl()
+    });
+    _bModel.Add(new BreadItem()
+    {
+        title = GeneralResource["_contact_us"].Value,
+        isActive = true
+    });
+    var BreadCrumbViewModel = new BreadViewModel()
+    {
+        BreadItems = _bModel
+    };
+}
+<partial name="~/Views/Shared/_BreadCrumb.cshtml" model="BreadCrumbViewModel" />
+
+<div class="row m-t-20">
+    <div class="col-md-8">
+        @if (contactSettings.Value.enable_contact_form)
+        {
+            <div class="m-b-20">
+                @await Html.PartialAsync("_ContactUs", new ContactUsViewModel() { })
+            </div>
+        }
+
+
+        <div class="m-b-40">
+            <h2 class="m-b-10">@GeneralResource["_information"].Value:</h2>
+
+            @if (contactSettings.Value.tel1 != "")
+            {
+                <p>
+                    <strong class="m-r-20"><i class="fa fa-phone-square"></i>&nbsp;@GeneralResource["_phone"].Value</strong> @contactSettings.Value.tel1
+                </p>
+            }
+            @if (contactSettings.Value.tel2 != "")
+            {
+                <p>
+                    <strong class="m-r-20"><i class="fa fa-phone-square"></i>&nbsp;@GeneralResource["_phone"].Value #2</strong> &nbsp;@contactSettings.Value.tel2
+                </p>
+            }
+            @if (contactSettings.Value.email != "")
+            {
+                <p>
+                    <strong class="m-r-20"><i class="fa fa-envelope"></i>&nbsp;@GeneralResource["_email"].Value</strong>
+                    <a href="mailto:@contactSettings.Value.email">@contactSettings.Value.email</a>
+                </p>
+            }
+
+            @if (contactSettings.Value.address != "")
+            {
+                <p>
+                    <strong class="m-r-20"><i class="fa fa-map"></i>&nbsp;@GeneralResource["_address"].Value</strong>
+                    @contactSettings.Value.address
+                </p>
+            }
+            @if (contactSettings.Value.fax != "")
+            {
+                <p>
+                    <strong class="m-r-20"><i class="fa fa-fax"></i>&nbsp;@GeneralResource["_fax"].Value</strong>
+                    @contactSettings.Value.fax
+                </p>
+            }
+
+        </div>
+
+    </div>
+    <div class="col-md-4">
+        @await Html.PartialAsync("~/Views/partials/ads/ad_336.cshtml", new AdsModelView() { isAdult = false })
+    </div>
+</div>

@@ -1,0 +1,134 @@
+<div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="m-b-0">{{ formHeading }}</h4>
+      </div>
+      <div class="card-body">
+        <app-loader *ngIf="showLoader"></app-loader>
+        <div *ngIf="!showLoader">
+          <div class="m-b-10 m-t-10">
+            <button (click)="AddAttribute()" class="btn btn-primary">
+              Add Attribute
+            </button>
+          </div>
+          <div *ngIf="Attributes.length > 0">
+  
+            <div class="table-responsive">
+              <table
+                class="table table-bordered table-hover table-striped no-wrap"
+              >
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Placeholder</th>
+                    <th>Element</th>
+                    <th>Options</th>
+                    <th>Priority</th>
+                    <th>Required</th>
+                    <th>Type</th>
+                    <th>---</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of Attributes; let i = index">
+                    
+                    <td>
+                      {{ item.title }}
+                    </td>
+                    <td>
+                      {{ item.value }}
+                    </td>
+                    <td>
+                      <div [ngSwitch]="item.element_type">
+                        <span
+                          *ngSwitchCase="0"
+                          class="badge badge-danger m-r-5 m-b-5"
+                          >Text Box</span
+                        >
+                        <span
+                          *ngSwitchCase="1"
+                          class="badge badge-danger m-r-5 m-b-5"
+                          >Text Area</span
+                        >
+                        <span
+                          *ngSwitchCase="2"
+                          class="badge badge-warning m-r-5 m-b-5"
+                          >Drop Down</span
+                        >
+                        <span
+                          *ngSwitchCase="3"
+                          class="badge badge-primary m-r-5 m-b-5"
+                          >Check Box</span
+                        >
+                        <span
+                          *ngSwitchCase="4"
+                          class="badge badge-info m-r-5 m-b-5"
+                          >Radio Button</span
+                        >
+                        <span
+                          *ngSwitchCase="5"
+                          class="badge badge-success m-r-5 m-b-5"
+                          >Rich Text Area</span
+                        >
+                      </div>
+                    </td>
+                    <td>
+                      {{item.options}}
+                    </td>
+                    <td>
+                      {{ item.priority }}
+                    </td>
+                    <td>
+                        <div [ngSwitch]="item.isrequired">
+                          <span
+                            *ngSwitchCase="0"
+                            class="badge badge-success m-r-5 m-b-5"
+                            >No</span
+                          >
+                          <span
+                            *ngSwitchCase="1"
+                            class="badge badge-danger m-r-5 m-b-5"
+                            >Yes</span
+                          >
+                          
+                        </div>
+                      </td>
+                      <td>
+                          <div [ngSwitch]="item.variable_type">
+                            <span
+                              *ngSwitchCase="0"
+                              class="badge badge-info m-r-5 m-b-5"
+                              >String</span
+                            >
+                            <span
+                              *ngSwitchCase="1"
+                              class="badge badge-info m-r-5 m-b-5"
+                              >Number</span
+                            >
+                            
+                          </div>
+                        </td>
+                    <td>
+                      <a href="#" (click)="EditAttribute(item, $event); false"
+                        ><i class="fa fa-pencil text-inverse m-r-10"></i
+                      ></a>
+                      <a
+                        href="#"
+                        (click)="RemoveAttribute(item, i, $event); false"
+                      >
+                        <i class="fa fa-close text-danger m-r-10"></i
+                      ></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div *ngIf="Attributes.length === 0" style="padding:80px 0px;">
+            <h3 style="text-align:center;">No Attributes Found!</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

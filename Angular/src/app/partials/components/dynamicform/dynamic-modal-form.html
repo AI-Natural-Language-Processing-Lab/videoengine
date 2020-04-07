@@ -1,0 +1,52 @@
+<app-loader *ngIf="showLoader"></app-loader>
+<div *ngIf="!showLoader">
+  <form (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div class="modal-body">
+      <div *ngFor="let control of controls">
+        <df-control
+          *ngIf="control.isVisible"
+          (OnFileRemoved)="OnFileRemoved($event)"
+          (OnDropdownSelectionChange)="OnDropdownSelectionChange($event)"
+          (uploadStatus)="uploadProgress($event)"
+          (uploadCompleted)="uploadCompleted($event)"
+          [isSubmit]="isSubmit"
+          [control]="control"
+          [form]="form"
+        >
+        </df-control>
+      </div>
+    </div>
+    
+    <div class="modal-footer m-t-10" *ngIf="!showLoader && showModal">
+        <hr />
+      <button *ngIf="showCancel" class="btn btn-primary m-r-5" (click)="close()">
+        {{ cancelText }}
+      </button>
+      <button class="btn btn-primary  m-r-5">{{ submitText }}</button>
+      <button
+        *ngIf="skipBtnText !== ''"
+        class="btn btn-default"
+        (click)="skip()"
+      >
+        {{ skipBtnText }}
+      </button>
+    </div>
+    <div class="m-t-0 m-b-0 m-l-10" *ngIf="!showLoader && !showModal">
+      <div class="form-group">
+        <button *ngIf="showCancel" class="btn btn-primary m-r-5" (click)="close()">
+          {{ cancelText }}
+        </button>
+        <button [disabled]="disableSubmit" class="{{ submitBtnCss }} m-r-5">
+          {{ submitText }}
+        </button>
+        <button
+          *ngIf="skipBtnText !== ''"
+          class="btn btn-default"
+          (click)="skip()"
+        >
+          {{ skipBtnText }}
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

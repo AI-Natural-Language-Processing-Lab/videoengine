@@ -1,0 +1,32 @@
+<div *ngIf="!isAccessGranted">
+  <h2 class="m-b-40 m-t-40 text-center">Access Denied</h2>
+</div>
+<div *ngIf="isAccessGranted">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <app-navigation-v2 [Options]="SearchOptions"> </app-navigation-v2>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="m-b-0">{{ formHeading }}</h4>
+        </div>
+        <div class="card-body">
+          <app-loader *ngIf="showLoader"></app-loader>
+          <dynamic-modal-form
+            *ngIf="!showLoader"
+            [controls]="controls"
+            [showLoader]="showLoader"
+            [showCancel]="false"
+            [showModal]="false"
+            [submitText]="submitText"
+            (OnSubmit)="SubmitForm($event)"
+          >
+          </dynamic-modal-form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

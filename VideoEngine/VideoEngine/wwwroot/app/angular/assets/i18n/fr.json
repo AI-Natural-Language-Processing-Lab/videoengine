@@ -1,0 +1,33 @@
+{
+	"_MENU": {
+		"_DASHBOARD": "Tableau de bord",
+		"_USERS": "Utilisateurs",
+		"_VIDEOS": "Vidéos",
+		"_AUDIO": "Audio",
+		"_PHOTOS": "Photos",
+		"_ARTISTS": "Artistes",
+		"_BLOGS": "Blogs",
+		"_POLLS": "Sondages",
+		"_FORUMS": "Forums",
+		"QA": "QA",
+		"_SETTINGS": "Paramètres",
+		"_WIKI": "Wiki",
+		"_LOG": "Log",
+		"_ADVERTISEMENT": "Publicité",
+		"_BLOCKIP": "Bloquer IP",
+		"_CATEGORIES": "Catégories",
+		"_TAGS": "Tags",
+		"_PACKAGES": "PACKAGES",
+		"_GAMIFY": "GAMIFY",
+		"_MAILTEMPLATES": "MAILTEMPLATES",
+		"_DICTIONARY": "DICTIONARY",
+		"_ALBUMS": "Albums",
+		"_TOPICS": "Sujets",
+		"_CONFIGURATIONS": "Configurations",
+		"_LOGOUT": "Déconnexion",
+		"_LANGUAGE": "Langue"
+	}, 
+	"_MESSAGES": {
+	   "_NORECORD": "Aucun enregistrement trouvé"
+	}
+}

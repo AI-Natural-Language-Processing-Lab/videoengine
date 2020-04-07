@@ -1,0 +1,52 @@
+﻿@model UserModelView
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Features> featureSettings
+@{
+    // setup search with channels
+    ViewBag.SearchType = 2;
+}
+<div class="row">
+    <div class="col-md-12 m-t-20 m-b-20">
+        @if (Model.Message != null && Model.Message != "")
+        {
+            @Html.Raw(Alerts.Prepare(Model.Message, Model.AlertType));
+        }
+
+        @if (Model.UserExist)
+        {
+            <div class="row">
+                <div class="col-md-3">
+
+                    @await Html.PartialAsync("~/Views/user/partials/_Connect.cshtml")
+
+                    @await Html.PartialAsync("~/Views/user/partials/_cProfile.cshtml")
+
+                    @await Html.PartialAsync("~/Views/user/partials/_Nav.cshtml", Model.Nav)
+
+                    <div class="m-t-10">
+                        @await Html.PartialAsync("~/Views/partials/ads/ad_300.cshtml", new AdsModelView() { isAdult = false })
+
+                    </div>
+
+                </div>
+                <div class="col-md-9">
+                    <div class="m-b-20">
+                        @await Html.PartialAsync("~/Views/videos/partials/_List_SM_01.cshtml", Model.videos)
+                    </div>
+
+                </div>
+            </div>
+
+
+        }
+        else
+        {
+            <div class="box">
+                <div class="m-b-20 m-t-20">
+                    <h4>@GeneralResource["_profile_not_found"].Value</h4>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

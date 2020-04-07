@@ -1,0 +1,30 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.title | @generalSettings.Value.page_caption</title>
+    @if (ViewBag.NoIndex != null)
+    {
+        <meta name="robots" content="noindex">
+    }
+    @if (ViewBag.description != null)
+    {
+        <meta name="description" content="@ViewBag.description" />
+
+    }
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

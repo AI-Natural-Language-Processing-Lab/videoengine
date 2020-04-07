@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-md-12 m-b-10">
+    <ul class="nav nav-pills">
+      <li
+        *ngFor="let menu of MyAccount_Menu"
+        class="nav-item"
+      >
+        <a
+          [ngClass]="{ active: menu.index == topMenuIndex }"
+          [routerLink]="[menu.value]"
+          class="nav-link"
+          href
+        >
+          {{ menu.title }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

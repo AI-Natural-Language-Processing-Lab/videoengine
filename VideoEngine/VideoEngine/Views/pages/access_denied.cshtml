@@ -1,0 +1,12 @@
+﻿@inject IStringLocalizer<GeneralResource> GeneralResource
+
+@{
+    ViewData["Title"] = GeneralResource["_access_denied"].Value;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>@ViewData["Title"]</h2>
+        <p>@GeneralResource["_access_denied_msg"].Value</p>
+    </div>
+</div>

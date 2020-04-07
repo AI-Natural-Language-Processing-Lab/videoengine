@@ -1,0 +1,398 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+    <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
+    <DockerTargetOS>Linux</DockerTargetOS>
+    <UserSecretsId>33f3dd44-172a-435c-a9c7-7da844a8ec70</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet />
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\Angular\**" />
+    <Compile Remove="wwwroot\contents\test\**" />
+    <Compile Remove="wwwroot\css\themes\**" />
+    <Compile Remove="wwwroot\plugins\flexnav-master\**" />
+    <Content Remove="wwwroot\Angular\**" />
+    <Content Remove="wwwroot\contents\test\**" />
+    <Content Remove="wwwroot\css\themes\**" />
+    <Content Remove="wwwroot\plugins\flexnav-master\**" />
+    <EmbeddedResource Remove="wwwroot\Angular\**" />
+    <EmbeddedResource Remove="wwwroot\contents\test\**" />
+    <EmbeddedResource Remove="wwwroot\css\themes\**" />
+    <EmbeddedResource Remove="wwwroot\plugins\flexnav-master\**" />
+    <None Remove="wwwroot\Angular\**" />
+    <None Remove="wwwroot\contents\test\**" />
+    <None Remove="wwwroot\css\themes\**" />
+    <None Remove="wwwroot\plugins\flexnav-master\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.CloudFront" Version="3.3.101.79" />
+    <PackageReference Include="AWSSDK.Core" Version="3.3.104.5" />
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.3.100.1" />
+    <PackageReference Include="AWSSDK.S3" Version="3.3.110" />
+    <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+    <PackageReference Include="Google.Apis.Core" Version="1.42.0" />
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.42.0.1758" />
+    <PackageReference Include="HtmlSanitizer" Version="4.0.217" />
+    <PackageReference Include="LinqKit.Core" Version="1.1.17" />
+    <PackageReference Include="Mandrill" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="3.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="reCAPTCHA.AspNetCore" Version="2.2.3" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.19" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\api\Data\" />
+    <Folder Include="Areas\api\Models\" />
+    <Folder Include="Areas\api\Views\" />
+    <Folder Include="wwwroot\css\bootswatch\default\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\account\Index.cshtml" />
+    <None Include="Views\admin\Index.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
+    <None Include="Views\Home\partials\_Nav.cshtml" />
+    <None Include="Views\installation\Configs.cshtml" />
+    <None Include="Views\installation\Index.cshtml" />
+    <None Include="Views\media\Index.cshtml" />
+    <None Include="Views\media\partials\_Nav.cshtml" />
+    <None Include="Views\pages\about-us.cshtml" />
+    <None Include="Views\pages\access_denied.cshtml" />
+    <None Include="Views\pages\activate.cshtml" />
+    <None Include="Views\pages\change_email.cshtml" />
+    <None Include="Views\pages\confirm_email.cshtml" />
+    <None Include="Views\pages\contact.cshtml" />
+    <None Include="Views\pages\cookies.cshtml" />
+    <None Include="Views\pages\external_login.cshtml" />
+    <None Include="Views\pages\forgot_password.cshtml" />
+    <None Include="Views\pages\forgot_password_confirmation.cshtml" />
+    <None Include="Views\pages\gdpr.cshtml" />
+    <None Include="Views\pages\index.cshtml" />
+    <None Include="Views\pages\lockout.cshtml" />
+    <None Include="Views\pages\loginwith2fa.cshtml" />
+    <None Include="Views\pages\loginwithrecoverycode.cshtml" />
+    <None Include="Views\pages\privacy-policy.cshtml" />
+    <None Include="Views\pages\reset_password.cshtml" />
+    <None Include="Views\pages\reset_password_confirmation.cshtml" />
+    <None Include="Views\pages\scripts\forgot_password.cshtml" />
+    <None Include="Views\pages\scripts\index.cshtml" />
+    <None Include="Views\pages\scripts\signin.cshtml" />
+    <None Include="Views\pages\scripts\signup.cshtml" />
+    <None Include="Views\pages\security.cshtml" />
+    <None Include="Views\pages\signin.cshtml" />
+    <None Include="Views\pages\signout.cshtml" />
+    <None Include="Views\pages\signup.cshtml" />
+    <None Include="Views\pages\sitemap.cshtml" />
+    <None Include="Views\pages\styles\index.cshtml" />
+    <None Include="Views\pages\terms-of-use.cshtml" />
+    <None Include="Views\pages\thirdparties.cshtml" />
+    <None Include="Views\pages\validate_adult.cshtml" />
+    <None Include="Views\partials\ads\ad_120_600.cshtml" />
+    <None Include="Views\partials\ads\ad_160_600.cshtml" />
+    <None Include="Views\partials\ads\ad_300.cshtml" />
+    <None Include="Views\partials\ads\ad_336.cshtml" />
+    <None Include="Views\partials\ads\ad_468.cshtml" />
+    <None Include="Views\partials\ads\ad_728.cshtml" />
+    <None Include="Views\partials\category\categorylist.cshtml" />
+    <None Include="Views\partials\category\item\content.cshtml" />
+    <None Include="Views\partials\category\item\gridItem.cshtml" />
+    <None Include="Views\partials\category\item\Item.cshtml" />
+    <None Include="Views\partials\category\item\linkItem.cshtml" />
+    <None Include="Views\partials\category\item\listItem.cshtml" />
+    <None Include="Views\partials\category\item\thumbnail.cshtml" />
+    <None Include="Views\partials\list\_ListStat.cshtml" />
+    <None Include="Views\partials\list\_Pagination.cshtml" />
+    <None Include="Views\partials\modules\_action.cshtml" />
+    <None Include="Views\partials\modules\_comment.cshtml" />
+    <None Include="Views\partials\modules\_info.cshtml" />
+    <None Include="Views\partials\utility\_norecord.cshtml" />
+    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Shared\layouts\_emptyLayout.cshtml" />
+    <None Include="Views\Shared\layouts\_Layout.cshtml" />
+    <None Include="Views\Shared\scripts\chosen.cshtml" />
+    <None Include="Views\Shared\scripts\fotorama.cshtml" />
+    <None Include="Views\Shared\scripts\logineye.cshtml" />
+    <None Include="Views\Shared\scripts\wysibb.cshtml" />
+    <None Include="Views\Shared\styles\chosen.cshtml" />
+    <None Include="Views\Shared\styles\fotorama.cshtml" />
+    <None Include="Views\Shared\styles\wysibb.cshtml" />
+    <None Include="Views\Shared\_BreadCrumb.cshtml" />
+    <None Include="Views\Shared\_Categories.cshtml" />
+    <None Include="Views\Shared\_Categories_Style_02.cshtml" />
+    <None Include="Views\Shared\_ContactUs.cshtml" />
+    <None Include="Views\Shared\_externalLoginProvider.cshtml" />
+    <None Include="Views\Shared\_Footer.cshtml" />
+    <None Include="Views\Shared\_Header.cshtml" />
+    <None Include="Views\Shared\_Language.cshtml" />
+    <None Include="Views\Shared\_mainSearch.cshtml" />
+    <None Include="Views\Shared\_Search.cshtml" />
+    <None Include="Views\Shared\_searchBar.cshtml" />
+    <None Include="Views\Shared\_TagList.cshtml" />
+    <None Include="Views\Shared\_Tags.cshtml" />
+    <None Include="Views\Shared\_tMenu.cshtml" />
+    <None Include="Views\Shared\_TNav.cshtml" />
+    <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Views\user\Index.cshtml" />
+    <None Include="Views\user\partials\_Connect.cshtml" />
+    <None Include="Views\user\partials\_cProfile.cshtml" />
+    <None Include="Views\user\partials\_Nav.cshtml" />
+    <None Include="Views\user\profile.cshtml" />
+    <None Include="Views\user\videos.cshtml" />
+    <None Include="Views\videoframe\Index.cshtml" />
+    <None Include="Views\videoframe\preview.cshtml" />
+    <None Include="Views\videos\archive.cshtml" />
+    <None Include="Views\videos\archivelist.cshtml" />
+    <None Include="Views\videos\categories.cshtml" />
+    <None Include="Views\videos\category.cshtml" />
+    <None Include="Views\videos\Index.cshtml" />
+    <None Include="Views\videos\label.cshtml" />
+    <None Include="Views\videos\labels.cshtml" />
+    <None Include="Views\videos\partials\item\content.cshtml" />
+    <None Include="Views\videos\partials\item\gridItem.cshtml" />
+    <None Include="Views\videos\partials\item\Item.cshtml" />
+    <None Include="Views\videos\partials\item\listItem.cshtml" />
+    <None Include="Views\videos\partials\item\thumbnail.cshtml" />
+    <None Include="Views\videos\partials\scripts\flowplayer.cshtml" />
+    <None Include="Views\videos\partials\scripts\jwplayer.cshtml" />
+    <None Include="Views\videos\partials\scripts\mediaelement.cshtml" />
+    <None Include="Views\videos\partials\scripts\videojs.cshtml" />
+    <None Include="Views\videos\partials\styles\mediaelement.cshtml" />
+    <None Include="Views\videos\partials\styles\videojs.cshtml" />
+    <None Include="Views\videos\partials\_Archives.cshtml" />
+    <None Include="Views\videos\partials\_List.cshtml" />
+    <None Include="Views\videos\partials\_ListFilter.cshtml" />
+    <None Include="Views\videos\partials\_List_SM_01.cshtml" />
+    <None Include="Views\videos\partials\_Nav.cshtml" />
+    <None Include="Views\videos\player\_flowplayer.cshtml" />
+    <None Include="Views\videos\player\_jwplayer.cshtml" />
+    <None Include="Views\videos\player\_videojs.cshtml" />
+    <None Include="Views\videos\search.cshtml" />
+    <None Include="Views\_ViewImports.cshtml" />
+    <None Include="Views\_ViewStart.cshtml" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\bin\ffmpeg.exe" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\bin\ffplay.exe" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\bin\ffprobe.exe" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\avio_dir_cmd.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\avio_reading.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\decoding_encoding.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\demuxing_decoding.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\extract_mvs.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\filtering_audio.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\filtering_video.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\filter_audio.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\http_multiclient.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\Makefile" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\metadata.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\muxing.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\qsvdec.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\README" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\remuxing.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\resampling_audio.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\scaling_video.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\transcode_aac.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\doc\examples\transcoding.c" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\presets\ffprobe.xsd" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\presets\libvpx-1080p.ffpreset" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\presets\libvpx-1080p50_60.ffpreset" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\presets\libvpx-360p.ffpreset" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\presets\libvpx-720p.ffpreset" />
+    <None Include="wwwroot\encoder\ffmpeg_2_27_17\presets\libvpx-720p50_60.ffpreset" />
+    <None Include="wwwroot\encoder\MP4Box\gpac_20081211.patch" />
+    <None Include="wwwroot\encoder\MP4Box\js32.dll" />
+    <None Include="wwwroot\encoder\MP4Box\MP4Box.exe" />
+    <None Include="wwwroot\plugins\bootstrap4c-chosen\.editorconfig" />
+    <None Include="wwwroot\plugins\bootstrap4c-chosen\gulpfile.js" />
+    <None Include="wwwroot\plugins\bootstrap4c-chosen\HISTORY.md" />
+    <None Include="wwwroot\plugins\bootstrap4c-chosen\LICENSE" />
+    <None Include="wwwroot\plugins\bootstrap4c-chosen\README.md" />
+    <None Include="wwwroot\plugins\bootstrap4c-chosen\src\scss\build.scss" />
+    <None Include="wwwroot\plugins\bootstrap4c-chosen\src\scss\_component-chosen.scss" />
+    <None Include="wwwroot\plugins\bootstrap4c-chosen\src\scss\_component-variables.scss" />
+    <None Include="wwwroot\plugins\bootstrap4c-chosen\yarn.lock" />
+    <None Include="wwwroot\plugins\chosen-js\chosen.jquery.js" />
+    <None Include="wwwroot\plugins\chosen-js\chosen.jquery.min.js" />
+    <None Include="wwwroot\plugins\chosen-js\chosen.proto.js" />
+    <None Include="wwwroot\plugins\chosen-js\chosen.proto.min.js" />
+    <None Include="wwwroot\plugins\chosen-js\LICENSE.md" />
+    <None Include="wwwroot\plugins\chosen-js\README.md" />
+    <None Include="wwwroot\plugins\font-awesome\.npmignore" />
+    <None Include="wwwroot\plugins\font-awesome\css\font-awesome.css.map" />
+    <None Include="wwwroot\plugins\font-awesome\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\plugins\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\plugins\font-awesome\less\animated.less" />
+    <None Include="wwwroot\plugins\font-awesome\less\bordered-pulled.less" />
+    <None Include="wwwroot\plugins\font-awesome\less\core.less" />
+    <None Include="wwwroot\plugins\font-awesome\less\fixed-width.less" />
+    <None Include="wwwroot\plugins\font-awesome\less\font-awesome.less" />
+    <None Include="wwwroot\plugins\font-awesome\less\icons.less" />
+    <None Include="wwwroot\plugins\font-awesome\less\larger.less" />
+    <None Include="wwwroot\plugins\font-awesome\less\list.less" />
+    <None Include="wwwroot\plugins\font-awesome\less\mixins.less" />
+    <None Include="wwwroot\plugins\font-awesome\less\path.less" />
+    <None Include="wwwroot\plugins\font-awesome\less\rotated-flipped.less" />
+    <None Include="wwwroot\plugins\font-awesome\less\screen-reader.less" />
+    <None Include="wwwroot\plugins\font-awesome\less\stacked.less" />
+    <None Include="wwwroot\plugins\font-awesome\less\variables.less" />
+    <None Include="wwwroot\plugins\font-awesome\README.md" />
+    <None Include="wwwroot\plugins\font-awesome\scss\font-awesome.scss" />
+    <None Include="wwwroot\plugins\font-awesome\scss\_animated.scss" />
+    <None Include="wwwroot\plugins\font-awesome\scss\_bordered-pulled.scss" />
+    <None Include="wwwroot\plugins\font-awesome\scss\_core.scss" />
+    <None Include="wwwroot\plugins\font-awesome\scss\_fixed-width.scss" />
+    <None Include="wwwroot\plugins\font-awesome\scss\_icons.scss" />
+    <None Include="wwwroot\plugins\font-awesome\scss\_larger.scss" />
+    <None Include="wwwroot\plugins\font-awesome\scss\_list.scss" />
+    <None Include="wwwroot\plugins\font-awesome\scss\_mixins.scss" />
+    <None Include="wwwroot\plugins\font-awesome\scss\_path.scss" />
+    <None Include="wwwroot\plugins\font-awesome\scss\_rotated-flipped.scss" />
+    <None Include="wwwroot\plugins\font-awesome\scss\_screen-reader.scss" />
+    <None Include="wwwroot\plugins\font-awesome\scss\_stacked.scss" />
+    <None Include="wwwroot\plugins\font-awesome\scss\_variables.scss" />
+    <None Include="wwwroot\plugins\jquery\dist\core.js" />
+    <None Include="wwwroot\plugins\jquery\dist\jquery.js" />
+    <None Include="wwwroot\plugins\jquery\dist\jquery.min.js" />
+    <None Include="wwwroot\plugins\jquery\dist\jquery.min.map" />
+    <None Include="wwwroot\plugins\jquery\dist\jquery.slim.js" />
+    <None Include="wwwroot\plugins\jquery\dist\jquery.slim.min.js" />
+    <None Include="wwwroot\plugins\jquery\dist\jquery.slim.min.map" />
+    <None Include="wwwroot\plugins\jquery\external\sizzle\dist\sizzle.js" />
+    <None Include="wwwroot\plugins\jquery\external\sizzle\dist\sizzle.min.js" />
+    <None Include="wwwroot\plugins\jquery\external\sizzle\dist\sizzle.min.map" />
+    <None Include="wwwroot\plugins\jquery\README.md" />
+    <None Include="wwwroot\plugins\jquery\src\ajax.js" />
+    <None Include="wwwroot\plugins\jquery\src\ajax\jsonp.js" />
+    <None Include="wwwroot\plugins\jquery\src\ajax\load.js" />
+    <None Include="wwwroot\plugins\jquery\src\ajax\parseXML.js" />
+    <None Include="wwwroot\plugins\jquery\src\ajax\script.js" />
+    <None Include="wwwroot\plugins\jquery\src\ajax\var\location.js" />
+    <None Include="wwwroot\plugins\jquery\src\ajax\var\nonce.js" />
+    <None Include="wwwroot\plugins\jquery\src\ajax\var\rquery.js" />
+    <None Include="wwwroot\plugins\jquery\src\ajax\xhr.js" />
+    <None Include="wwwroot\plugins\jquery\src\attributes.js" />
+    <None Include="wwwroot\plugins\jquery\src\attributes\attr.js" />
+    <None Include="wwwroot\plugins\jquery\src\attributes\classes.js" />
+    <None Include="wwwroot\plugins\jquery\src\attributes\prop.js" />
+    <None Include="wwwroot\plugins\jquery\src\attributes\support.js" />
+    <None Include="wwwroot\plugins\jquery\src\attributes\val.js" />
+    <None Include="wwwroot\plugins\jquery\src\callbacks.js" />
+    <None Include="wwwroot\plugins\jquery\src\core.js" />
+    <None Include="wwwroot\plugins\jquery\src\core\access.js" />
+    <None Include="wwwroot\plugins\jquery\src\core\camelCase.js" />
+    <None Include="wwwroot\plugins\jquery\src\core\DOMEval.js" />
+    <None Include="wwwroot\plugins\jquery\src\core\init.js" />
+    <None Include="wwwroot\plugins\jquery\src\core\nodeName.js" />
+    <None Include="wwwroot\plugins\jquery\src\core\parseHTML.js" />
+    <None Include="wwwroot\plugins\jquery\src\core\ready-no-deferred.js" />
+    <None Include="wwwroot\plugins\jquery\src\core\ready.js" />
+    <None Include="wwwroot\plugins\jquery\src\core\readyException.js" />
+    <None Include="wwwroot\plugins\jquery\src\core\stripAndCollapse.js" />
+    <None Include="wwwroot\plugins\jquery\src\core\support.js" />
+    <None Include="wwwroot\plugins\jquery\src\core\toType.js" />
+    <None Include="wwwroot\plugins\jquery\src\core\var\rsingleTag.js" />
+    <None Include="wwwroot\plugins\jquery\src\css.js" />
+    <None Include="wwwroot\plugins\jquery\src\css\addGetHookIf.js" />
+    <None Include="wwwroot\plugins\jquery\src\css\adjustCSS.js" />
+    <None Include="wwwroot\plugins\jquery\src\css\curCSS.js" />
+    <None Include="wwwroot\plugins\jquery\src\css\hiddenVisibleSelectors.js" />
+    <None Include="wwwroot\plugins\jquery\src\css\showHide.js" />
+    <None Include="wwwroot\plugins\jquery\src\css\support.js" />
+    <None Include="wwwroot\plugins\jquery\src\css\var\cssExpand.js" />
+    <None Include="wwwroot\plugins\jquery\src\css\var\getStyles.js" />
+    <None Include="wwwroot\plugins\jquery\src\css\var\isHiddenWithinTree.js" />
+    <None Include="wwwroot\plugins\jquery\src\css\var\rboxStyle.js" />
+    <None Include="wwwroot\plugins\jquery\src\css\var\rnumnonpx.js" />
+    <None Include="wwwroot\plugins\jquery\src\css\var\swap.js" />
+    <None Include="wwwroot\plugins\jquery\src\data.js" />
+    <None Include="wwwroot\plugins\jquery\src\data\Data.js" />
+    <None Include="wwwroot\plugins\jquery\src\data\var\acceptData.js" />
+    <None Include="wwwroot\plugins\jquery\src\data\var\dataPriv.js" />
+    <None Include="wwwroot\plugins\jquery\src\data\var\dataUser.js" />
+    <None Include="wwwroot\plugins\jquery\src\deferred.js" />
+    <None Include="wwwroot\plugins\jquery\src\deferred\exceptionHook.js" />
+    <None Include="wwwroot\plugins\jquery\src\deprecated.js" />
+    <None Include="wwwroot\plugins\jquery\src\dimensions.js" />
+    <None Include="wwwroot\plugins\jquery\src\effects.js" />
+    <None Include="wwwroot\plugins\jquery\src\effects\animatedSelector.js" />
+    <None Include="wwwroot\plugins\jquery\src\effects\Tween.js" />
+    <None Include="wwwroot\plugins\jquery\src\event.js" />
+    <None Include="wwwroot\plugins\jquery\src\event\ajax.js" />
+    <None Include="wwwroot\plugins\jquery\src\event\alias.js" />
+    <None Include="wwwroot\plugins\jquery\src\event\focusin.js" />
+    <None Include="wwwroot\plugins\jquery\src\event\support.js" />
+    <None Include="wwwroot\plugins\jquery\src\event\trigger.js" />
+    <None Include="wwwroot\plugins\jquery\src\exports\amd.js" />
+    <None Include="wwwroot\plugins\jquery\src\exports\global.js" />
+    <None Include="wwwroot\plugins\jquery\src\jquery.js" />
+    <None Include="wwwroot\plugins\jquery\src\manipulation.js" />
+    <None Include="wwwroot\plugins\jquery\src\manipulation\buildFragment.js" />
+    <None Include="wwwroot\plugins\jquery\src\manipulation\getAll.js" />
+    <None Include="wwwroot\plugins\jquery\src\manipulation\setGlobalEval.js" />
+    <None Include="wwwroot\plugins\jquery\src\manipulation\support.js" />
+    <None Include="wwwroot\plugins\jquery\src\manipulation\var\rcheckableType.js" />
+    <None Include="wwwroot\plugins\jquery\src\manipulation\var\rscriptType.js" />
+    <None Include="wwwroot\plugins\jquery\src\manipulation\var\rtagName.js" />
+    <None Include="wwwroot\plugins\jquery\src\manipulation\wrapMap.js" />
+    <None Include="wwwroot\plugins\jquery\src\manipulation\_evalUrl.js" />
+    <None Include="wwwroot\plugins\jquery\src\offset.js" />
+    <None Include="wwwroot\plugins\jquery\src\queue.js" />
+    <None Include="wwwroot\plugins\jquery\src\queue\delay.js" />
+    <None Include="wwwroot\plugins\jquery\src\selector-native.js" />
+    <None Include="wwwroot\plugins\jquery\src\selector-sizzle.js" />
+    <None Include="wwwroot\plugins\jquery\src\selector.js" />
+    <None Include="wwwroot\plugins\jquery\src\serialize.js" />
+    <None Include="wwwroot\plugins\jquery\src\traversing.js" />
+    <None Include="wwwroot\plugins\jquery\src\traversing\findFilter.js" />
+    <None Include="wwwroot\plugins\jquery\src\traversing\var\dir.js" />
+    <None Include="wwwroot\plugins\jquery\src\traversing\var\rneedsContext.js" />
+    <None Include="wwwroot\plugins\jquery\src\traversing\var\siblings.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\arr.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\class2type.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\concat.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\document.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\documentElement.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\fnToString.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\getProto.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\hasOwn.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\indexOf.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\isFunction.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\isWindow.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\ObjectFunctionString.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\pnum.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\push.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\rcssNum.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\rnothtmlwhite.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\slice.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\support.js" />
+    <None Include="wwwroot\plugins\jquery\src\var\toString.js" />
+    <None Include="wwwroot\plugins\jquery\src\wrap.js" />
+    <None Include="wwwroot\security\aws\cloudfront\pk-APKAI32P4WKK3MF2QSXA.pem" />
+  </ItemGroup>
+
+</Project>

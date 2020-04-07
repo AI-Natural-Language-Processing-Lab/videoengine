@@ -1,0 +1,17 @@
+﻿@inject IStringLocalizer<GeneralResource> GeneralResource
+@{
+    ViewData["Title"] = GeneralResource["_confirm_email"].Value;
+}
+
+<div class="row">
+    <div class="col-md-8 m-t-30 m-b-30 mx-auto">
+        <h2>
+            @GeneralResource["_confirm_email"].Value
+
+        </h2>
+        <p>
+            @GeneralResource["_confirm_email_msg"].Value
+        </p>
+        <p><a href="/signin">Click Here</a> to login.</p>
+    </div>
+</div>

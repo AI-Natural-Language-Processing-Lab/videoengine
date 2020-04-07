@@ -1,0 +1,15 @@
+﻿@model SearchListModel
+<div class='search-box'>
+    <form class='search-form' asp-controller="@Model.Controller" asp-action="@Model.Action">
+        @Html.AntiForgeryToken()
+
+        <div class="input-group">
+            @Html.HiddenFor(m => m.SearchType)
+            @Html.TextBoxFor(m => m.Query, new { @class = "form-control main-search-input", placeholder = Model.PlaceHolder + " ..." })
+           
+        </div>
+        <button class='btn btn-link search-btn'>
+            <i class='fa fa-search'></i>
+        </button>
+    </form>
+</div>

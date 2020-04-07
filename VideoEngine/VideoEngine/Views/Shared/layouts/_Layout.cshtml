@@ -1,0 +1,129 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Social> socialSettings
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @if (ViewBag.homePage != null)
+    {
+        <title>@ViewBag.title </title>
+        <meta property="og:title" content="@ViewBag.title" />
+        <meta name="twitter:title" content="@ViewBag.title" />
+    }
+    else
+    {
+        <title>@ViewBag.title | @generalSettings.Value.page_caption </title>
+        <meta property="og:title" content="@ViewBag.title | @generalSettings.Value.page_caption" />
+        <meta name="twitter:title" content="@ViewBag.title | @generalSettings.Value.page_caption" />
+    }
+
+    @if (ViewBag.NoIndex != null)
+    {
+        <meta name="robots" content="noindex">
+    }
+    @if (ViewBag.description != null)
+    {
+        <meta name="description" content="@ViewBag.description" />
+        <meta property="og:description" content="@ViewBag.description" />
+        <meta name="twitter:description" content="@ViewBag.description" />
+    }
+    @if (ViewBag.keywords != null)
+    {
+        <meta name="keywords" content="@ViewBag.keywords" />
+    }
+    @if (ViewBag.imageurl != null)
+    {
+        <meta property="og:image" content="@ViewBag.imageurl" />
+        <meta name="twitter:image" content="@ViewBag.imageurl" />
+    }
+    @if (ViewBag.rss != null)
+    {
+        <link rel="alternate" Type="application/rss+xml" title="@generalSettings.Value.website_title - RSS" href="@ViewBag.rss" />
+    }
+
+    @if (ViewBag.atom != null)
+    {
+        <link rel="alternate" Type="application/atom+xml" title="@generalSettings.Value.website_title - Atom" href="@ViewBag.atom" />
+    }
+
+    <meta property="og:site_name" content="@generalSettings.Value.website_title" />
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:site" content="@generalSettings.Value.website_title" />
+    <meta name="twitter:creator" content="@generalSettings.Value.website_title" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="Generator" content="MediaSoft @System.Reflection.Assembly.GetEntryAssembly().GetName().Version" />
+
+    @{
+        var Theme = Jugnoon.Utility.UtilityBLL.ReturnThemePath();
+    }
+
+    <environment include="Development">
+        <link href="~/css/bootswatch/@Theme/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="~/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link href="~/css/bootswatch/@Theme/theme.css" media="all" rel="stylesheet" type="text/css" />
+        <link href="~/css/style.css" media="all" rel="stylesheet" type="text/css" />
+         <link href="~/rating/rating24.css" media="all" rel="stylesheet" type="text/css" />
+    </environment>
+    <environment exclude="Development">
+        <link href="~/css/bootswatch/@Theme/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="~/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link href="~/css/bootswatch/@Theme/theme.css" media="all" rel="stylesheet" type="text/css" asp-append-version="true" />
+        <link href="~/css/style.css" media="all" rel="stylesheet" type="text/css" asp-append-version="true" />
+        <link href="~/rating/rating24.css" media="all" rel="stylesheet" type="text/css" asp-append-version="true" />
+    </environment>
+
+    @if (socialSettings.Value.sharethis_propertyId != "")
+    {
+        <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=@socialSettings.Value.sharethis_propertyId&product=inline-share-buttons' async='async'></script>
+    }
+    @RenderSection("styles", required: false)
+</head>
+
+<body>
+
+    <partial name="_Header" />
+
+    <div class="container">
+        <div class="container-body">
+            @RenderBody()
+        </div>
+
+        <partial name="_Footer" />
+
+    </div>
+
+    @if (socialSettings.Value.fb_appId != "")
+    {
+        @* Enable Facebook Javascript SDK - for activating facebook apps e.g comments, like box etc *@
+        <div id="fb-root"></div>
+        <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v4.0&appId=@socialSettings.Value.fb_appId&autoLogAppEvents=1"></script>
+    }
+
+    <environment include="Development">
+        <script src="~/js/popper.min.js"></script>
+        <script src="~/plugins/jquery/dist/jquery.min.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
+        <script src="~/js/flexnav.min.js"></script>
+        <script src="~/js/custom.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment exclude="Development">
+        <script src="~/js/popper.min.js"></script>
+        <script src="~/plugins/jquery/dist/jquery.min.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
+        <script src="~/js/flexnav.min.js"></script>
+        <script src="~/js/custom.js" asp-append-version="true"></script>
+    </environment>
+
+
+    @RenderSection("scripts", required: false)
+
+    @*
+        Place your third party tracking scripts below
+    *@
+</body>
+
+</html>

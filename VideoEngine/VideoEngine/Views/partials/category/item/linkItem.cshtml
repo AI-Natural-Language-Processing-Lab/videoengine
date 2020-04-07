@@ -1,0 +1,25 @@
+﻿@model Jugnoon.Models.CategoryItemViewModel
+
+@*
+    Link Item Design
+*@
+
+<div class="col-md-12">
+    <div class="list-item">
+        @if (Model.ListObject.showTitle)
+        {
+            // process title
+            string _title = Model.Data.title;
+            if (Model.ListObject.TitleLength > 0)
+            {
+                if (_title.Length > Model.ListObject.TitleLength)
+                {
+                    _title = _title.Substring(0, Model.ListObject.TitleLength) + "..";
+                }
+            }
+            <a class="item-title m-b-5" href="@Model.ProfileUrl">@_title</a>
+        }
+    </div>
+</div>
+
+

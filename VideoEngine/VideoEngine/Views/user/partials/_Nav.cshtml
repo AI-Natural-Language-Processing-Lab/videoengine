@@ -1,0 +1,32 @@
+﻿@model NavModelView
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Features> featureSettings
+@{
+    string videocss = "";
+    string profilecss = "";
+    switch (Model.ActiveIndex)
+    {
+        case 1:
+            videocss = " active";
+            break;
+
+        case 8:
+            profilecss = " active";
+            break;
+    }
+}
+
+<div class="list-group m-t-10">
+    @if (featureSettings.Value.enable_videos)
+    {
+        <a class="list-group-item d-flex justify-content-between align-items-center list-group-item-action @videocss" href="@Config.GetUrl("user/videos/" + Model.username)">
+            @GeneralResource["_videos"].Value
+            @if (Model.CountVideos > 0)
+            {
+                <span class="badge badge-primary badge-pill">@Model.CountVideos</span>
+            }
+        </a>
+    }
+
+    <a class="list-group-item  list-group-item-action @profilecss" href="@Config.GetUrl("user/profile/" + Model.username)">@GeneralResource["_user_profile"].Value</a>
+</div>

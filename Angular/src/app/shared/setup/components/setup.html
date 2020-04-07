@@ -1,0 +1,65 @@
+<div class="container setup-container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-8 col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <app-loader *ngIf="loading$ | async"></app-loader>
+
+          <div *ngIf="!(loading$ | async)">
+            <div class="m-b-20 text-center">
+              <h1 *ngIf="SetupType === 0">Database Setup</h1>
+              <h1 *ngIf="SetupType === 1">Website Setup</h1>
+              <hr />
+            </div>
+            <div class="m-b-0 m-l-10" *ngIf="SetupType === 1 && !finalstep">
+              <h2>{{ formHeading }}</h2>
+              <hr />
+            </div>
+
+            <div *ngIf="!finalstep">
+              <div class="m-b-20 m-t-0">
+                <app-loader *ngIf="showProcessing"></app-loader>
+                <dynamic-modal-form
+                  *ngIf="!showProcessing && controls.length > 0"
+                  [controls]="controls"
+                  [showCancel]="false"
+                  [skipBtnText]="skipBtnText"
+                  [showModal]="false"
+                  [submitText]="submitText"
+                  (OnSubmit)="SubmitForm($event)"
+                  (OnSkip)="SkipForm($event)"
+                >
+                </dynamic-modal-form>
+              </div>
+            </div>
+            <div *ngIf="finalstep">
+              <div *ngIf="SetupType === 0">
+                <h4 class="m-t-20 m-b-5">Database connection configured</h4>
+                <p class="m-b-20">
+                  You need to restart your application to start database tables,
+                  user setup and other configurations
+                </p>
+              </div>
+              <div *ngIf="SetupType === 1">
+                <h4 class="m-t-20 m-b-20">
+                  Setup completed. Please restart and use your application.
+                </h4>
+              </div>
+            </div>
+            <div class="m-b-20">
+              <p>
+                Note: Setup process only handles core configurations, for
+                specific contents related or detail configuration management,
+                please go to control panel -> settings -> configurations page.
+              </p>
+              <p class="red">
+                Warning: Please remove setup or installation page from from
+                deployed application
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

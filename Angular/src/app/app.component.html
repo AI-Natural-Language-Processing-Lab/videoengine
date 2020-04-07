@@ -1,0 +1,89 @@
+<div *ngIf="(loader$ | async)" id="loader">
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="loading"></div></div
+>
+<div *ngIf="!(loader$ | async)">
+  <div *ngIf="(auth_failed$ | async).title !== ''">
+    <div class="m-b-40 m-t-40 text-center">
+      <h2>{{ (auth_failed$ | async).title }}</h2>
+    </div>
+  </div>
+  <div *ngIf="(auth$ | async).isAuthenticated">
+    <div *ngIf="config.getGlobalVar('apptype') === 'account'">
+      <!-- Account Application -->
+      <app-account-breadcrumb></app-account-breadcrumb>
+      <div *ngIf="message !== ''">
+        <div class="m-b-40 m-t-40 text-center">
+          <h2>{{ message }}</h2>
+        </div>
+      </div>
+      <div *ngIf="message === ''">
+        <div *ngIf="settingLoading$ | async">
+          Loading settings....
+        </div>
+        <div *ngIf="!(settingLoading$ | async)">
+          <app-account-topnavigation></app-account-topnavigation>
+          <div class="row">
+            <div class="col-md-3 m-t-20">
+              <app-account-leftnavigation></app-account-leftnavigation>
+            </div>
+            <div class="col-md-9 m-t-20">
+              <router-outlet></router-outlet>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="config.getGlobalVar('apptype') === 'admin'">
+      <!-- dashboard application -->
+      <app-admin-header></app-admin-header>
+  
+      <div class="container">
+        <div class="container-body">
+          <app-admin-breadcrumb></app-admin-breadcrumb>
+          <div *ngIf="settingLoading$ | async">
+            Loading settings....
+          </div>
+          <div *ngIf="!(settingLoading$ | async)">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+  
+        <footer class="footer">
+          © {{ year }} - Developed by
+          <a target="_blank" href="https://www.mediasoftpro.com">Mediasoft Pro</a>
+        </footer>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!(auth$ | async).isAuthenticated">
+    <div *ngIf="config.getGlobalVar('apptype') === 'setup'">
+      <div class="container">
+        <div class="container-body">
+          <router-outlet></router-outlet>
+        </div>
+        <footer class="footer">
+          © {{ year }} - Developed by
+          <a target="_blank" href="https://www.mediasoftpro.com">Mediasoft Pro</a>
+        </footer>
+      </div>
+    </div>
+    <div *ngIf="config.getGlobalVar('apptype') === 'search'">
+        <div class="container">
+          <div class="container-body">
+              <router-outlet></router-outlet>
+          </div>
+         
+        </div>
+      </div>
+  </div>
+  
+</div>
+

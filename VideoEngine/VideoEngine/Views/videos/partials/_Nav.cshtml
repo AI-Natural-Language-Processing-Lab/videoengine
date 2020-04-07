@@ -1,0 +1,69 @@
+﻿@model Jugnoon.Videos.Models.MediaNavViewModel
+@inject IStringLocalizer<GeneralResource> GeneralResource
+<aside class="box sidebar">
+
+    @if (!Model.hideAds)
+    {
+        @await Html.PartialAsync("~/Views/partials/ads/ad_336.cshtml", new AdsModelView() { isAdult = Model.isAdultContent })
+    }
+
+    @if (!Model.hideCategories)
+    {
+        var _Type = CategoryBLL.Types.Videos;
+        @* if (Model.MediaType == 1)
+            {
+                _Type = CategoryBLL.Types.Audio;
+            } *@
+
+
+        var cModel = new CategoryListModelView()
+        {
+            Type = (int)_Type,
+            HeadingTitle = GeneralResource["_categories"].Value,
+            Path = Model.Path
+        };
+        <div class="m-b-10">
+            @await Html.PartialAsync("~/Views/shared/_Categories_Style_02.cshtml", cModel)
+            <div class="clearfix"></div>
+        </div>
+        <hr />
+    }
+
+    @if (!Model.hideTags)
+    {
+        var _TagType = (int)TagsBLL.Types.Videos;
+        @* if (Model.MediaType == 1)
+            {
+                _TagType = (int)TagsBLL.Types.Audio;
+            } *@
+
+        var tModel = new TagListModelView()
+        {
+            Type = _TagType,
+            HeadingTitle = GeneralResource["_labels"].Value,
+            Path = Model.Path,
+            Tag_Level = (int)TagsBLL.TagLevel.All,
+            Tag_Type = (int)TagsBLL.TagType.Normal,
+            TotalRecords = 15
+        };
+        <div class="m-b-10">
+            @await Html.PartialAsync("~/Views/shared/_Tags.cshtml", tModel)
+            <div class="clearfix"></div>
+        </div>
+        <hr />
+    }
+
+    @if (!Model.hideArchives)
+    {
+        var aModel = new ArchiveListModelView()
+        {
+            Path = Model.Path
+        };
+
+        <div class="m-b-10">
+            @await Html.PartialAsync("~/Views/videos/partials/_Archives.cshtml", aModel)
+        </div>
+
+    }
+
+</aside>

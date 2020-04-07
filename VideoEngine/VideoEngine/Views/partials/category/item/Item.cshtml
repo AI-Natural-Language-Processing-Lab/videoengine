@@ -1,0 +1,22 @@
+﻿@model Jugnoon.Models.CategoryItemViewModel
+@*
+    Core Item Design
+*@
+
+@{
+    var PartialPath = "~/Views/partials/category";
+}
+
+@if (Model.ListObject.ListType == Jugnoon.Scripts.ListType.Grid)
+{
+    @await Html.PartialAsync(PartialPath + "/item/gridItem.cshtml", Model);
+}
+else if (Model.ListObject.ListType == Jugnoon.Scripts.ListType.Links)
+{
+    @await Html.PartialAsync(PartialPath + "/item/linkItem.cshtml", Model);
+}
+else
+{
+    @await Html.PartialAsync(PartialPath + "/item/listItem.cshtml", Model);
+}
+

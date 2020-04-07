@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="/" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!-- Favicon icon -->
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/assets/images/favicon.png"
+    />
+    <title>Application</title>
+  </head>
+  <body>
+    <script>
+      var URL = "https://localhost:5001/";
+      var Ang_UID = "10df9e85-eb45-412c-9f07-749233689639"; // admin "10df9e85-eb45-412c-9f07-749233689639";
+      var Ang_Culture = "en-US";
+      var AppType = "account"; // account, admin, setup, search
+      var CreateType = "aws"; // general, youtube, direct, ffmpeg, aws
+      var setupType = 1; // 0: database setup, 1: user, data & configuration setup,
+      var ImageDirectory = "/assets/images/";
+      var AppTitle = "jMedia Core Framework";
+      // search parameters
+      var SearchParams = {
+        term: "",
+        type: "blogs"
+      };
+      var SerachContentType = 0; // 0: videos etc...
+    </script>
+    <app-root>
+      <div id="loader">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="loading"></div></div
+    ></app-root>
+  </body>
+</html>

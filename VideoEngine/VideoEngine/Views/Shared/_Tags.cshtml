@@ -1,0 +1,36 @@
+﻿@model TagListModelView
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Jugnoon.Framework.ApplicationDbContext _context
+<div class="box">
+    @{
+        var _list = await TagsBLL.LoadItems(_context, new TagEntity()
+        {
+            isenabled = EnabledTypes.Enabled,
+            type = (TagsBLL.Types)Model.Type,
+            tag_type = (TagsBLL.TagType)Model.Tag_Type,
+            tag_level = (TagsBLL.TagLevel)Model.Tag_Level,
+            pagesize = Model.TotalRecords,
+            pagenumber = Model.pagenumber,
+            order = "priority desc",
+            iscache = true,
+
+        });
+        if (_list.Count > 0)
+        {
+            <h3 class="m-b-10">@Model.HeadingTitle</h3>
+            foreach (var Item in _list)
+            {
+                <a href="@TagUrlConfig.PrepareUrl(Item, Model.Path)" class="btn btn-primary btn-sm m-b-5">@Item.title</a>
+            }
+            @if (_list.Count >= Model.TotalRecords)
+            {
+                <hr />
+                <a class="pull-right" href="@TagUrlConfig.BrowseAllUrl(Model.Path)">@GeneralResource["_see_all"].Value</a>
+                <div class="clearfix"></div>
+            }
+
+        }
+
+    }
+</div>
+

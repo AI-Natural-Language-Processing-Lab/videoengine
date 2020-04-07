@@ -1,0 +1,26 @@
+<div *ngIf="!isAccessGranted">
+  <h2 class="m-b-40 m-t-40 text-center">Access Denied</h2>
+</div>
+<div *ngIf="isAccessGranted">
+  <div class="row">
+   
+    <div class="col-md-12">
+      <app-toolbar-v2
+        [isAdmin]="isAdmin"
+        [Options]="ToolbarOptions"
+        (Action)="toolbaraction($event)"
+      ></app-toolbar-v2>
+      <app-loader *ngIf="showLoader"></app-loader>
+      <div *ngIf="!showLoader && optionSelected">
+        <google-chart [data]="tooltipChart"></google-chart>
+      </div>
+      <div *ngIf="!showLoader && !optionSelected">
+        <div style="padding:80px 0px;">
+          <h3 style="text-align:center;">
+             {{message}}
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

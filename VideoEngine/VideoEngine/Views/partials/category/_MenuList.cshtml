@@ -1,0 +1,16 @@
+﻿@model Jugnoon.Models.CategoryListViewModel_v2
+@inject Jugnoon.Framework.ApplicationDbContext _context
+@*
+    Category Listing Module Designed for generation Header Menus
+*@
+
+@{
+    Model.DataList = await CategoryBLL.LoadItems(_context, Model.QueryOptions);
+    if (Model.DataList.Count > 0)
+    {
+        foreach (var Item in Model.DataList)
+        {
+            <li><a href="@CategoryUrlConfig.PrepareUrl(Item, Model.Path)">@Item.title</a></li>
+        }
+    }
+}

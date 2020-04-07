@@ -1,0 +1,57 @@
+﻿@*@model Jugnoon.Models.CategoryListViewModel_v2
+    @inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+    <!-- Contents Section Started -->
+
+    @{
+
+        <h2 class="m-t-10 m-b-10">@Model.HeadingTitle</h2>
+        <hr />
+
+        var PartialPath = "~/Views/partials/category";
+
+        if (Model.TotalRecords == 0)
+        {
+            @await Html.PartialAsync("~/Views/partials/utility/_norecord.cshtml", new NoRecordModelView() { Message = Model.NoRecordFoundText })
+        }
+        else
+        {
+
+            if (generalSettings.Value.pagination_links > 0)
+            {
+                int maximum_allowed_records = generalSettings.Value.pagination_links * Model.TotalRecords;
+                if (Model.TotalRecords > maximum_allowed_records)
+                {
+                    Model.TotalRecords = maximum_allowed_records;
+                }
+            }
+
+
+            <div class="row">
+                @foreach (var Item in Model.DataList)
+                {
+                    @await Html.PartialAsync(PartialPath + "/item/Item.cshtml", new CategoryItemViewModel()
+                    {
+                        Data = Item,
+                        ListObject = Model.ListObject,
+                        ProfileUrl = CategoryUrlConfig.PrepareUrl(Item, Model.Path)
+                    });
+                }
+            </div>
+            // Pagination
+            if (Model.TotalRecords > Model.QueryOptions.pagesize)
+            {
+                var _paginationEntity = new PaginationViewModel()
+                {
+
+                    pagenumber = Model.QueryOptions.pagenumber,
+                    TotalRecords = Model.TotalRecords,
+                    PageSize = Model.QueryOptions.pagesize,
+                    Default_Url = Model.DefaultUrl,
+                    Pagination_Url = Model.PaginationUrl
+                };
+                @await Html.PartialAsync("~/Views/partials/list/_Pagination.cshtml", _paginationEntity)
+            }
+        }
+    }
+
+*@

@@ -1,0 +1,119 @@
+﻿@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Features> featureSettings
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Social> socialSettings
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+<footer id="footer" class="m-b-5">
+    <div class="top">
+        <div class="row  justify-content-md-center">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <ul class="nav">
+                        <li>
+                            <a href="@Config.GetUrl()">@GeneralResource["_home"].Value</a>
+                        </li>
+                        <li>
+                            <a href="@Config.GetUrl("videos/")">@GeneralResource["_recent"].Value</a>
+                        </li>
+                        <li>
+                            <a href="@Config.GetUrl("videos/mostviewed")">@GeneralResource["_most_viewed"].Value</a>
+                        </li>
+                        <li>
+                            <a href="@Config.GetUrl("videos/toprated")">@GeneralResource["_top_rated"].Value</a>
+                        </li>
+                        <li>
+                            <a href="@Config.GetUrl("videos/featured")">@GeneralResource["_featured"].Value</a>
+                        </li>
+                        <li>
+                            <a href="@Config.GetUrl("videos/categories")">@GeneralResource["_categories"].Value</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-md-center m-t-10">
+            <div class="col-md-6 col-lg-5 col-sm-6, col-xs-12">
+                <ul class="social-icons">
+                    @if (socialSettings.Value.facebook_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.facebook_url" target="_blank" class="social-icon"> <i class="fa fa-facebook"></i></a></li>
+                    }
+                    @if (socialSettings.Value.twitter_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.twitter_url" target="_blank" class="social-icon"> <i class="fa fa-twitter"></i></a></li>
+                    }
+                    @if (socialSettings.Value.rss_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.rss_url" target="_blank" class="social-icon"> <i class="fa fa-rss"></i></a></li>
+                    }
+                    @if (socialSettings.Value.youtube_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.youtube_url" target="_blank" class="social-icon"> <i class="fa fa-youtube"></i></a></li>
+                    }
+                    @if (socialSettings.Value.linkedin_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.linkedin_url" target="_blank" class="social-icon"> <i class="fa fa-linkedin"></i></a></li>
+                    }
+                    @if (socialSettings.Value.github_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.github_url" target="_blank" class="social-icon"> <i class="fa fa-github"></i></a></li>
+                    }
+                    @if (socialSettings.Value.instagram_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.instagram_url" target="_blank" class="social-icon"> <i class="fa fa-instagram"></i></a></li>
+                    }
+                    @if (socialSettings.Value.youtube_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.youtube_url" target="_blank" class="social-icon"> <i class="fa fa-youtube"></i></a></li>
+                    }
+                    @if (socialSettings.Value.vimeo_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.vimeo_url" target="_blank" class="social-icon"> <i class="fa fa-vimeo"></i></a></li>
+                    }
+                    @if (socialSettings.Value.google_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.google_url" target="_blank" class="social-icon"> <i class="fa fa-google"></i></a></li>
+                    }
+                    @if (socialSettings.Value.pinterest_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.pinterest_url" target="_blank" class="social-icon"> <i class="fa fa-pinterest"></i></a></li>
+                    }
+                    @if (socialSettings.Value.thumblr_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.thumblr_url" target="_blank" class="social-icon"> <i class="fa fa-tumblr"></i></a></li>
+                    }
+                    @if (socialSettings.Value.flickr_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.flickr_url" target="_blank" class="social-icon"> <i class="fa fa-flickr"></i></a></li>
+                    }
+                    @if (socialSettings.Value.linkedin_url != "")
+                    {
+                        <li><a href="@socialSettings.Value.linkedin_url" target="_blank" class="social-icon"> <i class="fa fa-linkedin"></i></a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="bottom">
+        <div class="row">
+            <div class="col-md-6">
+                &copy; @DateTime.Now.Year, <a target="_blank" href="https://www.mediasoftpro.com/product/blogengine">@generalSettings.Value.website_title @GetType().Assembly.GetName().Version.ToString()</a>, developed by <a target="_blank" href="https://www.mediasoftpro.com/">MediaSoftPro</a>
+            </div>
+            <div class="col-md-6">
+                <ul class="nav sm float-right">
+                    <li><a href="/about-us">@GeneralResource["_about_us"].Value</a></li>
+                    <li><span class="separator">|</span></li>
+                    <li><a href="/contact">@GeneralResource["_contact"].Value</a></li>
+                    <li><span class="separator">|</span></li>
+                    <li><a href="/sitemap">@GeneralResource["_sitemap"].Value</a></li>
+                    <li><span class="separator">|</span></li>
+                    <li><a href="/privacy-policy">@GeneralResource["_privacy_policy"].Value</a></li>
+                    <li><span class="separator">|</span></li>
+                    <li><a href="/terms-of-use">@GeneralResource["_terms_of_use"].Value</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</footer>
+

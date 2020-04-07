@@ -1,0 +1,10 @@
+<div class="list-group">
+  <a
+    *ngFor="let menu of MyAccount_Menu"
+    [ngClass]="{ active: menu.index == leftMenuIndex }"
+    routerLink="{{ menu.value }}"
+    class="list-group-item list-group-item-action"
+  >
+    {{ menu.title }}
+  </a>
+</div>

@@ -1,0 +1,17 @@
+﻿@inject IStringLocalizer<GeneralResource> GeneralResource
+
+@{
+    ViewData["Title"] = GeneralResource["_lock_out"].Value;
+}
+
+<div class="row">
+    <div class="col-md-8 mx-auto m-t-30 m-b-30">
+        <h2 class="m-b-20">
+            @GeneralResource["_lock_out"].Value
+        </h2>
+        <p>
+            @GeneralResource["_lock_out_msg"].Value
+        </p>
+    </div>
+</div>
+

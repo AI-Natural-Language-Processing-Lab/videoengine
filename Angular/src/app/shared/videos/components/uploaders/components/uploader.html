@@ -1,0 +1,6 @@
+<app-plupload
+  *ngIf="InitUploader"
+  [options]="uploadoptions"
+  (onCompletion)="filesUploaded($event)"
+>
+</app-plupload>

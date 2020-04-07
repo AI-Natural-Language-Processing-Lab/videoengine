@@ -1,0 +1,121 @@
+﻿@model Jugnoon.Videos.Models.VideoItemViewModel
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Listing> listingSettings
+@*
+    Item Content Processing
+*@
+
+@if (!Model.ListObject.PhotoOnly)
+{
+    <div class="m-t-10 m-b-5">
+        @if (Model.ListObject.showTitle)
+        {
+            // process title
+            string _title = Model.Data.title;
+            if (Model.ListObject.TitleLength > 0)
+            {
+                if (_title.Length > Model.ListObject.TitleLength)
+                {
+                    _title = _title.Substring(0, Model.ListObject.TitleLength) + "..";
+                }
+            }
+            <div class="m-b-5 truncate">
+                <a class="title m-b-0" href="@Model.ProfileUrl">@_title</a>
+            </div>
+        }
+        @if (Model.ListObject.showDescription)
+        {
+            string _desc = Model.Data.description;
+            if (Model.ListObject.descriptionlength > 0)
+            {
+                if (_desc.Length > Model.ListObject.descriptionlength)
+                {
+                    _desc = _desc.Substring(0, Model.ListObject.descriptionlength) + "..";
+                }
+            }
+            <div class="m-b-5 light-item">
+                @_desc
+            </div>
+        }
+        @*
+            @if (Model.ListObject.showCategories)
+            {
+                var Path = "videos/";
+                if (Model.Data.type == 1)
+                {
+                    Path = "audio/";
+                }
+                <div class="m-b-5">
+                    @Html.Raw(Jugnoon.Scripts.UGeneral.Prepare_Categories(string.Join(",", Model.Data.categories), Model.ListObject.CategoryLength, Path));
+                </div>
+            }
+        *@
+
+        @if (Model.ListObject.showTags)
+        {
+            var Path = "videos/";
+            if (Model.Data.type == 1)
+            {
+                Path = "audio/";
+            }
+            <div class="m-b-5">
+                @{
+                    var counter = 0;
+                    var tag_list = Model.ListObject.ToString().Split(char.Parse(","));
+                    foreach (var tag in tag_list)
+                    {
+                        if (counter > 0)
+                        {
+                            @Html.Raw(", ")
+                        }
+                        <a href="@TagUrlConfig.PrepareUrl(tag, Path)" title="@tag">@tag</a>
+                        counter++;
+                    }
+                };
+            </div>
+        }
+        @if (Model.ListObject.showUser)
+        {
+            <div class="m-t-5">
+                <a href="@Model.AuthorUrl">@UserBLL.prepareUserName(Model.Data.author)</a>
+            </div>
+        }
+        @if (Model.ListObject.showViews && listingSettings.Value.enable_views)
+        {
+            string _views = "0";
+            if (Model.Data.views > 0)
+            {
+                _views = string.Format("{0:#,###}", Model.Data.views);
+            }
+            <div class="m-t-5 light-item">
+                @_views @GeneralResource["_views"].Value
+            </div>
+        }
+        @if (Model.ListObject.showDate && listingSettings.Value.enable_date)
+        {
+            <div class="m-t-5 light-item">
+                @GeneralResource["_added"].Value @UtilityBLL.Generate_Date(Model.Data.created_at, Model.ListObject.DateFormat)
+            </div>
+
+        }
+        @if (Model.ListObject.showDuration && Model.Data.duration != null && Model.Data.duration != "")
+        {
+            <div class="m-t-5 light-item">
+                @Model.Data.duration
+            </div>
+
+        }
+        @if (Model.ListObject.showDownloads)
+        {
+            string _downloads = "0";
+            if (Model.Data.downloads > 0)
+            {
+                _downloads = string.Format("{0:#,###}", Model.Data.downloads);
+            }
+            <div class="m-t-5 light-item">
+                @Model.Data.duration @GeneralResource["_downloads"]
+            </div>
+        }
+
+    </div>
+}

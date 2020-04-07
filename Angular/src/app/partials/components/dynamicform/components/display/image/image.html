@@ -1,0 +1,78 @@
+<div *ngIf="showoriginalSize">
+  <div *ngFor="let image of images; let i = index">
+    <img src="{{ image.url }}" alt="{{ image.fname }}" />
+    <br />
+    <a *ngIf="!avatormode" (click)="remove(image, i, $event); (false)"
+      ><i class="fa fa-close text-center text-danger" aria-hidden="true"></i
+    ></a>
+  </div>
+</div>
+<div *ngIf="!showoriginalSize">
+  <div class="row" *ngIf="photouploader">
+    <div class="{{ colcss }}" *ngFor="let image of images; let i = index">
+      <div class="card">
+        <img
+          *ngIf="image.url"
+          class="card-img-top img-responsive"
+          src="{{ image.url }}"
+          alt="{{ image.fname }}"
+        />
+        <img
+          *ngIf="image.img_url"
+          class="card-img-top img-responsive"
+          src="{{ image.img_url }}"
+          alt="{{ image.fname }}"
+        />
+        <div class="card-body" *ngIf="!avatormode">
+          <div class="form-group">
+            <input
+              type="text"
+              [(ngModel)]="image.title"
+              class="form-control"
+              placeholder="Enter Caption (optional)"
+            />
+          </div>
+          <div class="form-group">
+            <textarea
+              rows="3"
+              [(ngModel)]="image.description"
+              class="form-control"
+              placeholder="Enter description (optional)"
+            ></textarea>
+          </div>
+          <p class="card-text text-center">
+            <a (click)="remove(image, i, $event); (false)"
+              ><i class="fa fa-close text-danger" aria-hidden="true"></i
+            ></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="!photouploader">
+    <div class="{{ colcss }}" *ngFor="let image of images; let i = index">
+      <div class="card">
+        <img
+          *ngIf="image.url"
+          class="card-img-top img-responsive"
+          src="{{ image.url }}"
+          alt="{{ image.fname }}"
+        />
+        <img
+          *ngIf="image.img_url"
+          class="card-img-top img-responsive"
+          src="{{ image.img_url }}"
+          alt="{{ image.fname }}"
+        />
+        <div class="card-body" *ngIf="!avatormode">
+          <p class="card-text text-center">
+            <a (click)="remove(image, i, $event); (false)"
+              ><i class="fa fa-close text-danger" aria-hidden="true"></i
+            ></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+﻿@{
+    // return all registered pages with root access
+    var pages = Jugnoon.Meta.Data.ReturnStaticPagesData();
+    foreach (var page in pages)
+    {
+        if (page.pagename == ViewData["Page"].ToString())
+        {
+            var view_name = "~/Views/pages/" + page.viewname + ".cshtml";
+            ViewBag.title = page.title;
+            ViewBag.description = page.description;
+            ViewBag.image_url = page.imageurl;
+            ViewBag.pagename = page.pagename;
+
+            <partial name="@view_name" />
+
+            break;
+        }
+    }
+}
+
+
+@* /* STYPES & SCRIPTS SECTION */ *@
+@section styles {
+    @{
+        foreach (var page in pages)
+        {
+            if (page.pagename == ViewData["Page"].ToString())
+            {
+                if (page.style_exists)
+                {
+                    var view_name = "~/Views/pages/styles/" + page.viewname + ".cshtml";
+                    <partial name="@view_name" />
+                }
+                break;
+            }
+
+        }
+    }
+}
+
+@section scripts {
+    @{
+        foreach (var page in pages)
+        {
+            if (page.pagename == ViewData["Page"].ToString())
+            {
+                if (page.script_exists)
+                {
+                    var view_name = "~/Views/pages/scripts/" + page.viewname + ".cshtml";
+                    <partial name="@view_name" />
+                }
+                break;
+            }
+        }
+    }
+}
+

@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ title }}</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div *ngIf="Info.scroller">
+    <div class="scrollbar" id="style-1">
+        <app-croppie
+          [CropOption]="Info.cropoption"
+          [Image]="Info.data.original_picture"
+          [MediaSettings]="Info.settings"
+          (OnCroppedCancel)="close($event)"
+          (OnCropped)="croppedImage($event)"
+          id="croppie-demo"
+        ></app-croppie>
+    </div> 
+    
+</div>
+<div *ngIf="!Info.scroller">
+    <app-croppie
+      [CropOption]="Info.cropoption"
+      [Image]="Info.data.original_picture"
+      [MediaSettings]="Info.settings"
+      (OnCroppedCancel)="close($event)"
+      (OnCropped)="croppedImage($event)"
+      id="croppie-demo"
+    ></app-croppie>
+</div>
+

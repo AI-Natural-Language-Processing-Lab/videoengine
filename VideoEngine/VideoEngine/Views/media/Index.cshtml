@@ -1,0 +1,170 @@
+﻿@model Jugnoon.Videos.Models.VideoViewModel
+@using Jugnoon.Videos
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject IStringLocalizer<VideoResource> VideoResource
+@{
+    // setup search with videos
+    ViewBag.SearchType = 0;
+}
+<div class="row">
+    <div class="col-md-12">
+        @{
+            if (Model.Message != null && Model.Message != "")
+            {
+                @Html.Raw(Alerts.Prepare(Model.Message, Model.AlertType));
+            }
+            <div id="msg"></div>
+            if (Model.isAllowed)
+            {
+                var PlayerViewPath = "~/Views/videos/player/_videojs.cshtml";
+                var ActionViewPath = "~/Views/partials/modules/_action.cshtml";
+                <div class="row">
+                    <div class="col-md-8">
+                        <partial name="@PlayerViewPath" model="Model.Player" />
+
+                        <div class="m-b-10">
+                            <partial name="@ActionViewPath" model=" Model.Action" />
+                        </div>
+                        <div class="m-b-20">
+                            <h2>@Model.Data.title</h2>
+                        </div>
+                        <div class="m-b-20">
+                            <partial name="~/Views/partials/modules/_info.cshtml" model=" Model.Info" />
+                        </div>
+
+                        <div class="m-b-10">
+                            <partial name="~/Views/partials/modules/_comment.cshtml" model=" Model.Comments" />
+                        </div>
+
+                        <div class="m-b-20">
+                            <div class="m-b-20">
+                                @{
+                                    var _path = "videos/";
+                                    var _type = VideoResource["_videos"].Value;
+                                    if (Model.Data.type == 1)
+                                    {
+                                        _path = "audio/";
+                                        _type = GeneralResource["_audio"].Value;
+                                    }
+
+                                    var relatedModel = new Jugnoon.Videos.Models.VideoListViewModel()
+                                    {
+                                        BrowseText = GeneralResource["_see_all"].Value,
+                                        HeadingTitle = GeneralResource["_related"].Value + " " + _type,
+                                        ListObject = new Jugnoon.Scripts.ListItems()
+                                        {
+                                            TitleLength = 50,
+                                            showRating = true,
+                                            showUser = false,
+                                            showViews = true,
+                                            showDate = false,
+                                            showDuration = true,
+                                            ItemType = ItemType.Div,
+                                            ListType = ListType.Grid,
+                                            ColWidth = "col-md-4 col-sm-6 col-xs-12",
+                                            isHover = false
+                                        },
+                                        BrowseUrl = Config.GetUrl("videos/"),
+                                        QueryOptions = new VideoEntity()
+                                        {
+                                            order = "video.created_at desc",
+                                            ispublic = true,
+                                            iscache = false,
+                                            isfeatured = FeaturedTypes.All,
+                                            pagesize = 6,
+                                            type = (MediaType)Model.Data.type // 0: videos, 1: audio
+                                        }
+                                    };
+                                    // exclude existing id from search
+                                    relatedModel.QueryOptions.excludedid = Model.Data.id;
+                                    // related videos processing
+                                    if (Model.Data.tags != "")
+                                    {
+                                        relatedModel.QueryOptions.tags = Model.Data.tags;
+                                    }
+                                    else if (Model.Data.categories.Length > 3)
+                                    {
+                                        relatedModel.QueryOptions.categoryname = string.Join(",", Model.Data.categories);
+                                    }
+                                    else if (Model.Data.title.Length > 3)
+                                    {
+                                        relatedModel.QueryOptions.term = Model.Data.title;
+                                    }
+                                }
+                                <partial name="~/views/videos/partials/_List_SM_01.cshtml" model="relatedModel" />
+                            </div>
+                        </div>
+                        @if (Model.Comments.isComment == 1)
+                        {
+
+                        }
+
+                    </div>
+                    <div class="col-md-4">
+                        @{
+                            var _term = Model.Data.tags;
+                            if (_term == null || _term == "")
+                            {
+                                _term = Model.Data.title;
+                            }
+                        }
+                        @await Html.PartialAsync("~/Views/media/partials/_Nav.cshtml", new Jugnoon.Videos.Models.MediaNavViewModel()
+                       {
+                           hideAds = false,
+                           hideSearch = true,
+                           hideArchives = true,
+                           hideCategories = false,
+                           hideTags = false,
+                           MediaType = Model.Data.type, // 0: video, 1: audio
+                           searchTitle = "Search " + _type,
+                           searchAction = "/" + _path + "queryresult",
+                           searchPlaceHolder = "Search " + _type,
+                           searchAdvanceUrl = "/" + _path + "searchoptions",
+                           Path = _path
+                       })
+                    </div>
+                </div>
+            }
+            else
+            {
+                @await Html.PartialAsync("~/Views/partials/utility/_norecord.cshtml", new NoRecordModelView() { Message = Model.DetailMessage })
+            }
+        }
+    </div>
+
+</div>
+
+@section Styles {
+    @if (Model.isAllowed)
+    {
+        if (Model.Data.type == 0)
+        {
+            // video player
+            @await Html.PartialAsync("~/views/videos/partials/styles/videojs.cshtml")
+        }
+        else
+        {
+            // audio player
+            @await Html.PartialAsync("~/views/videos/partials/styles/mediaelement.cshtml")
+        }
+    }
+
+}
+@section Scripts {
+    @if (Model.isAllowed)
+    {
+        if (Model.Data.type == 0)
+        {
+            //@await Html.PartialAsync("~/views/videos/partials/scripts/videojs.cshtml")
+        }
+        else
+        {
+            @await Html.PartialAsync("~/views/videos/partials/scripts/mediaelement.cshtml")
+            <script>
+                // using jQuery
+                $('video,audio').mediaelementplayer(/* Options */);
+            </script>
+        }
+    }
+
+}

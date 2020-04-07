@@ -1,0 +1,114 @@
+﻿@model Jugnoon.Videos.Models.MediaNavViewModel
+@inject IStringLocalizer<GeneralResource> GeneralResource
+
+<aside class="box sidebar">
+    @*
+        // Optional Search Panel
+        @if (!Model.hideSearch)
+        {
+            @await Html.PartialAsync("~/Views/shared/_Search.cshtml", new SearchListModel()
+            {
+                HeadingTitle = Model.searchTitle,
+                Action = Model.searchAction,
+                PlaceHolder = Model.searchPlaceHolder,
+                AdvanceSearchUrl = Model.searchAdvanceUrl
+            })
+        }
+    *@
+
+    @if (!Model.hideAds)
+    {
+        @await Html.PartialAsync("~/Views/partials/ads/ad_336.cshtml", new AdsModelView() { isAdult = Model.isAdultContent })
+    }
+
+    @if (!Model.hideCategories)
+    {
+        var _Type = CategoryBLL.Types.Videos;
+        @*
+            if (Model.MediaType == 1)
+            {
+                _Type = CategoryBLL.Types.Audio;
+            }
+        *@
+
+
+        var cModel = new Jugnoon.Models.CategoryListModelView()
+        {
+            Type = (int)_Type,
+            HeadingTitle = GeneralResource["_categories"].Value,
+            Path = Model.Path
+        };
+        <div class="m-b-10">
+            @await Html.PartialAsync("~/Views/shared/_Categories_Style_02.cshtml", cModel)
+            <div class="clearfix"></div>
+        </div>
+        <hr />
+    }
+
+    @if (!Model.hideTags)
+    {
+        var _TagType = (int)TagsBLL.Types.Videos;
+        @*  if (Model.MediaType == 1)
+            {
+                _TagType = (int)TagsBLL.Types.Audio;
+            }*@
+
+        var tModel = new TagListModelView()
+        {
+            Type = _TagType,
+            Path = Model.Path
+        };
+        <div class="m-b-10">
+            @await Html.PartialAsync("~/Views/shared/_Tags.cshtml", tModel)
+            <div class="clearfix"></div>
+        </div>
+        <hr />
+    }
+
+    @if (!Model.hideAds)
+    {
+        @await Html.PartialAsync("~/Views/partials/ads/ad_336.cshtml", new AdsModelView() { isAdult = Model.isAdultContent })
+    }
+
+
+
+
+    @{
+        /*var SearchViewPath = "~/Views/shared/_Search.cshtml";
+        var VideoViewPath = "~/Views/videos/partials/_Related.cshtml";
+
+        var mediaType = Localizer["videos;
+        if (Model.MediaType == 1)
+        {
+            mediaType = Localizer["audio"].ToString();
+        }
+        var RelatedMedia = new Jugnoon.models.VideoListViewModel()
+        {
+            HeadingTitle = Localizer["related + " " + mediaType,
+            ListObject = new Jugnoon.Scripts.ListItems()
+            {
+                TitleLength = 40,
+                showRating = false
+            },
+            QueryOptions = new VideoEntity()
+            {
+                order = "video.created_at desc",
+                ispublic = true,
+                pagesize = 6,
+                iscache = false,
+                isfeatured = FeaturedTypes.All,
+                type = Model.MediaType
+            }
+        };
+
+        if (Model.Term != null)
+        {
+            RelatedMedia.QueryOptions.term = Model.Term;
+        }
+        else
+        {
+            RelatedMedia.QueryOptions.categories_str = string.Join(",", Model.Categories);
+        }*/
+    }
+
+</aside>

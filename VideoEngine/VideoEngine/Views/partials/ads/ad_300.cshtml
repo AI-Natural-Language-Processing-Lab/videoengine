@@ -1,0 +1,27 @@
+﻿@model Jugnoon.Models.AdsModelView
+@inject Jugnoon.Framework.ApplicationDbContext _context
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Features> featureSettings
+
+
+@if (featureSettings.Value.enable_advertisement)
+{
+    <div class="text-center m-b-20">
+        @{
+            // Vertical Ad - 160x600
+            // Adult ID : 10
+            // Non Adult ID : 9
+            if (Model.isAdult)
+            {
+                // adult section
+                @Html.Raw(AdsBLL.Return_Ad_Script(_context, 16));
+            }
+            else
+            {
+                // non adult section
+                @Html.Raw(AdsBLL.Return_Ad_Script(_context, 15));
+            }
+        }
+    </div>
+}
+
+

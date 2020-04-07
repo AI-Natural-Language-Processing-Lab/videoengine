@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="m-b-0">Update Profile</h4>
+      </div>
+      <div class="card-body">
+        <app-loader *ngIf="showLoader"></app-loader>
+        <dynamic-modal-form
+          *ngIf="!showLoader && controls.length > 0"
+          [controls]="controls"
+          [showLoader]="showLoader"
+          [showCancel]="false"
+          [showModal]="false"
+          [submitText]="submitText"
+          (OnSubmit)="SubmitForm($event)"
+        >
+        </dynamic-modal-form>
+      </div>
+    </div>
+  </div>
+</div>

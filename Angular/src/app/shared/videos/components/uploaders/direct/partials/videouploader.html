@@ -1,0 +1,20 @@
+<app-loader *ngIf="showLoader"></app-loader>
+<div *ngIf="!showLoader">
+  <form class="form-material m-t-40" (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div class="modal-body">
+      <div *ngFor="let control of controls" class="form-group">
+        <df-control
+          (OnFileRemoved)="OnFileRemoved($event)"
+          (OnDropdownSelectionChange)="OnDropdownSelectionChange($event)"
+          [isSubmit]="isSubmit"
+          [control]="control"
+          [form]="form"
+        ></df-control>
+      </div>
+    </div>
+    <div class="m-t-0 m-b-0">
+      <hr />
+      <button class="{{ submitBtnCss }}">{{ submitText }}</button>
+    </div>
+  </form>
+</div>

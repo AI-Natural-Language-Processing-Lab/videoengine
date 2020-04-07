@@ -1,0 +1,694 @@
+<div [formGroup]="form">
+  <div [ngSwitch]="control.controlType">
+    <div class="row" *ngSwitchCase="'section'">
+      <div class="col-md-12">
+        <hr />
+        <h3>{{ control.label }}</h3>
+        <hr />
+      </div>
+    </div>
+    <!-- Textbox -->
+    <div class="row">
+      <div class="{{ control.colsize }}">
+        <div
+          class="{{control.css}}"
+          [ngClass]="
+            form.controls[control.key].invalid && isSubmit
+              ? 'has-error has-danger'
+              : ''
+          "
+          *ngSwitchCase="'textbox'"
+        >
+          <label [attr.for]="control.key">{{ control.label }}</label>
+          <input
+            placeholder="{{ control.placeholder }}"
+            [attr.disabled]="control.disabled ? '' : null"
+            class="form-control"
+            [formControlName]="control.key"
+            [id]="control.key"
+            [type]="control.type"
+          />
+          <span *ngIf="control.helpblock" class="help-block text-muted"
+            ><small>{{ control.helpblock }}</small></span
+          >
+          <div *ngIf="shouldShowErrors()" class="help-block">
+            <div *ngIf="listOfErrors().length > 1" style="color:red;">
+              <ul>
+                <li *ngFor="let error of listOfErrors()">
+                  <span>{{ error }}</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="listOfErrors().length === 1">
+              <small style="color:red;" *ngFor="let error of listOfErrors()"
+                >{{ error }}</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- TextboxList -->
+        <div
+          class="m-t-10"
+          [ngClass]="
+            form.controls[control.key].invalid && isSubmit
+              ? 'has-error has-danger'
+              : ''
+          "
+          *ngSwitchCase="'textboxlist'"
+        >
+          <label [attr.for]="control.key">{{ control.label }}</label>
+          <div class="row">
+            <div class="col-md-4" *ngFor="let opt of control.checklist">
+              <input
+                placeholder="{{ opt.placeholder }}"
+                [attr.disabled]="opt.disabled ? '' : null"
+                class="form-control"
+                [formControlName]="opt.key"
+                [id]="opt.key"
+                [type]="opt.type"
+              />
+            </div>
+          </div>
+          <span *ngIf="control.helpblock" class="help-block text-muted"
+            ><small>{{ control.helpblock }}</small></span
+          >
+          <div *ngIf="shouldShowErrors()" class="help-block">
+            <div *ngIf="listOfErrors().length > 1" style="color:red;">
+              <ul>
+                <li *ngFor="let error of listOfErrors()">
+                  <span>{{ error }}</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="listOfErrors().length === 1">
+              <small style="color:red;" *ngFor="let error of listOfErrors()"
+                >{{ error }}</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Textarea -->
+        <div
+          class="m-t-10"
+          [ngClass]="
+            form.controls[control.key].invalid && isSubmit
+              ? 'has-error has-danger'
+              : ''
+          "
+          *ngSwitchCase="'textarea'"
+        >
+          <label [attr.for]="control.key">{{ control.label }}</label>
+          <textarea
+            rows="4"
+            class="form-control"
+            [formControlName]="control.key"
+            [id]="control.key"
+          ></textarea>
+          <span *ngIf="control.helpblock" class="help-block text-muted"
+            ><small>{{ control.helpblock }}</small></span
+          >
+          <div *ngIf="shouldShowErrors()" class="help-block">
+            <div *ngIf="listOfErrors().length > 1" style="color:red;">
+              <ul>
+                <li *ngFor="let error of listOfErrors()">
+                  <span>{{ error }}</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="listOfErrors().length === 1">
+              <small style="color:red;" *ngFor="let error of listOfErrors()"
+                >{{ error }}</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- tinymice editory -->
+        <div
+          class="m-t-10"
+          [ngClass]="
+            form.controls[control.key].invalid && isSubmit
+              ? 'has-error has-danger'
+              : ''
+          "
+          *ngSwitchCase="'tinymce'"
+        >
+          <label [attr.for]="control.key">{{ control.label }}</label>
+          <editor
+            [formControlName]="control.key"
+            [id]="control.key"
+            [init]="control.tinymiceOptions"
+          ></editor>
+          <span *ngIf="control.helpblock" class="help-block text-muted"
+            ><small>{{ control.helpblock }}</small></span
+          >
+          <div *ngIf="shouldShowErrors()" class="help-block">
+            <div *ngIf="listOfErrors().length > 1" style="color:red;">
+              <ul>
+                <li *ngFor="let error of listOfErrors()">
+                  <span>{{ error }}</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="listOfErrors().length === 1">
+              <small style="color:red;" *ngFor="let error of listOfErrors()"
+                >{{ error }}</small
+              >
+            </div>
+          </div>
+        </div>
+        <!-- Dropdown -->
+        <div
+          class="m-t-10"
+          [ngClass]="
+            form.controls[control.key].invalid && isSubmit
+              ? 'has-error has-danger'
+              : ''
+          "
+          *ngSwitchCase="'dropdown'"
+        >
+          <label [attr.for]="control.key">{{ control.label }}</label>
+
+          <select
+            class="form-control"
+            [id]="control.key"
+            (ngModelChange)="selectedDropdownValue(control.key, $event)"
+            [formControlName]="control.key"
+          >
+            <option *ngFor="let opt of control.options" [value]="opt.key"
+              >{{ opt.value }}</option
+            >
+          </select>
+          <span *ngIf="control.helpblock" class="help-block text-muted"
+            ><small>{{ control.helpblock }}</small></span
+          >
+          <div *ngIf="shouldShowErrors()" class="help-block">
+            <div *ngIf="listOfErrors().length > 1" style="color:red;">
+              <ul>
+                <li *ngFor="let error of listOfErrors()">
+                  <span>{{ error }}</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="listOfErrors().length === 1">
+              <small style="color:red;" *ngFor="let error of listOfErrors()"
+                >{{ error }}</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Multiple Dropdown -->
+        <div
+          class="m-t-10"
+          [ngClass]="
+            form.controls[control.key].invalid && isSubmit
+              ? 'has-error has-danger'
+              : ''
+          "
+          *ngSwitchCase="'multidropdown'"
+        >
+          <label [attr.for]="control.key">{{ control.label }}</label>
+          <ng-multiselect-dropdown
+            [placeholder]="control.multiselectOptions.placeholder"
+            [data]="control.multiselectOptions.dropdownList"
+            [formControlName]="control.key"
+            [(ngModel)]="control.value"
+            [settings]="control.multiselectOptions.dropdownSettings"
+          >
+          </ng-multiselect-dropdown>
+
+          <span *ngIf="control.helpblock" class="help-block text-muted"
+            ><small>{{ control.helpblock }}</small></span
+          >
+          <div *ngIf="shouldShowErrors()" class="help-block">
+            <div *ngIf="listOfErrors().length > 1" style="color:red;">
+              <ul>
+                <li *ngFor="let error of listOfErrors()">
+                  <span>{{ error }}</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="listOfErrors().length === 1">
+              <small style="color:red;" *ngFor="let error of listOfErrors()"
+                >{{ error }}</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Auto Completion -->
+        <div
+          class="m-t-10"
+          [ngClass]="
+           form.controls[control.key].invalid && isSubmit
+             ? 'has-error has-danger'
+             : ''
+         "
+          *ngSwitchCase="'autocomplete'"
+        >
+          <label [attr.for]="control.key">{{ control.label }}</label>
+
+          <div class="ng-autocomplete">
+            <ng-autocomplete
+              [data]="control.autocompleteOptions.data"
+              [searchKeyword]="control.autocompleteOptions.keyword"
+              [isLoading]="control.autocompleteOptions.isLoading"
+              [minQueryLength]="control.autocompleteOptions.minQueryLength"
+              [notFoundText]="control.autocompleteOptions.notFoundText"
+              [placeHolder]="control.autocompleteOptions.placeHolder"
+              [(ngModel)]="control.value"
+              [formControlName]="control.key"
+              (inputChanged)="onChangeSearch($event)"
+              [itemTemplate]="itemTemplate"
+              [notFoundTemplate]="notFoundTemplate"
+            >
+            </ng-autocomplete>
+
+            <ng-template #itemTemplate let-item>
+              <a [innerHTML]="item.title"></a>
+            </ng-template>
+
+            <ng-template #notFoundTemplate let-notFound>
+              <div [innerHTML]="notFound"></div>
+            </ng-template>
+          </div>
+
+          <span *ngIf="control.helpblock" class="help-block text-muted"
+            ><small>{{ control.helpblock }}</small></span
+          >
+          <div *ngIf="shouldShowErrors()" class="help-block">
+            <div *ngIf="listOfErrors().length > 1" style="color:red;">
+              <ul>
+                <li *ngFor="let error of listOfErrors()">
+                  <span>{{ error }}</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="listOfErrors().length === 1">
+              <small style="color:red;" *ngFor="let error of listOfErrors()"
+                >{{ error }}</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Dropdown List -->
+        <div
+          class="m-t-10"
+          [ngClass]="
+            form.controls[control.key].invalid && isSubmit
+              ? 'has-error has-danger'
+              : ''
+          "
+          *ngSwitchCase="'dropdownlist'"
+        >
+          <label [attr.for]="control.key" class="m-b-5">{{ control.label }}</label>
+          <div class="row">
+            <div class="col-md-4" *ngFor="let opt of control.checklist">
+             
+              <label [attr.for]="opt.key">{{ opt.label }}</label> 
+              <select
+                class="form-control"
+                [id]="opt.key"
+                (ngModelChange)="selectedDropdownValue(opt.key, $event)"
+                [formControlName]="opt.key"
+              >
+                <option *ngFor="let opt1 of opt.options" [value]="opt1.key"
+                  >{{ opt1.value }}</option
+                >
+              </select>
+            </div>
+          </div>
+          <span *ngIf="control.helpblock" class="help-block text-muted"
+            ><small>{{ control.helpblock }}</small></span
+          >
+          <div *ngIf="shouldShowErrors()" class="help-block">
+            <div *ngIf="listOfErrors().length > 1" style="color:red;">
+              <ul>
+                <li *ngFor="let error of listOfErrors()">
+                  <span>{{ error }}</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="listOfErrors().length === 1">
+              <small style="color:red;" *ngFor="let error of listOfErrors()"
+                >{{ error }}</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Multi Text Options -->
+        <div
+          class="m-t-10"
+          [ngClass]="
+           form.controls[control.key].invalid && isSubmit
+             ? 'has-error has-danger'
+             : ''
+         "
+          *ngSwitchCase="'multitextoptions'"
+        >
+          <div *ngIf="control.label != ''">
+            <label [attr.for]="control.key">{{ control.label }}</label>
+          </div>
+          <input
+            type="hidden"
+            [(ngModel)]="control.value"
+            [formControlName]="control.key"
+            [id]="control.key"
+          />
+          
+          <app-multiple-options
+            [options]="control.value"
+            (onChange)="changeOption($event)"
+          ></app-multiple-options>
+
+          <span *ngIf="control.helpblock" class="help-block text-muted"
+            ><small>{{ control.helpblock }}</small></span
+          >
+          <div *ngIf="shouldShowErrors()" class="help-block">
+            <div *ngIf="listOfErrors().length > 1" style="color:red;">
+              <ul>
+                <li *ngFor="let error of listOfErrors()">
+                  <span>{{ error }}</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="listOfErrors().length === 1">
+              <small style="color:red;" *ngFor="let error of listOfErrors()"
+                >{{ error }}</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Uploader -->
+        <div
+          class="m-t-10"
+          [ngClass]="
+            form.controls[control.key].invalid && isSubmit
+              ? 'has-error has-danger'
+              : ''
+          "
+          *ngSwitchCase="'uploader'"
+        >
+          <div *ngIf="control.label != ''">
+            <label [attr.for]="control.key">{{ control.label }}</label>
+          </div>
+          <input
+            type="hidden"
+            [(ngModel)]="control.value"
+            [formControlName]="control.key"
+            [id]="control.key"
+          />
+          <div *ngIf="control.uploadoptions.sliderview">
+            <div class="row">
+              <div
+                class="col-md-3"
+                *ngFor="let image of control.value;let i = index"
+              >
+                <img src="{{ image.url }}" alt="{{image.filename}}" />
+                <a
+                  class="text-center"
+                  (click)="remove(image, i, $event); (false)"
+                  ><i
+                    class="fa fa-close text-center text-danger"
+                    aria-hidden="true"
+                  ></i
+                ></a>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="!control.uploadoptions.sliderview">
+            <app-file-display
+              [showFileName]="control.uploadoptions.showFileName"
+              [showoriginalSize]="control.uploadoptions.showoriginalSize"
+              [photouploader]="control.uploadoptions.photouploader"
+              *ngIf="uploadedFiles.length > 0"
+              [files]="uploadedFiles"
+              [colcss]="control.uploadoptions.colcss"
+              (onRemove)="removedItems($event)"
+            ></app-file-display>
+          </div>
+
+          <app-plupload
+            *ngIf="uploadedFiles.length < control.uploadoptions.maxallowedfiles"
+            [options]="control.uploadoptions"
+            (onCompletion)="filesUploaded($event)"
+            (uploadProgress)="uploadProgress($event)"
+          ></app-plupload>
+
+          <span *ngIf="control.helpblock" class="help-block text-muted"
+            ><small>{{ control.helpblock }}</small></span
+          >
+          <div *ngIf="shouldShowErrors()" class="help-block">
+            <div *ngIf="listOfErrors().length > 1" style="color:red;">
+              <ul>
+                <li *ngFor="let error of listOfErrors()">
+                  <span>{{ error }}</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="listOfErrors().length === 1">
+              <small style="color:red;" *ngFor="let error of listOfErrors()"
+                >{{ error }}</small
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Cropper -->
+        <div
+          class="m-t-10"
+          [ngClass]="
+            form.controls[control.key].invalid && isSubmit
+              ? 'has-error has-danger'
+              : ''
+          "
+          *ngSwitchCase="'cropper'"
+        >
+          <div *ngIf="control.label != ''">
+            <label [attr.for]="control.key">{{ control.label }}</label>
+          </div>
+          <input
+            type="hidden"
+            [(ngModel)]="control.value"
+            [formControlName]="control.key"
+            [id]="control.key"
+          />
+          <label
+            class="m-t-10 m-b-10"
+            [attr.for]="control.cropperOptions.upload_id"
+            *ngIf="showUploadBtn"
+          >
+            <span class="{{ control.cropperOptions.btncss }}"
+              >{{ control.cropperOptions.uploadbtntext }}</span
+            >
+            <input
+              style="display: none;"
+              [id]="control.cropperOptions.upload_id"
+              type="file"
+              (change)="changeListener($event)"
+            />
+          </label>
+
+          <div *ngIf="control.cropperOptions.cropped_picture !== ''">
+            <div class="row">
+              <div class="col-sm-12 {{control.cropperOptions.colcss}}">
+                <img
+                  class="m-t-10 m-b-10"
+                  src="{{ control.cropperOptions.cropped_picture }}"
+                  *ngIf="control.cropperOptions.cropped_picture !== ''"
+                />
+                <a
+                  class="text-center m-t-5"
+                  (click)="removeCropperImage($event); false"
+                  ><i
+                    class="fa fa-close text-center text-danger"
+                    aria-hidden="true"
+                  ></i
+                ></a>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="control.helpblock" class="help-block text-muted">
+            <small>{{ control.helpblock }}</small>
+          </div>
+          <div *ngIf="shouldShowErrors()" class="help-block">
+            <div *ngIf="listOfErrors().length > 1" style="color:red;">
+              <ul>
+                <li *ngFor="let error of listOfErrors()">
+                  <span>{{ error }}</span>
+                </li>
+              </ul>
+            </div>
+            <div *ngIf="listOfErrors().length === 1">
+              <small style="color:red;" *ngFor="let error of listOfErrors()"
+                >{{ error }}</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Radiobutton List -->
+        <div
+          class="{{control.css}}"
+          [ngClass]="
+            form.controls[control.key].invalid && isSubmit
+              ? 'has-error has-danger'
+              : ''
+          "
+          *ngSwitchCase="'radiolist'"
+        >
+          <div *ngIf="control.labelasheading">
+            <h4>{{ control.label }}</h4>
+            <hr />
+          </div>
+          <label *ngIf="!control.labelasheading" [attr.for]="control.key"
+            >{{ control.label }}</label
+          >
+
+          <div class="row">
+            <div class="{{ control.colsize }}">
+              <div
+                class="form-check p-l-0 m-l-0"
+                *ngFor="let opt of control.options"
+              >
+                <label class="form-check-label">
+                  <input
+                    type="radio"
+                    value="{{ opt.key }}"
+                    [formControlName]="control.key"
+                    [checked]="control.value == opt.key"
+                    (change)="choose(opt.key, $event)"
+                  />
+                  {{ opt.value }}
+                </label>
+              </div>
+              <span *ngIf="control.helpblock" class="help-block text-muted"
+                ><small>{{ control.helpblock }}</small></span
+              >
+              <div *ngIf="shouldShowErrors()" class="help-block">
+                <div *ngIf="listOfErrors().length > 1" style="color:red;">
+                  <ul>
+                    <li *ngFor="let error of listOfErrors()">
+                      <span>{{ error }}</span>
+                    </li>
+                  </ul>
+                </div>
+                <div *ngIf="listOfErrors().length === 1">
+                  <small style="color:red;" *ngFor="let error of listOfErrors()"
+                    >{{ error }}</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Check List -->
+        <div
+          class="{{control.css}}"
+          [ngClass]="
+            form.controls[control.key].invalid && isSubmit
+              ? 'has-error has-danger'
+              : ''
+          "
+          *ngSwitchCase="'checklist'"
+        >
+          <div *ngIf="control.labelasheading">
+            <h4>{{ control.label }}</h4>
+            <hr />
+          </div>
+          <label *ngIf="!control.labelasheading" [attr.for]="control.key"
+            >{{ control.label }}</label
+          >
+          <div class="row">
+            <div class="{{ control.colsize }}">
+              <div
+                class="form-check  p-l-0 m-l-0"
+                *ngFor="let opt of control.checklist"
+              >
+                <label class="form-check-label">
+                  <input
+                    [(ngModel)]="opt.checked"
+                    value="{{ opt.value }}"
+                    [formControlName]="opt.key"
+                    type="checkbox"
+                  />
+                  {{ opt.label }}
+                </label>
+              </div>
+              <span *ngIf="control.helpblock" class="help-block text-muted"
+                ><small>{{ control.helpblock }}</small></span
+              >
+              <div *ngIf="shouldShowErrors()" class="help-block">
+                <div *ngIf="listOfErrors().length > 1" style="color:red;">
+                  <ul>
+                    <li *ngFor="let error of listOfErrors()">
+                      <span>{{ error }}</span>
+                    </li>
+                  </ul>
+                </div>
+                <div *ngIf="listOfErrors().length === 1">
+                  <small style="color:red;" *ngFor="let error of listOfErrors()"
+                    >{{ error }}</small
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Check -->
+        <div
+          class="{{control.css}}"
+          [ngClass]="
+            form.controls[control.key].invalid && isSubmit
+              ? 'has-error has-danger'
+              : ''
+          "
+          *ngSwitchCase="'check'"
+        >
+          <div class="form-check p-l-0 m-l-0">
+            <label class="form-check-label">
+              <input
+                [(ngModel)]="control.checked"
+                value="{{ control.value }}"
+                [formControlName]="control.key"
+                type="checkbox"
+              />
+              {{ control.label }}
+            </label>
+          </div>
+          <div class="form-check p-l-0 m-l-0">
+            <span *ngIf="control.helpblock" class="help-block text-muted"
+              ><small>{{ control.helpblock }}</small></span
+            >
+            <div *ngIf="shouldShowErrors()" class="help-block">
+              <div *ngIf="listOfErrors().length > 1" style="color:red;">
+                <ul>
+                  <li *ngFor="let error of listOfErrors()">
+                    <span>{{ error }}</span>
+                  </li>
+                </ul>
+              </div>
+              <div *ngIf="listOfErrors().length === 1">
+                <small style="color:red;" *ngFor="let error of listOfErrors()"
+                  >{{ error }}</small
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

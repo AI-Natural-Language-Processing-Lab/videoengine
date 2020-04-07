@@ -1,0 +1,69 @@
+<div *ngIf="isAdmin" class="card">
+  <div *ngIf="!isAccessGranted">
+    <h2 class="m-b-40 m-t-40 text-center">Access Denied</h2>
+  </div>
+  <div *ngIf="isAccessGranted">
+    <div class="row">
+      <div class="col-md-3">
+        <app-navigation-v2
+          [FilterOptions]="FilterOptions"
+          [Options]="SearchOptions"
+          (Action)="toolbaraction($event)"
+          (SearchSelection)="FindRecords($event)"
+        >
+        </app-navigation-v2>
+      </div>
+      <div class="col-md-9">
+        <app-toolbar-v2
+          [Options]="ToolbarOptions"
+          [isItemsSelected]="isItemsSelected"
+          (Action)="toolbaraction($event)"
+          (SelectAllCard)="selectAll($event)"
+        ></app-toolbar-v2>
+
+        <div class="card-body">
+          <app-video-list
+            [showReportLink] = "showReportLink"
+            [route_path] = "route_path"
+            [PublicView] = "PublicView"
+            [type] = "type"
+            [isAdmin]="isAdmin"
+            (View)="toolbaraction($event)"
+            [isActionGranded]="isActionGranded"
+            (SelectedItems)="getSelectedItems($event)"
+          ></app-video-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!isAdmin">
+  <app-navigation-v2
+    [isAdmin]="isAdmin"
+    [FilterOptions]="FilterOptions"
+    [Options]="SearchOptions"
+    (Action)="toolbaraction($event)"
+    (SearchSelection)="FindRecords($event)"
+  >
+  </app-navigation-v2>
+  <div class="card">
+    <div class="card-body">
+      <app-toolbar-v2
+        [isAdmin]="isAdmin"
+        [Options]="ToolbarOptions"
+        [isItemsSelected]="isItemsSelected"
+        (Action)="toolbaraction($event)"
+        (SelectAllCard)="selectAll($event)"
+      ></app-toolbar-v2>
+      <app-video-list
+        [showReportLink] = "showReportLink"
+        [route_path] = "route_path"
+        [PublicView] = "PublicView"
+        [type] = "type"
+        [isAdmin]="isAdmin"
+        (View)="toolbaraction($event)"
+        (SelectedItems)="getSelectedItems($event)"
+      ></app-video-list>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@{ 
+    var info = await UserManager.GetUserAsync(User);
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var CurrentHost = SiteConfiguration.URL;
+}
+    
+    <script>
+          
+            var URL = '@Context.Request.Scheme://@Context.Request.Host/'; // API URL
+            // var URL = '@CurrentHost';
+            var Ang_UID = '@info.Id';
+            var Ang_Culture = '@requestCulture.RequestCulture.UICulture.Name'
+            var Ang_VideoUploaderOption = 0;
+            var AppType = 'account';
+            var setupType = 0; 
+            var ImageDirectory = '/images/';
+            var AppTitle = '@generalSettings.Value.website_title';
+            var SearchParams = {
+                term: '',
+                type: ''
+            };
+            var SerachContentType = 0;
+    </script>
+    <div class="m-t-10 m-b-20" style="min-height: 500px;">
+        <app-root>
+            <div id="loader">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="loading"></div>
+            </div>
+        </app-root>
+    </div>
+
+    @section Styles {
+        <base href="/account/">
+    }
+
+    @section Scripts {
+        <script src="/app/angular/runtime-es2015.js" type="module"></script>
+        <script src="/app/angular/runtime-es5.js" nomodule defer></script>
+        <script src="/app/angular/polyfills-es5.js" nomodule defer></script>
+        <script src="/app/angular/polyfills-es2015.js" type="module"></script>
+        <script src="/app/angular/scripts.js" defer></script>
+        <script src="/app/angular/main-es2015.js" type="module"></script>
+        <script src="/app/angular/main-es5.js" nomodule defer></script>
+    }

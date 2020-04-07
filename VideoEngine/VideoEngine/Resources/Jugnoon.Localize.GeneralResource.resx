@@ -1,0 +1,850 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="two_factor_auth" xml:space="preserve">
+    <value>Two-factor authentication</value>
+  </data>
+  <data name="two_factor_auth_msg" xml:space="preserve">
+    <value>Your login is protected with an authenticator app. Enter your authenticator code below.</value>
+  </data>
+  <data name="_about_us" xml:space="preserve">
+    <value>About Us</value>
+  </data>
+  <data name="_abuse_msg_01" xml:space="preserve">
+    <value>You can't post abuse / spam report on your own content.</value>
+  </data>
+  <data name="_abuse_msg_02" xml:space="preserve">
+    <value>You already post abuse / spam report on this content.</value>
+  </data>
+  <data name="_abuse_msg_03" xml:space="preserve">
+    <value>Report already posted from this IP address.</value>
+  </data>
+  <data name="_abuse_msg_04" xml:space="preserve">
+    <value>Report has been submitted successfully!</value>
+  </data>
+  <data name="_accept_aggrement" xml:space="preserve">
+    <value>Please accept our terms of server &amp; privacy policy policy to continue.</value>
+  </data>
+  <data name="_access_denied" xml:space="preserve">
+    <value>Access Denied</value>
+  </data>
+  <data name="_access_denied_msg" xml:space="preserve">
+    <value>You do not have access to this resource.</value>
+  </data>
+  <data name="_account_activation" xml:space="preserve">
+    <value>Account Activation</value>
+  </data>
+  <data name="_account_activation_msg" xml:space="preserve">
+    <value>&lt;p&gt;
+            Thanks for signing up with us.
+        &lt;/p&gt;
+        &lt;p&gt;Activation link has been sent on your provided email address. Please check your inbox and click on link to activate your account.&lt;/p&gt;</value>
+  </data>
+  <data name="_account_created" xml:space="preserve">
+    <value>Account Created Successfully!</value>
+  </data>
+  <data name="_account_failed" xml:space="preserve">
+    <value>Account Creation Failed!</value>
+  </data>
+  <data name="_account_suspended" xml:space="preserve">
+    <value>Your Account Suspended!</value>
+  </data>
+  <data name="_added" xml:space="preserve">
+    <value>Added</value>
+  </data>
+  <data name="_address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="_add_to_favorites" xml:space="preserve">
+    <value>Add to favorites</value>
+  </data>
+  <data name="_add_to_playlist" xml:space="preserve">
+    <value>Add to playlist</value>
+  </data>
+  <data name="_adult_warning" xml:space="preserve">
+    <value>Adult Warning</value>
+  </data>
+  <data name="_adult_warning_msg" xml:space="preserve">
+    <value>You may only access this Section if you are at least 18 years of age, or at least the age of majority in the jurisdiction where you reside or from which you access this Section. If you do not meet these requirements, then you do not have permission to use the Section.</value>
+  </data>
+  <data name="_ad_listings" xml:space="preserve">
+    <value>Ad Listings</value>
+  </data>
+  <data name="_albums" xml:space="preserve">
+    <value>Albums</value>
+  </data>
+  <data name="_all_time" xml:space="preserve">
+    <value>All Time</value>
+  </data>
+  <data name="_already_have_account" xml:space="preserve">
+    <value>Already have an account?</value>
+  </data>
+  <data name="_archive_list" xml:space="preserve">
+    <value>Archive List</value>
+  </data>
+  <data name="_ask_question" xml:space="preserve">
+    <value>Ask Question</value>
+  </data>
+  <data name="_audio" xml:space="preserve">
+    <value>Audio</value>
+  </data>
+  <data name="_audio_files" xml:space="preserve">
+    <value>Audio Files</value>
+  </data>
+  <data name="_authentication_failed" xml:space="preserve">
+    <value>Authentication Failed</value>
+  </data>
+  <data name="_blogs" xml:space="preserve">
+    <value>Blogs</value>
+  </data>
+  <data name="_cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="_categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="_click_here_to_login" xml:space="preserve">
+    <value>click here to log in</value>
+  </data>
+  <data name="_closed" xml:space="preserve">
+    <value>Closed</value>
+  </data>
+  <data name="_confirmation_mail_sent" xml:space="preserve">
+    <value>Confirmation Email Sent!</value>
+  </data>
+  <data name="_confirm_email" xml:space="preserve">
+    <value>Confirm email</value>
+  </data>
+  <data name="_confirm_email_msg" xml:space="preserve">
+    <value>Thank you for confirming your email.</value>
+  </data>
+  <data name="_confirm_password" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="_contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="_contactus_form_msg" xml:space="preserve">
+    <value>Please use the form below to send your query or feedback or have any question.</value>
+  </data>
+  <data name="_contact_us" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="_control_panel" xml:space="preserve">
+    <value>Control Panel</value>
+  </data>
+  <data name="_cookies" xml:space="preserve">
+    <value>Cookies</value>
+  </data>
+  <data name="_create_account" xml:space="preserve">
+    <value>Create Account</value>
+  </data>
+  <data name="_create_new_account" xml:space="preserve">
+    <value>Create New Account</value>
+  </data>
+  <data name="_create_one" xml:space="preserve">
+    <value>Create One</value>
+  </data>
+  <data name="_delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="_detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="_dislikes" xml:space="preserve">
+    <value>Dislikes</value>
+  </data>
+  <data name="_dont_have_account" xml:space="preserve">
+    <value>Don't have an account?</value>
+  </data>
+  <data name="_download" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="_edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="_edit_information" xml:space="preserve">
+    <value>Edit Information</value>
+  </data>
+  <data name="_edit_profile" xml:space="preserve">
+    <value>Edit Profile</value>
+  </data>
+  <data name="_email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="_email_address" xml:space="preserve">
+    <value>Email address</value>
+  </data>
+  <data name="_email_reset_code_error" xml:space="preserve">
+    <value>A code and user must be supplied for email reset.</value>
+  </data>
+  <data name="_email_reset_failed" xml:space="preserve">
+    <value>Failed to reset your current emailaddress.</value>
+  </data>
+  <data name="_embed_code" xml:space="preserve">
+    <value>Embed Code</value>
+  </data>
+  <data name="_embed_this" xml:space="preserve">
+    <value>Embed This</value>
+  </data>
+  <data name="_enter" xml:space="preserve">
+    <value>Enter</value>
+  </data>
+  <data name="_enter_email" xml:space="preserve">
+    <value>Enter email address</value>
+  </data>
+  <data name="_enter_email_username" xml:space="preserve">
+    <value>Enter email or username</value>
+  </data>
+  <data name="_enter_full_name" xml:space="preserve">
+    <value>Enter Full Name</value>
+  </data>
+  <data name="_enter_message" xml:space="preserve">
+    <value>Enter Message</value>
+  </data>
+  <data name="_enter_password" xml:space="preserve">
+    <value>Enter Password</value>
+  </data>
+  <data name="_enter_phone" xml:space="preserve">
+    <value>Enter Phone Number</value>
+  </data>
+  <data name="_enter_username" xml:space="preserve">
+    <value>Enter username</value>
+  </data>
+  <data name="_error_external_login_information" xml:space="preserve">
+    <value>Error loading external login information during confirmation.</value>
+  </data>
+  <data name="_error_occured" xml:space="preserve">
+    <value>Error occured while processing your request!</value>
+  </data>
+  <data name="_explore_premium_version" xml:space="preserve">
+    <value>Explore Premium Versions</value>
+  </data>
+  <data name="_favorites" xml:space="preserve">
+    <value>Favorites</value>
+  </data>
+  <data name="_fax" xml:space="preserve">
+    <value>Fax</value>
+  </data>
+  <data name="_featured" xml:space="preserve">
+    <value>Featured</value>
+  </data>
+  <data name="_female" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="_file_under" xml:space="preserve">
+    <value>File under</value>
+  </data>
+  <data name="_filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="_first_name" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="_flag_as_inappropriate" xml:space="preserve">
+    <value>Flag as inappropriate</value>
+  </data>
+  <data name="_forgot_password" xml:space="preserve">
+    <value>Forgot Password</value>
+  </data>
+  <data name="_forgot_password_confirmation" xml:space="preserve">
+    <value>Forgot password confirmation</value>
+  </data>
+  <data name="_forgot_password_confirmation_msg" xml:space="preserve">
+    <value>Please check your email to reset your password.</value>
+  </data>
+  <data name="_forgot_password_msg" xml:space="preserve">
+    <value>Forgot Password?</value>
+  </data>
+  <data name="_forums" xml:space="preserve">
+    <value>Forums</value>
+  </data>
+  <data name="_full_name" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="_gdpr_faq" xml:space="preserve">
+    <value>GDPR FAQ</value>
+  </data>
+  <data name="_get_embed_code" xml:space="preserve">
+    <value>Get Embed Code</value>
+  </data>
+  <data name="_glossary" xml:space="preserve">
+    <value>Glossary</value>
+  </data>
+  <data name="_highest_price" xml:space="preserve">
+    <value>Highest Price</value>
+  </data>
+  <data name="_home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="_Idislikethis" xml:space="preserve">
+    <value>I Dislike This</value>
+  </data>
+  <data name="_Ilikethis" xml:space="preserve">
+    <value>I Like This</value>
+  </data>
+  <data name="_information" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="_invalid_authentication_code" xml:space="preserve">
+    <value>Invalid Authentication Code!</value>
+  </data>
+  <data name="_invalid_chapcha" xml:space="preserve">
+    <value>Invalid Chapcha Code Entered!</value>
+  </data>
+  <data name="_invalid_code_supplied" xml:space="preserve">
+    <value>A code must be supplied for password reset.</value>
+  </data>
+  <data name="_invalid_data" xml:space="preserve">
+    <value>Invalid Data</value>
+  </data>
+  <data name="_invalid_description" xml:space="preserve">
+    <value>There is problem in your content, please fix and try again.</value>
+  </data>
+  <data name="_invalid_email" xml:space="preserve">
+    <value>Invalid Email Address</value>
+  </data>
+  <data name="_invalid_login_attempt" xml:space="preserve">
+    <value>Invalid Login Attempt</value>
+  </data>
+  <data name="_invalid_recovery_code_entered" xml:space="preserve">
+    <value>Invalid Recovery Code Entered!</value>
+  </data>
+  <data name="_invalid_tags" xml:space="preserve">
+    <value>Please enter proper tags separated by comma</value>
+  </data>
+  <data name="_invalid_title" xml:space="preserve">
+    <value>You entered invalid Title</value>
+  </data>
+  <data name="_ip_blocked" xml:space="preserve">
+    <value>Your IP Address Blocked!</value>
+  </data>
+  <data name="_joined" xml:space="preserve">
+    <value>Joined</value>
+  </data>
+  <data name="_labels" xml:space="preserve">
+    <value>Labels</value>
+  </data>
+  <data name="_last_name" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="_last_sign_in" xml:space="preserve">
+    <value>Last Sign In</value>
+  </data>
+  <data name="_latest" xml:space="preserve">
+    <value>Latest</value>
+  </data>
+  <data name="_like" xml:space="preserve">
+    <value>Like</value>
+  </data>
+  <data name="_likes" xml:space="preserve">
+    <value>Likes</value>
+  </data>
+  <data name="_listings" xml:space="preserve">
+    <value>Listings</value>
+  </data>
+  <data name="_lock_out" xml:space="preserve">
+    <value>Locked Out</value>
+  </data>
+  <data name="_lock_out_msg" xml:space="preserve">
+    <value>This account has been locked out, please try again later.</value>
+  </data>
+  <data name="_login" xml:space="preserve">
+    <value>Log in</value>
+  </data>
+  <data name="_lowest_price" xml:space="preserve">
+    <value>Lowest Price</value>
+  </data>
+  <data name="_male" xml:space="preserve">
+    <value>Male</value>
+  </data>
+  <data name="_message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="_message_sent" xml:space="preserve">
+    <value>Message sent successfully!</value>
+  </data>
+  <data name="_meta_2_factor_auth" xml:space="preserve">
+    <value>2 Factor Authentication</value>
+  </data>
+  <data name="_meta_about_us" xml:space="preserve">
+    <value>About Us</value>
+  </data>
+  <data name="_meta_access_denied" xml:space="preserve">
+    <value>Access Denied</value>
+  </data>
+  <data name="_meta_activate_account" xml:space="preserve">
+    <value>Activate Account</value>
+  </data>
+  <data name="_meta_adult_warning" xml:space="preserve">
+    <value>Adult Warning</value>
+  </data>
+  <data name="_meta_change_email" xml:space="preserve">
+    <value>Change Email</value>
+  </data>
+  <data name="_meta_confirm_email" xml:space="preserve">
+    <value>Confirm Email</value>
+  </data>
+  <data name="_meta_contact_us" xml:space="preserve">
+    <value>Contact Us</value>
+  </data>
+  <data name="_meta_cookies" xml:space="preserve">
+    <value>Cookies</value>
+  </data>
+  <data name="_meta_external_login_provider" xml:space="preserve">
+    <value>External Login Provider</value>
+  </data>
+  <data name="_meta_forgot_password" xml:space="preserve">
+    <value>Forgot Password</value>
+  </data>
+  <data name="_meta_forgot_password_confirmation" xml:space="preserve">
+    <value>Forgot Password Confirmation</value>
+  </data>
+  <data name="_meta_gdpr" xml:space="preserve">
+    <value>GDPR FAQ</value>
+  </data>
+  <data name="_meta_home" xml:space="preserve">
+    <value>ASP.NET Video Sharing Portal</value>
+  </data>
+  <data name="_meta_home_desc" xml:space="preserve">
+    <value>Demo of VideoEngine, a complete video sharing script and portal writting in asp.net core framework.</value>
+  </data>
+  <data name="_meta_lock_out" xml:space="preserve">
+    <value>Lock Out</value>
+  </data>
+  <data name="_meta_login_with_recovery_code" xml:space="preserve">
+    <value>Login With Recovery Code</value>
+  </data>
+  <data name="_meta_privacy_policy" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="_meta_reset_password" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="_meta_reset_password_confirmation" xml:space="preserve">
+    <value>Reset Password Confirmation</value>
+  </data>
+  <data name="_meta_security" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="_meta_signin" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="_meta_signup" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="_meta_sign_out" xml:space="preserve">
+    <value>Sign Out</value>
+  </data>
+  <data name="_meta_sitemap" xml:space="preserve">
+    <value>Sitemap</value>
+  </data>
+  <data name="_meta_terms_of_use" xml:space="preserve">
+    <value>Terms of Use</value>
+  </data>
+  <data name="_meta_third_party" xml:space="preserve">
+    <value>Third Party Infrastructure Policies</value>
+  </data>
+  <data name="_missing_information" xml:space="preserve">
+    <value>Missing Information!</value>
+  </data>
+  <data name="_most_viewed" xml:space="preserve">
+    <value>Most Viewed</value>
+  </data>
+  <data name="_my_account" xml:space="preserve">
+    <value>My Account</value>
+  </data>
+  <data name="_my_profile" xml:space="preserve">
+    <value>My Profile</value>
+  </data>
+  <data name="_name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="_no_category" xml:space="preserve">
+    <value>No Categories Found!</value>
+  </data>
+  <data name="_no_description" xml:space="preserve">
+    <value>No description</value>
+  </data>
+  <data name="_no_profiles_found" xml:space="preserve">
+    <value>No Profiles Found</value>
+  </data>
+  <data name="_no_records" xml:space="preserve">
+    <value>No Records Found!</value>
+  </data>
+  <data name="_out_of" xml:space="preserve">
+    <value>out of</value>
+  </data>
+  <data name="_page" xml:space="preserve">
+    <value>Page</value>
+  </data>
+  <data name="_password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="_phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="_phone_number" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
+  <data name="_photo" xml:space="preserve">
+    <value>Photo</value>
+  </data>
+  <data name="_photos" xml:space="preserve">
+    <value>Photos</value>
+  </data>
+  <data name="_photo_albums" xml:space="preserve">
+    <value>Photo Albums</value>
+  </data>
+  <data name="_polls" xml:space="preserve">
+    <value>Polls</value>
+  </data>
+  <data name="_popular" xml:space="preserve">
+    <value>Popular</value>
+  </data>
+  <data name="_post" xml:space="preserve">
+    <value>Post</value>
+  </data>
+  <data name="_posted_topics" xml:space="preserve">
+    <value>Posted Topics</value>
+  </data>
+  <data name="_privacy_policy" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="_products" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="_profile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="_profiles" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="_profile_detail" xml:space="preserve">
+    <value>Profile Detail</value>
+  </data>
+  <data name="_profile_not_found" xml:space="preserve">
+    <value>Profile Not Found!</value>
+  </data>
+  <data name="_profile_views" xml:space="preserve">
+    <value>Profile Views</value>
+  </data>
+  <data name="_qa" xml:space="preserve">
+    <value>QA</value>
+  </data>
+  <data name="_questions" xml:space="preserve">
+    <value>Questions</value>
+  </data>
+  <data name="_rated" xml:space="preserve">
+    <value>Rated</value>
+  </data>
+  <data name="_ratings" xml:space="preserve">
+    <value>Ratings</value>
+  </data>
+  <data name="_recent" xml:space="preserve">
+    <value>Recent</value>
+  </data>
+  <data name="_recently_added" xml:space="preserve">
+    <value>Recently Added</value>
+  </data>
+  <data name="_records_processed" xml:space="preserve">
+    <value>Record Processed Successfully</value>
+  </data>
+  <data name="_records_updated" xml:space="preserve">
+    <value>All Records Updated Successfully</value>
+  </data>
+  <data name="_record_created" xml:space="preserve">
+    <value>Record Created Successfully</value>
+  </data>
+  <data name="_record_deleted" xml:space="preserve">
+    <value>Record Deleted Successfully</value>
+  </data>
+  <data name="_record_exist" xml:space="preserve">
+    <value>Record Already Exist!</value>
+  </data>
+  <data name="_record_failed" xml:space="preserve">
+    <value>Updating Record Failed!</value>
+  </data>
+  <data name="_record_updated" xml:space="preserve">
+    <value>Record Updated Successfully</value>
+  </data>
+  <data name="_recovery_code_verification" xml:space="preserve">
+    <value>Recovery code verification</value>
+  </data>
+  <data name="_recovery_code_verification_msg" xml:space="preserve">
+    <value>You have requested to login with a recovery code. This login will not be remembered until you provide
+            an authenticator app code at login or disable 2FA and login again.</value>
+  </data>
+  <data name="_register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="_registeration_not_enabled" xml:space="preserve">
+    <value>Registeration Not Enabled</value>
+  </data>
+  <data name="_related" xml:space="preserve">
+    <value>Related</value>
+  </data>
+  <data name="_report" xml:space="preserve">
+    <value>Report</value>
+  </data>
+  <data name="_reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="_reset_email" xml:space="preserve">
+    <value>Reset email</value>
+  </data>
+  <data name="_reset_password" xml:space="preserve">
+    <value>Reset Password</value>
+  </data>
+  <data name="_reset_password_confirmation" xml:space="preserve">
+    <value>Reset password confirmation</value>
+  </data>
+  <data name="_reset_password_confirmation_msg" xml:space="preserve">
+    <value>Your password has been reset.</value>
+  </data>
+  <data name="_reset_password_msg" xml:space="preserve">
+    <value>By clicking "Reset Password" we will send a password reset link</value>
+  </data>
+  <data name="_reset_password_page_msg_01" xml:space="preserve">
+    <value>Make sure your password is strong and easy to remember</value>
+  </data>
+  <data name="_resize_and_download" xml:space="preserve">
+    <value>Resize &amp; Download</value>
+  </data>
+  <data name="_resolved" xml:space="preserve">
+    <value>Resolved</value>
+  </data>
+  <data name="_result" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="_return_to_homepage" xml:space="preserve">
+    <value>Return to Homepage</value>
+  </data>
+  <data name="_search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="_security" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="_see_all" xml:space="preserve">
+    <value>See All</value>
+  </data>
+  <data name="_select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="_select_reason" xml:space="preserve">
+    <value>Select Reason</value>
+  </data>
+  <data name="_send_message" xml:space="preserve">
+    <value>Send Message</value>
+  </data>
+  <data name="_share" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="_share_or_embed" xml:space="preserve">
+    <value>Share or Embed This</value>
+  </data>
+  <data name="_share_the_post" xml:space="preserve">
+    <value>Share the post</value>
+  </data>
+  <data name="_showmore" xml:space="preserve">
+    <value>Show more</value>
+  </data>
+  <data name="_sign_in" xml:space="preserve">
+    <value>Sign In</value>
+  </data>
+  <data name="_sign_out" xml:space="preserve">
+    <value>Sign Out</value>
+  </data>
+  <data name="_sign_out_confirm_msg_01" xml:space="preserve">
+    <value>You have successfully signed out.</value>
+  </data>
+  <data name="_sign_up" xml:space="preserve">
+    <value>Sign Up</value>
+  </data>
+  <data name="_sitemap" xml:space="preserve">
+    <value>Sitemap</value>
+  </data>
+  <data name="_tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="_terms_of_service" xml:space="preserve">
+    <value>Terms of Service</value>
+  </data>
+  <data name="_terms_of_use" xml:space="preserve">
+    <value>Terms of Use</value>
+  </data>
+  <data name="_thanks_for_rating" xml:space="preserve">
+    <value>Thanks for the rating feedback!</value>
+  </data>
+  <data name="_thanks_for_the_feedback" xml:space="preserve">
+    <value>Thanks for the feedback!</value>
+  </data>
+  <data name="_thirdparty_policy" xml:space="preserve">
+    <value>Third Party Infrastructure Policy</value>
+  </data>
+  <data name="_thismonth" xml:space="preserve">
+    <value>This Month</value>
+  </data>
+  <data name="_thisweek" xml:space="preserve">
+    <value>This Week</value>
+  </data>
+  <data name="_this_month" xml:space="preserve">
+    <value>This Month</value>
+  </data>
+  <data name="_this_week" xml:space="preserve">
+    <value>This Week</value>
+  </data>
+  <data name="_today" xml:space="preserve">
+    <value>Today</value>
+  </data>
+  <data name="_top_rated" xml:space="preserve">
+    <value>Top Rated</value>
+  </data>
+  <data name="_top_voted" xml:space="preserve">
+    <value>Top Voted</value>
+  </data>
+  <data name="_upload" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="_uploaded_photos" xml:space="preserve">
+    <value>Uploaded Photos</value>
+  </data>
+  <data name="_upload_audio" xml:space="preserve">
+    <value>Uploaded Audio</value>
+  </data>
+  <data name="_user_profile" xml:space="preserve">
+    <value>User Profile</value>
+  </data>
+  <data name="_video" xml:space="preserve">
+    <value>Video</value>
+  </data>
+  <data name="_viewed" xml:space="preserve">
+    <value>Viewed</value>
+  </data>
+  <data name="_views" xml:space="preserve">
+    <value>Views</value>
+  </data>
+  <data name="_wallpaper" xml:space="preserve">
+    <value>Wallpaper</value>
+  </data>
+  <data name="_wallpapers" xml:space="preserve">
+    <value>Wallpapers</value>
+  </data>
+</root>

@@ -1,0 +1,150 @@
+﻿@model InfoViewModel
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Features> featureSettings
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Listing> listingSettings
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Registration> registrationSettings
+<div class="vdinfo">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="vsminfo">
+                @{
+                    var userlink = UserUrlConfig.ProfileUrl(Model.Author, registrationSettings.Value.uniqueFieldOption);
+                    var desc = UtilityBLL.StripHTML(Model.Description);
+                    if (desc.Length > 100)
+                    {
+                        desc = desc.Substring(0, 100);
+                    }
+                }
+                <p class="m-b-5">
+                    @Model.PostedCaption @UtilityBLL.Generate_Date(Model.Created_at, 1) by
+                    <a href="@userlink">@UserBLL.prepareUserName(Model.Author)</a>
+                </p>
+
+                @if (desc == "")
+                {
+                    <p class="m-b-5">
+                        @GeneralResource["_no_description"]
+                    </p>
+                }
+                else
+                {
+                    <p class="m-b-5">@Html.Raw(desc)</p>
+                }
+            </div>
+            <div class="vfullinfo" style="display:none;">
+                <p class="m-b-5">
+                    @Model.PostedCaption @UtilityBLL.Generate_Date(Model.Created_at, 1) by
+                    <a href="@userlink">@UserBLL.prepareUserName(Model.Author)</a>
+                </p>
+                @if (Model.Description == "")
+                {
+                    <p class="m-b-5">
+                        @GeneralResource["_no_description"]
+                    </p>
+                }
+                else
+                {
+                    <p class="m-b-5">@Html.Raw(Model.Description)</p>
+                }
+
+                @{
+                    var counter = 0;
+                }
+                @if (Model.Category.Count > 0)
+                {
+                    @GeneralResource["_file_under"]
+                    <p class="m-b-5">
+
+                        @foreach (var category in Model.Category)
+                        {
+                            if (counter > 0)
+                            {
+                                @Html.Raw(", ")
+                            }
+                            <a href="@CategoryUrlConfig.PrepareUrl(category.category.term, Model.Path)"
+                               title="@category.category.title">@category.category.title</a>
+                            counter++;
+                        }
+                    </p>
+                }
+
+                @if (Model.Tags != "")
+                {
+                    <p class="m-b-5">
+                        @GeneralResource["_tags"]
+                        @{
+                            counter = 0;
+                            var tag_list = Model.Tags.ToString().Split(char.Parse(","));
+                            foreach (var tag in tag_list)
+                            {
+                                if (counter > 0)
+                                {
+                                    @Html.Raw(", ")
+                                }
+                                <a href="@TagUrlConfig.PrepareUrl(tag, Model.Path)" title="@tag">@tag</a>
+                                counter++;
+                            }
+                        }
+                    </p>
+                }
+
+            </div>
+        </div>
+
+
+        @if (listingSettings.Value.enable_likedislike)
+        {
+            int totalratings = Model.Liked + Model.Disliked;
+            int per = 0;
+            if (Model.Disliked == 0)
+            {
+                per = 100;
+            }
+            else if (Model.Liked > 0 && Model.Disliked > 0)
+            {
+                per = (int)((Model.Liked * 100) / totalratings);
+            }
+            int invper = 100 - per;
+
+            <div class="col-md-4">
+                @if (Model.Liked > 0 || Model.Disliked > 0)
+                {
+                    <div class="m-b-5">
+                        <div class="progress">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: @invper%"
+                                 aria-valuenow="@invper" aria-valuemin="0" aria-valuemax="100"></div>
+                            <div class="progress-bar bg-success" role="progressbar" style="width: @per"
+                                 aria-valuenow="@per" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                    string like = "0";
+                    if (Model.Liked > 0)
+                    {
+                        like = string.Format("{0:#,###}", Model.Liked);
+                    }
+
+                    string dislike = "0";
+                    if (Model.Disliked > 0)
+                    {
+                        dislike = string.Format("{0:#,###}", Model.Disliked);
+                    }
+
+                    <span class="m-b-5">@like @GeneralResource["_likes"], @dislike  @GeneralResource["_dislikes"]</span>
+                }
+            </div>
+
+        }
+
+    </div>
+    <div class="m-t-10 m-b-10 text-center">
+
+        <button class="btn btn-default btn-sm vinfobtn">
+            <i class="fa fa-chevron-circle-down vinfoico"></i>
+            <span class="vinfotxt">@GeneralResource["_showmore"]</span>
+        </button>
+
+    </div>
+</div>
+
+

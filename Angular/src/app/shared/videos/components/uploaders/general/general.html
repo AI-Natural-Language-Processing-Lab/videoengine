@@ -1,0 +1,157 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="m-b-0">{{formHeading}}</h4>
+      </div>
+     
+      <div class="card-body">
+        <div class="row  justify-content-md-center">
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <div *ngIf="(settings$ | async).videos">
+              <!-- Admin Uploaders-->
+              <div *ngIf="isAdmin">
+                <div
+                  class="m-t-10 text-center"
+                  *ngIf="(settings$ | async).videos.aws.enable_admin"
+                >
+                  <button
+                    [routerLink]="[route_path + 'aws']"
+                    class="btn btn-lg btn-success btn-block text-center m-b-10"
+                  >
+                    Upload Videos [AWS]
+                  </button>
+                  <!--<p>Upload, transcode and process videos via AWS Webservices</p>-->
+                </div>
+                <div
+                  class="m-t-10"
+                  *ngIf="(settings$ | async).videos.direct.enable_admin"
+                >
+                  <button
+                    [routerLink]="[route_path + 'directuploader/0']"
+                    class="btn btn-lg  btn-block btn-success text-center m-b-5"
+                  >
+                    Upload Videos [Direct]
+                  </button>
+                  <!--<p>Upload mp4 videos directly without transcoding</p>-->
+                </div>
+                <div
+                  class="m-t-10"
+                  *ngIf="(settings$ | async).videos.youtube.enable_admin"
+                >
+                  <button
+                    [routerLink]="[route_path + 'youtube']"
+                    class="btn btn-lg  btn-block btn-success text-center m-b-10"
+                  >
+                    Upload Youtube Videos
+                  </button>
+                  <!--<p>Fetch and host your youtube videos</p>-->
+                </div>
+                <div
+                  class="m-t-10"
+                  *ngIf="(settings$ | async).videos.ffmpeg.enable_admin"
+                >
+                  <button
+                    [routerLink]="[route_path + 'ffmpeg']"
+                    class="btn btn-lg  btn-block btn-success text-center m-b-10"
+                  >
+                    Upload Videos [FFMPEG]
+                  </button>
+                  <!--<p>Upload and process videos via open-source ffmpeg encoder.</p>-->
+                </div>
+                <div
+                  class="m-t-10"
+                  *ngIf="(settings$ | async).videos.movie.enable_admin"
+                >
+                  <button
+                    [routerLink]="[route_path + 'movie']"
+                    class="btn btn-lg  btn-block btn-success text-center m-b-10"
+                  >
+                    Upload Movie
+                  </button>
+                  <!--<p>Upload and process videos via open-source ffmpeg encoder.</p>-->
+                </div>
+                <div
+                  class="m-t-10"
+                  *ngIf="(settings$ | async).videos.movie.enable_embed_admin"
+                >
+                  <button
+                    [routerLink]="[route_path + 'embed']"
+                    class="btn btn-lg  btn-block btn-success text-center m-b-10"
+                  >
+                    Embed Video / Movie
+                  </button>
+                  <!--<p>Upload and process videos via open-source ffmpeg encoder.</p>-->
+                </div>
+              </div>
+
+              <!-- Account Uploaders -->
+              <div *ngIf="!isAdmin">
+                <div
+                  class="m-t-10 text-center"
+                  *ngIf="(settings$ | async).videos.aws.enable"
+                >
+                  <button
+                    [routerLink]="[route_path + 'aws']"
+                    class="btn btn-lg btn-success btn-block text-center m-b-10"
+                  >
+                    Upload Videos
+                  </button>
+                  <!--<p>Upload, transcode and process videos via AWS Webservices</p>-->
+                </div>
+                <div class="m-t-10" *ngIf="(settings$ | async).videos.direct.enable">
+                  <button
+                    [routerLink]="[route_path + 'directuploader/0']"
+                    class="btn btn-lg  btn-block btn-success text-center m-b-5"
+                  >
+                    Upload Videos
+                  </button>
+                  <!--<p>Upload mp4 videos directly without transcoding</p>-->
+                </div>
+                <div class="m-t-10" *ngIf="(settings$ | async).videos.youtube.enable">
+                  <button
+                    [routerLink]="[route_path + 'youtube']"
+                    class="btn btn-lg  btn-block btn-success text-center m-b-10"
+                  >
+                    Upload Youtube Videos
+                  </button>
+                  <!--<p>Fetch and host your youtube videos</p>-->
+                </div>
+                <div class="m-t-10" *ngIf="(settings$ | async).videos.ffmpeg.enable">
+                  <button
+                    [routerLink]="[route_path + 'ffmpeg']"
+                    class="btn btn-lg  btn-block btn-success text-center m-b-10"
+                  >
+                    Upload Videos
+                  </button>
+                  <!--<p>Upload and process videos via open-source ffmpeg encoder.</p>-->
+                </div>
+                <div class="m-t-10" *ngIf="(settings$ | async).videos.movie.enable">
+                  <button
+                    [routerLink]="[route_path + 'movie']"
+                    class="btn btn-lg  btn-block btn-success text-center m-b-10"
+                  >
+                    Upload Movie
+                  </button>
+                  <!--<p>Upload and process videos via open-source ffmpeg encoder.</p>-->
+                </div>
+                <div
+                  class="m-t-10"
+                  *ngIf="(settings$ | async).videos.movie.enabled_embed"
+                >
+                  <button
+                    [routerLink]="[route_path + 'embed']"
+                    class="btn btn-lg  btn-block btn-success text-center m-b-10"
+                  >
+                    Embed Video / Movie
+                  </button>
+                  <!--<p>Upload and process videos via open-source ffmpeg encoder.</p>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

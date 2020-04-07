@@ -1,0 +1,171 @@
+﻿body {
+    background: #fff;
+    margin-top: 60px;
+    overflow-x: hidden;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+    background: #ffffff;
+}
+
+#footer .top {
+    background-color: #212834;
+    padding: 40px;
+    color: #fdfdfd;
+}
+
+#footer h3 {
+    color: #fdfdfd;
+    margin-bottom:3px;
+}
+
+#footer hr {
+    border: solid 1px #2a3444;
+    margin: 5px 0px;
+}
+
+#footer p {
+    color: #d3d3d3;
+}
+
+#footer .nav {
+    list-style-type: none;
+    margin: 10px 0px 0px 0px;
+    padding: 0;
+    text-align: center;
+}
+
+#footer .nav li a {
+    display: inline;
+    padding: 3px 20px;
+    color: #dddddd;
+    font-size: 108%;
+    padding: 3px 20px;
+}
+
+#footer .nav.sm {
+   margin:0px;
+   text-align:right;
+}
+
+#footer .nav.sm li a {
+    font-size:93%;
+    padding:0px 5px;
+}
+
+#footer .nav li .separator {
+    display: inline;
+    padding: 3px 5px;
+    color: #dddddd;
+    font-size: 108%;
+}
+#footer .nav.sm li .separator {
+    padding: 3px 5px;
+    font-size: 93%;
+}
+
+#footer .bottom {
+    background-color: #1a202a;
+    padding: 10px 15px;
+    font-size: 93%;
+    color: #d3d3d3
+}
+#footer .bottom a {
+    color: #fdfdfd;
+}
+/*******************
+Text Colors
+*******************/
+.text-white {
+    color: #ffffff !important;
+}
+
+.text-danger {
+    color: #fc4b6c !important;
+}
+
+.text-muted {
+    color: #99abb4 !important;
+}
+
+.text-warning {
+    color: #ffb22b !important;
+}
+
+.text-success {
+    color: #26c6da !important;
+}
+
+.text-info {
+    color: #1e88e5 !important;
+}
+
+.text-inverse {
+    color: #2f3d4a !important;
+}
+
+/* List Item */
+.list-item {
+    padding:3px;
+    margin-bottom:7px;
+}
+
+.item-hover:hover {
+    background: #f4f4f4;
+}
+
+.item-content {
+    min-height: 110px;
+}
+
+.item-title {
+    font-weight:bold;
+}
+
+.item-light {
+    font-size: 93%;
+}
+
+/* qa item */
+.qa-item {
+    margin-bottom: 20px;
+}
+.qa-item .title {
+    font-size: 24px;
+    font-weight: normal;
+}
+.qa-item .light {
+    font-size: 93%;
+}
+
+.qa-item .highlight {
+    font-size: 93%;
+}
+
+/* frm items */
+.frm-category {
+   font-size: 22px;
+   font-weight:bold;
+   color: #fc4b6c;
+}
+
+.frm-head {
+    font-size: 18px;
+    font-weight:bold;
+}
+
+.frm-light {
+    color: #949494;
+}
+
+.frm-light a {
+    text-decoration: underline;
+}
+
+.bold {
+    font-weight:bold;
+}
+
+

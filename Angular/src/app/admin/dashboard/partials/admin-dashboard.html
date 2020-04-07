@@ -1,0 +1,19 @@
+<div class="row m-t-10 m-t-20" style="min-height: 500px;">
+  <div class="col-md-6 col-sm-12">
+    <div *ngIf="(configs$ | async).general.features.enable_videos">
+      <app-smvideo-list
+        [row_class]="'col-md-4 col-sm-6 col-xs-12'"
+        [pagesize]="3"
+        [type]="0"
+        [mediaType]="0"
+        [isAdmin]="isAdmin"
+        [title]="'Recent Videos'"
+        [browse_url]="'/videos'"
+      ></app-smvideo-list>
+    </div>
+
+  </div>
+  <div class="col-md-6 col-sm-12">
+
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<h3 class="m-b-10 m-t-10">Uploaded Videos</h3>
+<hr />
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-bordered">
+      <tr *ngFor="let video of videos; let i = index">
+        <td style="width:5%;">
+          {{ i + 1 }}
+        </td>
+        <td style="width: 90%;">
+          {{ video.fname }}
+        </td>
+        <td style="width: 5%;">
+          <a (click)="remove(video, i, $event); (false)"
+            ><i class="fa fa-close text-danger" aria-hidden="true"></i
+          ></a>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

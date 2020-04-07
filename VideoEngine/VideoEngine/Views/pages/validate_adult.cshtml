@@ -1,0 +1,48 @@
+﻿
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@{
+
+    var _bModel = new List<BreadItem>();
+    _bModel.Add(new BreadItem()
+    {
+        title = GeneralResource["_home"].Value,
+        url = Config.GetUrl()
+    });
+    _bModel.Add(new BreadItem()
+    {
+        title = GeneralResource["_adult_warning"].Value,
+        isActive = true
+    });
+    var BreadCrumbViewModel = new BreadViewModel()
+    {
+        BreadItems = _bModel
+    };
+}
+<partial name="~/Views/Shared/_BreadCrumb.cshtml" model="BreadCrumbViewModel" />
+
+
+<div class="row">
+    <div class="col-md-6 mx-auto">
+        <div class="card m-t-40 m-b-40">
+            <div class="card-header">
+                <h3 class="mb-10"> @GeneralResource["_adult_warning"]</h3>
+            </div>
+            <div class="card-body">
+                @GeneralResource["_adult_warning_msg"]
+            </div>
+            <div class="card-footer">
+                @using (Html.BeginForm("validateadult", "Home", FormMethod.Post, new { role = "form" }))
+                {
+                    <button class="btn btn-primary" name="submit" value="enter">
+                        @GeneralResource["_enter"].Value
+                    </button>
+                    <button class="btn btn btn-danger" name="submit" value="cancel">
+                        @GeneralResource["_cancel"].Value
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+

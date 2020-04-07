@@ -1,0 +1,110 @@
+<div class="card">
+  <div class="card-body">
+    <h3>{{ Info.title }}</h3>
+
+    <div clas="m-t-10 m-b-10">
+      <div *ngIf="Info.player.url !== null">
+        <video style="width:100%; height: auto;" controls>
+          <source src="{{ Info.player.url }}" type="video/mp4" />
+        </video>
+      </div>
+
+      <iframe
+        *ngIf="Info.youtubeid !== null"
+        width="800"
+        height="640"
+        [src]="Info.player.youtubeid"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <hr />
+    <div [innerHTML]="Info.description"></div>
+    <hr />
+    <p>
+      Author:
+      <a [routerLink]="['/users/profile/' + Info.author.id]"
+        >{{ Author_FullName }} - ({{ Info.username }})</a
+      >
+    </p>
+    <p>
+      Uploaded: <span class="text-muted"><i class="fa fa-clock-o"></i></span>
+      {{ Info.created_at | date: "fullDate" }}
+    </p>
+    <hr />
+    <div *ngIf="Info.category_list.length > 0">
+      <div class="m-b-10">
+        Categories
+      </div>
+      <div class="m-b-10">
+        <span *ngFor="let item of Info.category_list">
+          <a
+            class="btn btn-info  m-r-5"
+            [routerLink]="['/blogs/category/' + item.category.term]"
+            >{{ item.category.title }}</a
+          >
+        </span>
+      </div>
+      <hr />
+    </div>
+    <div *ngIf="Info.tags_arr.length > 0">
+      <div class="m-b-10">
+        Tags:
+      </div>
+      <span *ngFor="let tag of Info.tags_arr">
+        <a
+          class="btn btn-danger  m-r-5"
+          [routerLink]="['/videos/tag/' + tag.slug]"
+          >{{ tag.title }}</a
+        >
+      </span>
+    </div>
+    <hr />
+
+    <a class="btn btn-primary" [routerLink]="['/videos/user/' + Info.username]"
+      >Browse all {{ Info.username }} videos...</a
+    >
+
+    <hr />
+
+    <p>Views: {{ Info.views }}</p>
+    <p>Liked: {{ Info.liked }}</p>
+    <hr />
+    <div>
+      <span class="badge badge-danger  m-r-5" *ngIf="Info.isenabled == 0"
+        >Blocked</span
+      >
+      <span class="badge badge-success  m-r-5" *ngIf="Info.isenabled == 1"
+        >Active</span
+      >
+      <span class="badge badge-info  m-r-5" *ngIf="Info.isapproved == 1"
+        >Approved</span
+      >
+      <span class="badge badge-warning  m-r-5" *ngIf="Info.isapproved == 0"
+        >Under Review</span
+      >
+      <span class="badge badge-primary  m-r-5" *ngIf="Info.isfeatured == 1"
+        >Featured</span
+      >
+      <span class="badge badge-primary  m-r-5" *ngIf="Info.isfeatured == 0"
+        >Not Featured</span
+      >
+      <span class="badge badge-danger  m-r-5" *ngIf="Info.isadult == 1"
+        >Adult</span
+      >
+      <span class="badge badge-danger  m-r-5" *ngIf="Info.isprivate == 1"
+        >Restrited</span
+      >
+      <span class="badge badge-warning  m-r-5" *ngIf="Info.isprivate == 2"
+        >Unlisted</span
+      >
+      <span class="badge badge-success  m-r-5" *ngIf="Info.isprivate == 0"
+        >Public</span
+      >
+    </div>
+    <div class="m-b-10 m-t-10">
+      <button class="btn btn-danger" (click)="edit()">Edit</button>
+    </div>
+  </div>
+</div>

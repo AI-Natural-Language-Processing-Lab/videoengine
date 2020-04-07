@@ -1,0 +1,273 @@
+﻿@model ActionViewModel
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+@using System.Text
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
+
+<div id="vsk_action_mod" class="m-t-20 m-b-20">
+
+    @{
+        Model.Ratingtype = 0;
+        var str = new StringBuilder();
+        string like_css = " likeact";
+        string dislike_css = " dislikeact";
+        //string playlist_css = " plyact";
+        string fav_css = " favact";
+        string flag_css = " flagact";
+        if (!User.Identity.IsAuthenticated)
+        {
+            //if (Config.isLoginRequired_Rating())
+            //{
+            // admin can toggle on | off login required option
+            like_css = " nologincss";
+            dislike_css = " nologincss";
+            // }
+            // playlist_css = " nologincss";
+            fav_css = " nologincss";
+            flag_css = " nologincss";
+        }
+        else
+        {
+            Model.Current_UserName = UserManager.GetUserId(User);
+        }
+        string _rootpath = Config.GetUrl();
+
+        string rating_handler_path = "";
+        string rating_parameters = "";
+        //if (Model.isRating == 1)
+        //{
+        // if rating enabled for selected content
+        rating_handler_path = _rootpath + "handler/like";
+        rating_parameters = "t=" + Model.Type + "&mtp=" + Model.MediaType + "&id=" + Model.ContentID + "&usr=" + Model.Current_UserName + "&lk=" + Model.Liked + "&dlk=" + Model.Disliked + "&rtype=" + Model.Ratingtype + "&ratings=" + Model.Ratings + "&aratings=" + Model.Avg_Ratings + "&tratings=" + Model.TotalRatings;
+        //}
+        string btn_size_css = "mb-sm";
+        switch (Model.ToolbarSize)
+        {
+            case 0:
+                btn_size_css = "btn-xs";
+                break;
+            case 1:
+                btn_size_css = "mb-sm";
+                break;
+            case 2:
+                btn_size_css = "btn-lg";
+                break;
+        }
+        string btn_theme_css = "btn btn-secondary";
+        string btn_icon_css = "";
+        if (Model.ToolbarTheme > 0)
+        {
+            btn_icon_css = " white";
+            switch (Model.ToolbarTheme)
+            {
+                case 1:
+                    btn_theme_css = "btn-primary ";
+                    break;
+                case 2:
+                    btn_theme_css = "btn-warning ";
+                    break;
+                case 3:
+                    btn_theme_css = "btn-danger ";
+                    break;
+                case 4:
+                    btn_theme_css = "btn-info ";
+                    break;
+                case 5:
+                    btn_theme_css = "btn-secondary ";
+                    break;
+                case 6:
+                    btn_theme_css = "btn-success ";
+                    break;
+            }
+        }
+    }
+    <div class="row">
+        <div class="col-md-9">
+            <div class="btn-toolbar actionbar">
+                @if (Model.Ratingtype == 0)
+                {
+                    string _disabled = "";
+                    if (Model.isRating == 0)
+                    {
+                        _disabled = " disabled";
+                    }
+                    <div class="btn-group m-r-5">
+                        <button id="lk_0" class="btn @btn_theme_css @btn_size_css @like_css ilike" data-path="@rating_handler_path" data-param="@rating_parameters" title="@GeneralResource["_Ilikethis"].Value @_disabled">
+                            <i class=" fa fa-thumbs-o-up">
+                            </i>&nbsp;@GeneralResource["_like"].Value
+                        </button>
+                        <button id="lk_1" class="btn @btn_theme_css @btn_size_css  @dislike_css idislike" data-path="@rating_handler_path" data-param="@rating_parameters" title="@GeneralResource["_Idislikethis"].Value @_disabled"><i class="fa fa-thumbs-o-down"></i></button>
+                    </div> // --> Like / Dislike Button Group
+                }
+                else
+                {
+                    // five star rating system.
+                    <div class="btn-group m-t-5 m-r-10">
+                        @{
+                            var frating = " rcss";
+                            var first_title = "1 " + GeneralResource["_out_of"].Value + " 5";
+
+                            var second_title = "2 " + GeneralResource["_out_of"].Value + " 5";
+
+                            var third_title = "3 " + GeneralResource["_out_of"].Value + " 5";
+
+                            var fourth_title = "4 " + GeneralResource["_out_of"].Value + " 5";
+
+                            var fifth_title = "5 " + GeneralResource["_out_of"].Value + " 5";
+                            if (Model.isRating == 0)
+                            {
+                                <p>Rating Disabled!</p>
+                            }
+                            else
+                            {
+                                <ul class='star-rating'>
+                                    <li class='current-rating' data-path="@rating_handler_path" data-param="@rating_parameters" data-average="@Model.Avg_Ratings" data-totalratings="@Model.TotalRatings" data-ratings="@Model.Ratings" style="width: @Html.Raw(Config.Calculate_Ratings(Model.Avg_Ratings) + "px;")">Currently @Math.Round(Model.Avg_Ratings, 2) /5 Stars.</li>
+                                    <li><a href='#' title="@first_title" data-value="1" data-toggle="tooltip" class="one-star @frating">1</a></li>
+                                    <li><a href='#' title="@second_title" data-value="2" data-toggle="tooltip" class="two-stars @frating">2</a></li>
+                                    <li><a href='#' title="@third_title" data-value="3" data-toggle="tooltip" class="three-stars @frating">3</a></li>
+                                    <li><a href='#' title="@fourth_title" data-value="4" data-toggle="tooltip" class="four-stars @frating">4</a></li>
+                                    <li><a href='#' title="@fifth_title" data-value="5" data-toggle="tooltip" class="five-stars @frating">5</a></li>
+                                </ul>
+                            }
+                        }
+
+
+                    </div>
+                }
+                @if (Model.isFavorites || Model.isDownload)
+                {
+                    // show Model option if playlist or favorite is on
+                    <div class="btn-group">
+                        <div class="dropdown">
+                            <button class="btn @btn_theme_css @btn_size_css dropdown-toggle m-r-5" id="addtofaoritedrp" data-toggle="dropdown" title="Add to playlist or favorites">Add to <span class="caret"></span></button>
+                            <div class="dropdown-menu" aria-labelledby="addtofaoritedrp">
+                                @if (Model.isFavorites)
+                                {
+                                    int favtype = 0;
+                                    if (Model.Type == 9) // gallery or album
+                                    {
+                                        favtype = 2;
+                                    }
+                                    string favorite_handler_path = _rootpath + "handler/favorites";
+                                    string favorite_parameters = "id=" + Model.ContentID + "&usr=" + Model.Current_UserName + "&ausr=" + Model.UserName + "&mtp=" + Model.MediaType + "&favt=" + Model.Favorites + "&ftype=" + favtype;
+
+                                    <a class="dropdown-item @fav_css" data-path="@favorite_handler_path" data-param="@favorite_parameters" href="#">
+                                        @GeneralResource["_add_to_favorites"].Value
+                                    </a>
+
+                                }
+
+                                @if (Model.isPlaylist)
+                                {
+                                    string playlist_handler_path = _rootpath + "handler/playlist";
+                                    string playlist_parameters = "id=" + Model.ContentID + "&usr=" + Model.Current_UserName + "&ausr=" + Model.UserName + "&mtp=" + Model.MediaType;
+
+                                    @*<a class="dropdown-item @fav_css" data-path="@playlist_handler_path" data-param="@playlist_parameters" href="#">
+                                            @GeneralResource["_add_to_playlist"].Value
+                                        </a>*@
+
+                                }
+
+                                @if (Model.isDownload)
+                                {
+
+                                    <a class="dropdown-item" href="@Config.GetUrl("videos/download/?id=" + Model.ContentID)">
+                                        @GeneralResource["_download"] @Model.Content_Type
+                                    </a>
+
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (Model.isShare || Model.isEmbed)
+                {
+                    string share_path = _rootpath + "handler/share";
+                    string share_parameters = "tp=" + Model.Content_Type;
+                    string embed_parameters = "";
+                    string embed_path = "";
+
+                    if (Model.isAlbumEmbed)
+                    {
+                        embed_parameters = "cid=" + Model.ContentID;
+                        embed_path = _rootpath + "handler/embedalbum";
+                    }
+                    else if (Model.isPhotoEmbed)
+                    {
+                        embed_parameters = "cid=" + Model.ContentID;
+                        embed_path = _rootpath + "handler/embedphoto";
+                    }
+                    else
+                    {
+                        embed_path = _rootpath + "handler/embedvideo";
+                        embed_parameters = "cid=" + Model.ContentID;
+                    }
+                    <div class="btn-group">
+                        @if (Model.isEmbed && Model.isPhotoEmbed)
+                        {
+                            <button class="btn @btn_theme_css @btn_size_css m-r-5 iembed" data-path="@embed_path" data-param="@embed_parameters" title="Get @Model.Content_Type url">
+                                @GeneralResource["_embed_code"]
+                            </button>
+                        }
+                        else if (Model.isEmbed && Model.isAlbumEmbed)
+                        {
+                            <button class="btn @btn_theme_css @btn_size_css m-r-5 iembed" data-path="@embed_path" data-param="@embed_parameters" title="Get @Model.Content_Type embed code">
+                                @GeneralResource["_embed_code"]
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="btn @btn_theme_css @btn_size_css m-r-5 iembed" data-path="@embed_path" data-param="@embed_parameters" title="@GeneralResource["_embed_this"].Value @Model.Content_Type">@GeneralResource["_get_embed_code"].Value</button>
+                        }
+
+                        @if (Model.isShare)
+                        {
+                            <button class=" btn @btn_theme_css @btn_size_css m-r-5 ishare" data-path="@share_path" data-param="@share_parameters" title="@GeneralResource["_share_or_embed"].Value @Model.Content_Type">@GeneralResource["_share"].Value</button>
+                        }
+                    </div>
+                }
+                @if (Model.isFlag)
+                {
+                    string flag_post_path = _rootpath + "handler/flag";
+                    string flag_post_parameters = "t=" + Model.Type + "&id=" + Model.ContentID + "&usr=" + Model.UserName + "&mtp=" + Model.MediaType;
+
+                    <div class="btn-group">
+                        <button class="btn @btn_theme_css @btn_size_css @flag_css @btn_icon_css" data-path="@flag_post_path" data-param="@flag_post_parameters" title="@GeneralResource["_flag_as_inappropriate"].Value"><i class="fa fa-flag-o"></i></button>
+                    </div>
+                }
+
+                @if (Model.PhotoOptions)
+                {
+                    <div class="btn-group">
+                        <a href="@Model.PhotoDownloadLink" class="btn @btn_theme_css @btn_size_css  m-r-5" title="@GeneralResource["_resize_and_download"].Value">@GeneralResource["_download"].Value</a>
+                    </div>
+                }
+
+            </div>
+        </div>
+        <div class="col-md-3">
+            @if (Model.isViews)
+            {
+                string _views = "0";
+                if (Model.Views > 0)
+                {
+                    _views = string.Format("{0:#,###}", Model.Views);
+                }
+
+                <div class="float-right m-t-5">
+                    <span style="font-size:18px;" class="text-right">@_views @GeneralResource["_views"].Value</span>
+                </div>
+            }
+        </div>
+    </div>
+
+
+    <div id="actionbar_msg" class="m-t-10">
+    </div>
+    <div class="abox m-t-20 m-b-20">
+    </div>
+</div>
+
+

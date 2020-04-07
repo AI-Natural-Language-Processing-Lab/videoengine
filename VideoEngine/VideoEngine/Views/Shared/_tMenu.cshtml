@@ -1,0 +1,30 @@
+﻿@inject IStringLocalizer<GeneralResource> GeneralResource
+
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Features> featureSettings
+<div class="nav-main">
+    <div class="flexnav-menu-button" id="flexnav-menu-button">Menu</div>
+    <nav>
+        <ul class="nav nav-pills flexnav" id="flexnav" data-breakpoint="800">
+            <li class="@ViewBag.HomeTabCss">
+                <a href="@Config.GetUrl()">@GeneralResource["_home"].Value</a>
+            </li>
+            <li class="@ViewBag.VideoTabCss">
+                <a href="@Config.GetUrl("videos/")">@GeneralResource["_recent"].Value</a>
+            </li>
+            <li class="@ViewBag.MostViewedTabCss">
+                <a href="@Config.GetUrl("videos/mostviewed")">@GeneralResource["_most_viewed"].Value</a>
+            </li>
+            <li class="@ViewBag.TopRatedTabCss">
+                <a href="@Config.GetUrl("videos/toprated")">@GeneralResource["_top_rated"].Value</a>
+            </li>
+            <li class="@ViewBag.FeaturedTabCss">
+                <a href="@Config.GetUrl("videos/featured")">@GeneralResource["_featured"].Value</a>
+            </li>
+            <li class="@ViewBag.CategoriesTabCss">
+                <a href="@Config.GetUrl("videos/categories")">@GeneralResource["_categories"].Value</a>
+            </li>
+        </ul>
+
+    </nav>
+</div>
+

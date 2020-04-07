@@ -1,0 +1,20 @@
+<div class="row m-b-5" *ngFor="let item of options; let j = index">
+  <div class="col-md-11">
+    <input
+      type="text"
+      placeholder="Enter Option..."
+      class="form-control"
+      [(ngModel)]="item.value"
+      (input)="onSearchChange(item.id, $event.target.value)"
+    />
+  </div>
+  <div class="col-md-1">
+    <a href="#" (click)="removeOption(item, j, $event); false">
+      <i class="fa fa-close text-danger"></i
+    ></a>
+  </div>
+</div>
+
+<div class="m-b-5">
+  <a href="#" (click)="AddOption($event); false" class="btn btn-success">Add Option</a>
+</div>

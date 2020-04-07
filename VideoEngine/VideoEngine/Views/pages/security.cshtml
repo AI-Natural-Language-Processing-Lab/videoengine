@@ -1,0 +1,59 @@
+﻿@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+@{
+
+    var _bModel = new List<BreadItem>();
+    _bModel.Add(new BreadItem()
+    {
+        title = GeneralResource["_home"].Value,
+        url = Config.GetUrl()
+    });
+    _bModel.Add(new BreadItem()
+    {
+        title = GeneralResource["_security"].Value,
+        isActive = true
+    });
+    var BreadCrumbViewModel = new BreadViewModel()
+    {
+        BreadItems = _bModel
+    };
+}
+<partial name="~/Views/Shared/_BreadCrumb.cshtml" model="BreadCrumbViewModel" />
+
+
+<div class="row">
+    <div class="col-md-8">
+        <h2 class="m-b-10">@GeneralResource["_security"].Value</h2>
+        <p>
+            @generalSettings.Value.website_title takes the security of your data and our service very seriously.
+            We are committed to providing an environment that is safe, secure, and available to all of our customers.
+        </p>
+        <p>
+            Read through the pages in this section to learn more about your
+            rights under the EU General Data Protection Regulation (GDPR), how we use cookies, and more.
+
+        </p>
+        <h3>Questions</h3>
+        <p>
+            If you have any security related questions, or have discovered a vulnerability,
+            we would love to hear from you. Our preferred method is for you to open a support ticket by contacting customer support <a href="/contact">here</a>.
+        </p>
+
+        <small>
+            Effective as of 10-01-2019
+        </small>
+    </div>
+    <div class="col-md-4">
+        <ul>
+            <li><a href="/terms-of-use">@GeneralResource["_terms_of_service"].Value</a></li>
+            <li><a href="/privacy">@GeneralResource["_privacy_policy"].Value</a></li>
+        </ul>
+        <hr />
+        <ul>
+            <li><a href="~/security">@GeneralResource["_security"].Value</a></li>
+            <li><a href="/gdpr">@GeneralResource["_gdpr_faq"].Value</a></li>
+            <li><a href="/cookies">@GeneralResource["_cookies"].Value</a></li>
+            <li><a href="/thirdparties">@GeneralResource["_thirdparty_policy"].Value</a></li>
+        </ul>
+    </div>
+</div>

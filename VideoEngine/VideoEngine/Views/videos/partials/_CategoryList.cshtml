@@ -1,0 +1,123 @@
+﻿@model Jugnoon.Models.CategoryListViewModel_v2
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Jugnoon.Framework.ApplicationDbContext _context
+@using  Jugnoon.Videos;
+@*
+    Category Listing Module Designed for Videos / Audio Files
+    It support short listing and complete listing with pagination.
+*@
+
+@{
+    Model.TotalRecords = await CategoryBLL.Count(_context, Model.QueryOptions);
+    if (Model.TotalRecords > 0)
+        Model.DataList = await CategoryBLL.LoadItems(_context, Model.QueryOptions);
+}
+
+@if (Model.TotalRecords == 0)
+{
+    if (Model.NoRecordFoundText != "")
+    {
+        @await Html.PartialAsync("~/Views/partials/utility/_norecord.cshtml", new NoRecordModelView() { Message = Model.NoRecordFoundText })
+    }
+}
+else
+{
+    <div class="row">
+
+        @foreach (var Item in Model.DataList)
+        {
+            <div class="@Model.ListObject.ColWidth">
+
+                <div class="list-item">
+                    <div class="m-b-5">
+                        @{
+                            string _title = Item.title;
+                            if (Model.ListObject.TitleLength > 0)
+                            {
+                                if (_title.Length > Model.ListObject.TitleLength)
+                                {
+                                    _title = _title.Substring(0, Model.ListObject.TitleLength) + "..";
+                                }
+                            }
+                        }
+                        <a class="item-title-bg" href="@CategoryUrlConfig.PrepareUrl(Item, Model.Path)">@_title</a>
+                    </div>
+                    @if (Model.display_thumbnail)
+                    {
+                        <div class="m-b-10">
+
+                            @await Html.PartialAsync("~/Views/partials/category/item/thumbnail.cshtml", new CategoryItemViewModel()
+                            {
+                                Data = Item,
+                                ListObject = Model.ListObject,
+                                ProfileUrl = CategoryUrlConfig.PrepareUrl(Item, Model.Path)
+                            })
+
+                        </div>
+                    }
+
+                    @if (Model.display_records)
+                    {
+                        <div>
+                            @await Html.PartialAsync("~/Views/videos/partials/_List_SM_01.cshtml", new Jugnoon.Videos.Models.VideoListViewModel()
+                            {
+                               BrowseUrl = CategoryUrlConfig.PrepareUrl(Item, Model.Path),
+                               BrowseText = GeneralResource["_see_all"].Value,
+                               ListObject = new Jugnoon.Scripts.ListItems()
+                               {
+                                  showTitle = false,
+                                  showUser = false,
+                                  showViews = false,
+                                  showDate = false,
+                                  showDuration = false,
+                                  ItemType = ItemType.Div,
+                                  ListType = ListType.Grid,
+                                  ColWidth = "col-md-4 col-xs-6",
+                                  isHover = false
+                              },
+                              QueryOptions = new VideoEntity()
+                              {
+                                  categoryid = Item.id,
+                                  order = "video.created_at desc",
+                                  ispublic = true,
+                                  iscache = true,
+                                  isfeatured = FeaturedTypes.All,
+                                  pagesize = 6,
+                                  type = MediaType.Videos
+                              }
+                           })
+                        </div>
+                    }
+
+                </div>
+            </div>
+        }
+
+        @if (!Model.shortList)
+        {
+            @* Pagination Enabled *@
+            if (generalSettings.Value.pagination_links > 0)
+            {
+                int maximum_allowed_records = generalSettings.Value.pagination_links * Model.TotalRecords;
+                if (Model.TotalRecords > maximum_allowed_records)
+                {
+                    Model.TotalRecords = maximum_allowed_records;
+                }
+            }
+            if (Model.TotalRecords > Model.QueryOptions.pagesize)
+            {
+                var _paginationEntity = new PaginationViewModel()
+                {
+
+                    pagenumber = Model.QueryOptions.pagenumber,
+                    TotalRecords = Model.TotalRecords,
+                    PageSize = Model.QueryOptions.pagesize,
+                    Default_Url = Model.DefaultUrl,
+                    Pagination_Url = Model.PaginationUrl
+                };
+                @await Html.PartialAsync("~/Views/partials/list/_Pagination.cshtml", _paginationEntity)
+            }
+        }
+    </div>
+}

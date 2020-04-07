@@ -1,0 +1,106 @@
+﻿@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject IStringLocalizer<VideoResource> VideoResource
+@using  Jugnoon.Videos;
+
+<div class="row" style="min-height:500px;">
+    <div class="col-md-9">
+        <div class="m-b-10">
+            @await Html.PartialAsync("~/views/videos/partials/_List_SM_01.cshtml", new Jugnoon.Videos.Models.VideoListViewModel()
+            {
+                  BrowseText = GeneralResource["_see_all"].Value,
+                  HeadingTitle = GeneralResource["Featured"].Value + " " + VideoResource["_videos"].Value,
+                  // NoRecordFoundText = VideoResource["_no_featured_videos"].Value,
+                  ListObject = new Jugnoon.Scripts.ListItems()
+                  {
+                      showUser = false,
+                      showViews = true,
+                      showDate = true,
+                      showDuration = true,
+                      ItemType = ItemType.Div,
+                      ListType = ListType.Grid,
+                      ColWidth = "col-md-4 col-xs-6",
+                      isHover = false
+                  },
+                  BrowseUrl = Config.GetUrl("videos/"),
+                  QueryOptions = new VideoEntity()
+                  {
+                      order = "video.created_at desc",
+                      ispublic = true,
+                      iscache = true,
+                      isfeatured = FeaturedTypes.Featured,
+                      pagesize = 6,
+                      type = MediaType.Videos
+                  }
+              })
+
+        </div>
+        <div class="m-b-10">
+
+            @await Html.PartialAsync("~/views/videos/partials/_List_SM_01.cshtml", new Jugnoon.Videos.Models.VideoListViewModel()
+            {
+                  BrowseText = GeneralResource["_see_all"].Value,
+                  HeadingTitle = GeneralResource["_recently_added"].Value + " " + VideoResource["_videos"].Value,
+                  NoRecordFoundText = VideoResource["_no_videos"].Value,
+                  ListObject = new Jugnoon.Scripts.ListItems()
+                  {
+                      showUser = false,
+                      showViews = true,
+                      showDate = true,
+                      showDuration = true,
+                      ItemType = ItemType.Div,
+                      ListType = ListType.Grid,
+                      ColWidth = "col-md-4 col-xs-6",
+                      isHover = false
+                  },
+                  BrowseUrl = Config.GetUrl("videos/"),
+                  QueryOptions = new VideoEntity()
+                  {
+                      order = "video.created_at desc",
+                      ispublic = true,
+                      iscache = true,
+                      isfeatured = FeaturedTypes.All,
+                      pagesize = 6,
+                      type = MediaType.Videos
+                  }
+              })
+
+        </div>
+
+        <div class="m-t-10">
+
+            @await Html.PartialAsync("~/Views/videos/partials/_CategoryList.cshtml", new CategoryListViewModel_v2()
+            {
+                QueryOptions = new CategoryEntity()
+                {
+                    type = (int)CategoryBLL.Types.Videos,
+                    ispublic = true,
+                    iscache = true,
+                    pagesize = 6,
+                    order = "priority desc",
+                },
+                ListObject = new ListItems()
+                {
+                    ListType = ListType.Grid,
+                    ColWidth = "col-md-12",
+                },
+                shortList = true,
+                display_thumbnail = false, // hide category thumbnail
+                display_records = true, // show category related records
+                Path = "videos/",
+                NoRecordFoundText = GeneralResource["_no_category"].Value
+            })
+
+        </div>
+
+    </div>
+    <div class="col-md-3">
+        @await Html.PartialAsync("~/Views/home/partials/_Nav.cshtml", new Jugnoon.Models.MainNavViewModel()
+        {
+           hideAds = false,
+           hideSearch = true,
+           hideArchives = false,
+           hideCategories = false,
+           hideTags = false
+        })
+    </div>
+</div>

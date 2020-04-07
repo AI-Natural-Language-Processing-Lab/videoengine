@@ -1,0 +1,17 @@
+﻿@model UserModelView
+@inject IStringLocalizer<GeneralResource> GeneralResource
+<div class="card">
+    <img class="card-img-top" src="@UserUrlConfig.ProfilePhoto(Model.UserName,Model.user.picturename,0)" alt="@Model.FullName" title="@Model.FullName" />
+    <div class="card-body">
+        <h5 class="card-title">@Model.FullName</h5>
+        <p class="card-text">
+            @Model.UserInfo
+            @if (Model.OwnProfile)
+            {
+                <a href="@Config.GetUrl("account/")" class="m-t-5 m-b-5 btn btn-default btn-sm">
+                    <i class="fa fa-edit"></i>&nbsp;@GeneralResource["_edit_profile"].Value
+                </a>
+            }
+        </p>
+    </div>
+</div>

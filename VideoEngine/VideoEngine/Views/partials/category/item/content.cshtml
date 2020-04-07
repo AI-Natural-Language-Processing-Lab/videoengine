@@ -1,0 +1,41 @@
+﻿@model Jugnoon.Models.CategoryItemViewModel
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@*
+    Item Content Processing
+*@
+
+@if (!Model.ListObject.PhotoOnly)
+{
+    <div class="">
+        @if (Model.ListObject.showTitle)
+        {
+            // process title
+            string _title = Model.Data.title;
+            if (Model.ListObject.TitleLength > 0)
+            {
+                if (_title.Length > Model.ListObject.TitleLength)
+                {
+                    _title = _title.Substring(0, Model.ListObject.TitleLength) + "..";
+                }
+            }
+            <div class="m-b-5 m-t-5">
+                <a class="item-title" href="@Model.ProfileUrl">@_title</a>
+            </div>
+        }
+        @if (Model.ListObject.showDescription)
+        {
+            string _desc = Model.Data.description;
+            if (Model.ListObject.descriptionlength > 0)
+            {
+                if (_desc.Length > Model.ListObject.descriptionlength)
+                {
+                    _desc = _desc.Substring(0, Model.ListObject.descriptionlength) + "..";
+                }
+            }
+            <div class="m-b-5">
+                @_desc
+            </div>
+        }
+
+    </div>
+}

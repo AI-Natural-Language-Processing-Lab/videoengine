@@ -1,0 +1,33 @@
+﻿@model CategoryListModelView
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject Jugnoon.Framework.ApplicationDbContext _context
+@{
+
+    var _list = await CategoryBLL.LoadItems(_context, new CategoryEntity()
+    {
+        type = Model.Type,
+        isenabled = EnabledTypes.Enabled,
+        iscache = true,
+        order = "title asc",
+        pagesize = Model.TotalRecords
+    });
+    if (_list.Count > 0)
+    { <div class="box">
+            <h3 class="m-b-10">@Model.HeadingTitle</h3>
+            <ul class="horizontal_nav">
+                @foreach (var Item in _list)
+                {
+                    <li class="m-b-5"><a class="item-title-sm" href="@CategoryUrlConfig.PrepareUrl(Item, Model.Path)">@Item.title</a></li>
+                }
+                @if (_list.Count >= Model.TotalRecords)
+                {
+                    <li class="m-b-5"><a class="item-title-sm" href="@CategoryUrlConfig.BrowseAllUrl(Model.Path)">@GeneralResource["_see_all"].Value</a></li>
+                }
+
+            </ul>
+        </div>
+    }
+}
+
+
+

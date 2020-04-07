@@ -1,0 +1,15 @@
+﻿@model UserModelView
+@inject IStringLocalizer<GeneralResource> GeneralResource
+<div class="m-t-10">
+
+    <ul class="list-group">
+        <li class="list-group-item">@GeneralResource["_name"]: @Model.FullName</li>
+        <li class="list-group-item">@GeneralResource["_profile_views"]: @string.Format("{0:#,###}", Model.user.views)</li>
+        <li class="list-group-item">@GeneralResource["_joined"]: @string.Format("{0:Y}", Model.user.created_at)</li>
+        @if (Model.user.last_login != null)
+        {
+            <li class="list-group-item">@GeneralResource["_last_sign_in"]: @UtilityBLL.CustomizeDate(Model.user.last_login.Value, DateTime.Now)</li>
+        }
+    </ul>
+</div>
+

@@ -1,0 +1,56 @@
+<div *ngIf="!isAccessGranted">
+  <h2 class="m-b-40 m-t-40 text-center">Access Denied</h2>
+</div>
+<div *ngIf="isAccessGranted">
+  <div class="row">
+    <div class="col-md-9">
+      <app-loader *ngIf="showLoader"></app-loader>
+      <div *ngIf="!showLoader">
+        <div class="card">
+          <app-toolbar-v2
+            [Options]="ToolbarOptions"
+            [isItemsSelected]="isItemsSelected"
+            (Action)="toolbaraction($event)"
+          ></app-toolbar-v2>
+          <div class="card-body">
+            <app-video-info
+              [Author_FullName]="Author_FullName"
+              [Info]="Info"
+            ></app-video-info>
+          </div>
+        </div>
+
+        <div class="card m-t-10" *ngIf="Info.video_thumbs.length > 0">
+          <div class="card-header">
+            <h4 class="m-b-0">Update Video Thumb</h4>
+          </div>
+
+          <div class="card-body">
+            <div class="row">
+              <div
+                class="col-md-3 m-b-10"
+                *ngFor="let thumb of Info.video_thumbs"
+              >
+                <a
+                  href="#"
+                  (click)="updateSelectedThumb(thumb, $event); (false)"
+                >
+                  <img
+                    class="img-responsive"
+                    [ngClass]="thumb.selected ? 'selected' : ''"
+                    src="{{ thumb.filename }}"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button (click)="updateThumb()" class="btn btn-primary">
+              Save Changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

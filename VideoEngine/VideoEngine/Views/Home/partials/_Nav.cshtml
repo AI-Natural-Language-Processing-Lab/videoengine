@@ -1,0 +1,45 @@
+﻿
+@model Jugnoon.Models.MainNavViewModel
+@inject IStringLocalizer<GeneralResource> GeneralResource
+
+@if (!Model.hideAds)
+{
+    <!-- Advertisement start -->
+    <aside class="box sidebar">
+        @await Html.PartialAsync("~/Views/partials/ads/ad_336.cshtml", new AdsModelView() { isAdult = false })
+
+
+        @if (!Model.hideCategories)
+        {
+            var cModel = new CategoryListModelView()
+            {
+                Type = Model.CategoryType,
+                Path = Model.Path,
+                HeadingTitle = GeneralResource["_categories"].Value
+            };
+
+            <div class="m-b-10">
+                @await Html.PartialAsync("_Categories_Style_02", cModel)
+            </div>
+            <hr />
+        }
+
+        @if (!Model.hideTags)
+        {
+            var tModel = new TagListModelView()
+            {
+                HeadingTitle = GeneralResource["_labels"].Value,
+                Type = (int)TagsBLL.Types.Videos,
+                Path = Model.Path,
+                Tag_Level = (int)TagsBLL.TagLevel.All,
+                Tag_Type = (int)TagsBLL.TagType.Normal,
+                TotalRecords = 15
+            };
+            <div class="m-b-10">
+                @await Html.PartialAsync("_Tags", tModel)
+            </div>
+        }
+    </aside>
+
+}
+

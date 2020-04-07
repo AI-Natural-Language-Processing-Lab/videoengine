@@ -1,0 +1,32 @@
+﻿@model Jugnoon.Videos.Models.VideoListFilterViewModel
+@inject IStringLocalizer<GeneralResource> GeneralResource
+
+<div class="btn-group m-r-10">
+    <button type="button" class="btn btn-secondary">@Model.selectedOrder</button>
+    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="sr-only">Order Dropdown</span>
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="@Model.order_recent_url">@GeneralResource["_recent"].Value</a>
+        <a class="dropdown-item" href="@Model.order_view_url">@GeneralResource["_viewed"].Value</a>
+        <a class="dropdown-item" href="@Model.order_rating_url">@GeneralResource["_rated"].Value</a>
+    </div>
+</div>
+<div class="btn-group">
+    <button type="button" class="btn btn-secondary">@Model.selectedFilter</button>
+    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="sr-only">@GeneralResource["_filter"].Value</span>
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="@Model.filter_date_today_url">
+            @GeneralResource["_today"].Value
+        </a>
+        <a class="dropdown-item" href="@Model.filter_date_thisweek_url">
+            @GeneralResource["_thisweek"].Value
+        </a>
+        <a class="dropdown-item" href="@Model.filter_date_thismonth_url">
+            @GeneralResource["_thismonth"].Value
+        </a>
+        <a class="dropdown-item" href="@Model.filter_date_alltime_url">@GeneralResource["_all_time"].Value</a>
+    </div>
+</div>

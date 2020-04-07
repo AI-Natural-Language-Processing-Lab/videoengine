@@ -1,0 +1,143 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="m-b-0">{{ formHeading }}</h4>
+          </div>
+          <div class="card-body">
+            <app-loader *ngIf="showLoader"></app-loader>
+            <div *ngIf="!showLoader">
+              <div *ngIf="Steps === 1">
+                <dynamic-modal-form
+                  *ngIf="!showLoader"
+                  [controls]="controls"
+                  [showLoader]="showLoader"
+                  [showCancel]="false"
+                  [showModal]="false"
+                  [submitText]="submitText"
+                  (OnSubmit)="SubmitForm($event)"
+                >
+                </dynamic-modal-form>
+              </div>
+              <div *ngIf="Steps === 2">
+                <h3>Uploaded Video Processing</h3>
+                <table class="table">
+                  <tr *ngFor="let video of UploadedFiles.files; let i = index">
+                    <td style="width: 70%;">
+                      <div class="m-b-10">
+                        <video
+                          style="width:100%; height: auto; height:auto;"
+                          id="vd_{{ video.id }}"
+                          controls
+                        >
+                          <source src="{{ video.url }}" type="video/mp4" />
+                        </video>
+                      </div>
+                      <div class="m-b-10">
+                        <!-- <button class="btn btn-warning" (click)="capture(video)" title="capture file">Capture Thumbnail</button> -->
+                        <!--<button
+                          class="btn btn-danger m-r-5"
+                          (click)="attachthumbnails(video)"
+                          title="Attach one or more thumbnails"
+                        >
+                          Attach Thumbnails
+                        </button>-->
+                        <button
+                          class="btn btn-danger m-r-5"
+                          (click)="captureDuration(video)"
+                          title="Capture duration from video"
+                        >
+                          Capture Duration
+                        </button>
+                      </div>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          [(ngModel)]="video.thumb_url"
+                          class="form-control"
+                          placeholder="Enter Thumb Url"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          [(ngModel)]="video.title"
+                          class="form-control"
+                          placeholder="Enter title (optional)"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <textarea
+                          rows="3"
+                          [(ngModel)]="video.description"
+                          class="form-control"
+                          placeholder="Enter description (optional)"
+                        ></textarea>
+                      </div>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          [(ngModel)]="video.duration"
+                          class="form-control"
+                          readonly="true"
+                          placeholder="Enter duration"
+                        />
+                      </div>
+                      <p class="card-text text-center">
+                        <a (click)="remove(i, $event); (false)"
+                          ><i
+                            class="fa fa-close text-danger"
+                            aria-hidden="true"
+                          ></i
+                        ></a>
+                      </p>
+                    </td>
+                    <td style="width: 30%;">
+                      <div id="view_{{ video.id }}" style="display:none;"></div>
+
+                      <div
+                        *ngFor="let thumb of video.video_thumbs; let f = index"
+                      >
+                        <div class="card-img-top img-responsive">
+                          <img
+                            style="cursor: pointer;"
+                            class="card-img-top"
+                            src="{{ thumb.url }}"
+                            alt="{{ thumb.fname }}"
+                          />
+                          <div class="card-body">
+                            <p class="center-text">
+                              <a
+                                (click)="delete(video, f, $event); (false)"
+                                href="#"
+                                data-toggle="tooltip"
+                                data-original-title="Close"
+                              >
+                                <i class="fa fa-close text-danger"></i>
+                              </a>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+
+                <div
+                  *ngIf="this.UploadedFiles.files.length > 0"
+                  class="m-b-10 m-t-10"
+                >
+                  <button (click)="saveChanges()" class="btn btn-primary">
+                    Save Changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="row">
+  <!--<div class="col-md-3">
+    <app-searchnavigation
+      [Type]="0"
+      [Options]="SearchOptions"
+      [FilterOptions]="FilterOptions"
+      (OnFilterSelected)="Search($event)"
+    ></app-searchnavigation>
+  </div> -->
+  <div class="col-md-12">
+    <app-searchnavigation
+      [Type]="1"
+      [Options]="TopSearchOptions"
+      [FilterOptions]="FilterOptions"
+      (OnFilterSelected)="Search($event)"
+    ></app-searchnavigation>
+
+    <app-toolbar-v2
+      [Options]="ToolbarOptions"
+      (Action)="toolbaraction($event)"
+    ></app-toolbar-v2>
+
+    <app-video-list
+      [PublicView]="PublicView"
+      [NoRecordText]="NoRecordText"
+      (View)="toolbaraction($event)"
+    ></app-video-list>
+  </div>
+</div>

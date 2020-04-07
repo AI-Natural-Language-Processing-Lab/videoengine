@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div *ngIf="!isAccessGranted">
+        <h2 class="m-b-40 m-t-40 text-center">Access Denied</h2>
+      </div>
+      <div *ngIf="isAccessGranted">
+        <app-loader *ngIf="loading$ | async"></app-loader>
+        <div class="row m-b-10">
+          <div class="col-md-12">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#configurationSettings"
+                aria-controls="configurationSettings"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="configurationSettings">
+                <ul class="navbar-nav mr-auto">
+                  <li
+                    [ngClass]="
+                      ConfigType === nav.id
+                        ? 'nav-item dropdown active'
+                        : 'nav-item dropdown'
+                    "
+                    *ngFor="let nav of SearchOptions.navList"
+                  >
+                    <a
+                      class="nav-link dropdown-toggle"
+                      data-toggle="dropdown"
+                      href="#"
+                    >
+                      {{ nav.title }} <span class="caret"></span
+                    ></a>
+                    <div class="dropdown-menu" *ngIf="nav.child_nav.length > 0">
+                      <a
+                        *ngFor="let child of nav.child_nav"
+                        (click)="renderNav(nav, child, $event); (false)"
+                        class="dropdown-item"
+                        href="#"
+                        >{{ child.title }}</a
+                      >
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+          </div>
+        </div>
+
+        <div class="row justify-content-md-center" *ngIf="!(loading$ | async)">
+          <div class="col-md-8 col-sm-10 col-xs-12">
+            <div class="card-body card-outline-inverse">
+              <div class="card-header">
+                <h4 class="m-b-0">{{ formHeading }}</h4>
+              </div>
+
+              <app-loader *ngIf="showProcessing"></app-loader>
+
+              <dynamic-modal-form
+                *ngIf="!showProcessing && controls.length > 0"
+                [controls]="controls"
+                [showCancel]="false"
+                [showModal]="false"
+                [submitText]="submitText"
+                (OnSubmit)="SubmitForm($event)"
+              >
+              </dynamic-modal-form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

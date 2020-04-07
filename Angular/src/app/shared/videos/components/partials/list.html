@@ -1,0 +1,125 @@
+<app-loader *ngIf="loading$ | async"></app-loader>
+
+<div style="padding:15px 10px;">
+  <app-alert></app-alert>
+
+  <div *ngIf="!(loading$ | async)">
+    <div class="row" *ngIf="(Data$ | async).length > 0">
+      <div
+        class="col-md-4 col-sm-6 col-xs-12 videolist"
+        [hidden]="item.isdeleted"
+        *ngFor="let item of Data$ | async; trackBy: getKey"
+      >
+        <div class="card-img-top img-responsive">
+          <a *ngIf="isAdmin && !PublicView" [routerLink]="[route_path + '/profile/' + item.enc_id]"><img
+            style="cursor: pointer;"
+            class="card-img-top"
+            src="{{ item.picturename }}"
+            alt="{{ item.title }}"
+          /></a>
+          <a *ngIf="!isAdmin || PublicView"  href="{{item.url}}"><img
+            style="cursor: pointer;"
+            class="img-responsive"
+            src="{{ item.picturename }}"
+            alt="{{ item.title }}"
+          /></a>
+          <div class="m-t-10">
+            <p class="title m-b-0 truncate">{{ item.title }}</p>
+            <p class="light-item">Created: {{ item.customize_date }}</p>
+            <p class="light-item">Views: {{ item.views | number:'.2' }}</p>
+            <p class="card-text" *ngIf="!PublicView">
+              <span
+                class="badge badge-info m-r-5 m-b-5"
+                *ngIf="item.ispublished == 0"
+                >Publishing</span
+              >
+              <span
+                class="badge badge-danger m-r-5 m-b-5"
+                *ngIf="item.isenabled == 0"
+                >Blocked</span
+              >
+              <span
+                class="badge badge-success m-r-5 m-b-5"
+                *ngIf="item.isenabled == 1"
+                >Active</span
+              >
+              <span
+                class="badge badge-info m-r-5 m-b-5"
+                *ngIf="item.isapproved == 1"
+                >Approved</span
+              >
+              <span
+                class="badge badge-warning m-r-5 m-b-5"
+                *ngIf="item.isapproved == 0"
+                >Under Review</span
+              >
+              <span
+                class="badge badge-primary m-r-5 m-b-5"
+                *ngIf="item.isfeatured == 1"
+                >Featured</span
+              >
+              <span
+                class="badge badge-primary m-r-5 m-b-5"
+                *ngIf="item.isprivate == 1"
+                >Private</span
+              >
+              <span
+                class="badge badge-danger m-r-5 m-b-5"
+                *ngIf="item.isadult == 1"
+                >Adult</span
+              >
+              <a
+              *ngIf="showReportLink"
+              [routerLink]="['/reports/abuse/' + AbuseContentType + '/' + item.enc_id]"
+              class="m-l-10 m-b-5 pull-right"
+              ><i class="fa fa-flag" aria-hidden="true"></i></a>
+              <a
+                *ngIf="type === 0"
+                [routerLink]="[route_path + 'updatethumbnail/' + item.enc_id]"
+                class="m-l-10 m-b-5 pull-right"
+                ><i class="fa fa-camera" aria-hidden="true"></i
+              ></a>
+              <a
+                *ngIf="type === 0"
+                href="#"
+                [routerLink]="[route_path + 'process/' + item.enc_id]"
+                class="m-l-10 m-b-5 pull-right"
+                ><i class="fa fa-pencil" aria-hidden="true"></i
+              ></a>
+            </p>
+         
+            <div class="mx-auto" style="width: 50px;" *ngIf="!PublicView">
+              <div class="form-check">
+                <label for="{{ item.id }}">
+                  <input
+                    [(ngModel)]="item.Selected"
+                    (ngModelChange)="checkChange()"
+                    type="checkbox"
+                    id="{{ item.id }}"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="(Data$ | async).length == 0">
+      <div class="col-md-12">
+        <div style="padding:80px 0px;">
+          <h3 style="text-align:center;">No Records Found!</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="text-center content-group-lg pt-20">
+  <pagination
+    [currentPage]="(pagination$ | async).currentPage"
+    [totalRecords]="(pagination$ | async).totalRecords"
+    [pageSize]="(pagination$ | async).pageSize"
+    (OnSelection)="PaginationChange($event)"
+  >
+  </pagination>
+</div>

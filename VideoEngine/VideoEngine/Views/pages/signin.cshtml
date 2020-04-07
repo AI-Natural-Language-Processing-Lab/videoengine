@@ -1,0 +1,78 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model Jugnoon.Models.LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@using Microsoft.Extensions.Options
+@using reCAPTCHA.AspNetCore
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Registration> registrationSettings
+@inject IOptions<RecaptchaSettings> RecaptchaSettings
+<section class="h-100 m-t-40 m-b-40">
+    <div class="container h-100">
+        <div class="row justify-content-md-center h-100 login-page">
+            <div class="card-wrapper">
+                <div class="card fat">
+                    <div class="card-body">
+                        <h4 class="card-title">@GeneralResource["_login"].Value</h4>
+                        @{
+                            var externalLoginProviderViewModel = new Jugnoon.Models.ExternalLoginProviderViewModel()
+                            {
+                            };
+                        }
+                        <partial name="_externalLoginProvider" model="externalLoginProviderViewModel" />
+                        <form asp-controller="auth" asp-action="login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                            @if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+                            {
+                                <div class="alert alert-danger alert-error">
+                                    <a class="close" data-dismiss="alert">&times;</a>
+                                    @Html.ValidationSummary(true, "Errors: ")
+                                </div>
+                            }
+
+                            <div class="form-group">
+                                <label asp-for="Email"></label>
+                                <input asp-for="Email" class="form-control" placeholder="@GeneralResource["_enter_email_username"].Value" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Password">
+                                    @GeneralResource["_password"].Value
+                                    <a href="/forgot-password" class="float-right">
+                                        @GeneralResource["_forgot_password_msg"].Value
+                                    </a>
+                                </label>
+                                <input asp-for="Password" class="form-control" placeholder="@GeneralResource["_enter_password"].Value" required data-eye />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="RememberMe">
+                                    <input asp-for="RememberMe" />
+                                    @Html.DisplayNameFor(m => m.RememberMe)
+                                </label>
+                            </div>
+
+                            @if (registrationSettings.Value.enableChapcha)
+                            {
+                                <div class="form-group">
+                                    @Html.Recaptcha(RecaptchaSettings?.Value)
+                                </div>
+                            }
+
+                            <div class="form-group no-margin">
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    @GeneralResource["_sign_in"].Value
+                                </button>
+                            </div>
+
+                            <div class="margin-top20 text-center">
+                                @GeneralResource["_dont_have_account"].Value <a href="/signup">@GeneralResource["_create_one"].Value</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

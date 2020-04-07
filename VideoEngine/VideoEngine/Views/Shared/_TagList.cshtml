@@ -1,0 +1,89 @@
+﻿@inject Jugnoon.Framework.ApplicationDbContext _context
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@model TagListModelView
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+@{
+    var _query = new TagEntity()
+    {
+        isenabled = EnabledTypes.Enabled,
+        type = (TagsBLL.Types)Model.Type,
+        tag_type = (TagsBLL.TagType)Model.Tag_Type,
+        tag_level = (TagsBLL.TagLevel)Model.Tag_Level,
+        pagesize = Model.TotalRecords,
+        pagenumber = Model.pagenumber,
+        order = Model.Order,
+        iscache = Model.iscache,
+        term = Model.Term,
+    };
+
+    var _count = await TagsBLL.Count(_context, _query);
+
+    if (_count > 0)
+    {
+        var _list = await TagsBLL.LoadItems(_context, _query);
+
+        if (generalSettings.Value.pagination_links > 0)
+        {
+            int maximum_allowed_records = generalSettings.Value.pagination_links * Model.TotalRecords;
+            if (Model.TotalRecords > maximum_allowed_records)
+            {
+                Model.TotalRecords = maximum_allowed_records;
+            }
+        }
+
+        <div class="row mb10">
+            <div class="col-md-4">
+                <form action="@Model.Action" method="post">
+                    @Html.AntiForgeryToken()
+                    <div class="input-group">
+                        @Html.TextBoxFor(m => m.Query, new { @class = "form-control", placeholder = GeneralResource["_search"].Value, required = "required" })
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-8">
+                @{
+                    var _listStat = new ListStatViewModels()
+                    {
+                        pagenumber = Model.pagenumber,
+                        TotalRecords = _count,
+                        PageSize = Model.TotalRecords
+                    };
+                    @await Html.PartialAsync("~/Views/partials/list/_ListStat.cshtml", _listStat)
+                }
+            </div>
+        </div>
+        <hr />
+        <h2 class="m-t-10 m-b-20">@Model.HeadingTitle</h2>
+        foreach (var Item in _list)
+        {
+            <a href="@TagUrlConfig.PrepareUrl(Item, Model.Path)" class="btn btn-primary btn-sm m-b-5">@Item.title</a>
+        }
+        <hr class="invisible mt-xl mb-sm">
+
+        {
+            // Pagination
+            if (_count > Model.TotalRecords)
+            {
+                var _paginationEntity = new PaginationViewModel()
+                {
+                    pagenumber = Model.pagenumber,
+                    TotalRecords = _count,
+                    PageSize = Model.TotalRecords,
+                    Default_Url = Model.DefaultUrl,
+                    Pagination_Url = Model.PaginationUrl
+                };
+                @await Html.PartialAsync("~/Views/partials/list/_Pagination.cshtml", _paginationEntity)
+            }
+        }
+
+    }
+    else
+    {
+        @await Html.PartialAsync("~/Views/partials/utility/_norecord.cshtml", new NoRecordModelView() { Message = Model.NoRecordFoundText })
+    }
+}
+
+

@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@inject Jugnoon.Framework.ApplicationDbContext _context
+@inject IOptions<RequestLocalizationOptions> LocOptions
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.Features> featureSettings
+@if (featureSettings.Value.enable_languages)
+{
+    var _lst = LanguageBLLC.LoadItems(_context, new LanguageEntity()
+    {
+        isselected = 1,
+        isdefault = 2,
+        isenabled = EnabledTypes.Enabled,
+        iscache = true,
+        order = "isdefault desc"
+    }).Result;
+
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="languages-nav">
+            @requestCulture.RequestCulture.UICulture.DisplayName
+            <span class="caret"></span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="languages-nav">
+            @if (_lst != null)
+            {
+                if (_lst.Count > 0)
+                {
+                    foreach (var item in _lst)
+                    {
+                        <a class="dropdown-item" href="/Home/Index?lng=@item.culturename">
+                            <i class="flag @LanguageBLLC.returnFlagCss(item.culturename, _lst)" alt="@LanguageBLLC.returnLanguage(item.culturename, _lst)"></i> @item.language
+                        </a>
+                    }
+                }
+            }
+
+        </div>
+    </li>
+
+}
+

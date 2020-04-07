@@ -1,0 +1,83 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Videos.Settings.Player> playerSettings
+@model Jugnoon.Videos.Models.VideoJsModelView
+
+<script src="https://vjs.zencdn.net/7.6.6/video.js"></script>
+<div class="m-t-5 m-b-10">
+
+    @if (Model.enabledAWS)
+    {
+        <video id="my-video" class="video-js" controls preload="auto"
+               poster="@Model.PictureUrl" data-setup="{}">
+            @foreach (var feed in Model.VideoFeed)
+            {
+                <source src="@feed.src" type="@feed.type">
+            }
+            @*<source src="@Model.VideoUrl" type='video/mp4'>*@
+            <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a
+                web browser that
+                <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+        </video>
+
+        <script>
+            var player = videojs('my-video', {
+                autoplay: 'muted',
+                aspectRatio: "16:9",
+                width: "100%",
+                fluid: true,
+                playbackRates: [0.5, 1, 1.5, 2]
+            });
+        </script>
+    }
+    else if (Model.EmbedScript != "")
+    {
+        // youtube video streaming enabled
+        if (Model.EmbedScript.Contains("/watch?v="))
+        {
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/@Model.EmbedScript.Replace("/watch?v=", "")" allowfullscreen></iframe>
+            </div>
+        }
+        else
+        {
+            @Html.Raw(Model.EmbedScript)
+        }
+    }
+    else
+    {
+        // normal mp4 streaming enabled
+        if (Model.Type == 0)
+        {
+            // video player
+            <video id="my-video" class="video-js vjs-theme-city" controls preload="auto" style="width:100%; height: 380px;"
+                   poster="@Model.PictureUrl" data-setup="{}">
+                <source src="@Model.VideoUrl" type='video/mp4'>
+                <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider upgrading to a web browser that
+                    <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                </p>
+            </video>
+
+            <script>
+                var player = videojs('my-video', {
+                    autoplay: 'muted',
+                    aspectRatio: "16:9",
+                    width: "100%",
+                    fluid: true,
+                    playbackRates: [0.5, 1, 1.5, 2]
+                });
+            </script>
+        }
+        else
+        {
+            <!-- audio player -->
+            <audio id="player2" preload="none" controls style="max-width: 100%">
+                <source src="@Model.VideoUrl" type="audio/mp3">
+            </audio>
+
+
+        }
+    }
+
+</div>

@@ -1,0 +1,33 @@
+{
+"_MENU": {
+        "_DASHBOARD": "لوحة التحكم",
+        "_USERS": "المستخدمون",
+        "_VIDEOS": "مقاطع الفيديو",
+        "_AUDIO": "الصوت",
+        "_PHOTOS": "صور",
+        "_ARTISTS": "الفنانون",
+        "_BLOGS": "مدونات",
+        "_POLLS": "استطلاعات الرأي",
+        "_FORUMS": "فورمز",
+        "_QA": "كا",
+        "_SETTINGS": "إعدادات",
+        "_WIKI": "ويكي",
+        "_LOG": "لوغ",
+        "_ADVERTISEMENT": "أدفرتيسيمنت",
+        "_BLOCKIP": "بلوك إب",
+        "_CATEGORIES": "الفئات",
+        "_TAGS": "العلامات",
+        "_PACKAGES": "الحزم",
+        "_GAMIFY": "غاميفي",
+        "_MAILTEMPLATES": "ميلتمبلاتس",
+        "_DICTIONARY": "ديكتيوناري",
+        "_ALBUMS": "ألبومات",
+        "_TOPICS": "مواضيع",
+        "_CONFIGURATIONS": "التهيئات",
+        "_LOGOUT": "تسجيل الخروج",
+        "_LANGUAGE": "اللغة"
+    }, 
+    "_MESSAGES": {
+       "_NORECORD": "لا توجد سجلات"
+    }
+}

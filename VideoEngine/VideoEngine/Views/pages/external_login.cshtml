@@ -1,0 +1,47 @@
+﻿@model Jugnoon.Models.ExternalLoginViewModel
+@inject IStringLocalizer<GeneralResource> GeneralResource
+
+@{
+    ViewData["Title"] = GeneralResource["_create_new_account"].Value;
+}
+
+<section class="h-100 m-t-40 m-b-40">
+    <div class="container h-100">
+        <div class="row justify-content-md-center h-100 login-page">
+            <div class="card-wrapper">
+                <div class="card fat">
+                    <div class="card-body">
+                        <h4 class="card-title">@GeneralResource["_create_new_account"].Value</h4>
+                        <h4>Associate your @ViewData["LoginProvider"] account.</h4>
+
+                        <form asp-controller="auth" asp-action="ExternalLoginConfirmation" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                            <div asp-validation-summary="All" class="text-danger"></div>
+
+                            <div class="form-group">
+                                <label asp-for="UserName"></label>
+                                <input asp-for="UserName" class="form-control" placeholder="@GeneralResource["_enter_username"].Value" />
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email"></label>
+                                <input asp-for="Email" class="form-control" placeholder="@GeneralResource["_enter_email"].Value" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group no-margin">
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    @GeneralResource["_register"].Value
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

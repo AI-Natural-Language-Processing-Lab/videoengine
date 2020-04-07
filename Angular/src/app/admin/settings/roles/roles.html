@@ -1,0 +1,181 @@
+<div *ngIf="!isAccessGranted">
+  <h2 class="m-b-40 m-t-40 text-center">Access Denied</h2>
+</div>
+<div *ngIf="isAccessGranted">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body inbox-panel">
+          <ul class="list-group list-group-full">
+            <li
+              *ngFor="let item of RoleTypes"
+              [ngClass]="{ active: RoleType == item.value }"
+              class="list-group-item"
+            >
+              <a
+                href="#"
+                (click)="filterCategories(item, $event); (false)"
+                title="{{ item.title }}"
+              >
+                {{ item.title }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <app-navigation-v2
+          [FilterOptions]="FilterOptions"
+          [Options]="SearchOptions"
+        >
+        </app-navigation-v2>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <!-- Role Management -->
+
+      <div class="card" *ngIf="RoleType == 1">
+        <div class="card-header">
+          <h4 class="m-b-0">{{ formHeading }}</h4>
+        </div>
+        <div class="card-body">
+          <app-loader *ngIf="showLoader"></app-loader>
+          <div *ngIf="!showLoader">
+            <div class="m-b-10 m-t-10">
+              <button
+                (click)="addRole()"
+                type="button"
+                class="btn btn-dark  m-r-5"
+              >
+                <i class="fa fa-plus"></i> Add Role
+              </button>
+            </div>
+            <div *ngIf="RoleList.length > 0">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered table-hover table-striped no-wrap"
+                >
+                  <thead>
+                    <tr>
+                      <th style="width:90%;" class="text-nowrap">
+                        Name
+                      </th>
+
+                      <th style="width:10%;" class="text-nowrap">
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      [hidden]="item.isdeleted"
+                      *ngFor="let item of RoleList; let i = index"
+                    >
+                      <td>
+                        <h4>{{ item.rolename }}</h4>
+                      </td>
+
+                      <td class="text-nowrap">
+                        <a
+                          href="#"
+                          (click)="editRole(item, $event); (false)"
+                          data-toggle="tooltip"
+                          data-original-title="Edit"
+                        >
+                          <i class="fa fa-pencil text-inverse m-r-10"></i>
+                        </a>
+                        <a
+                          (click)="delete(item, i, $event); (false)"
+                          href="#"
+                          data-toggle="tooltip"
+                          data-original-title="Close"
+                        >
+                          <i class="fa fa-close text-danger"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <app-norecord *ngIf="RoleList.length === 0"></app-norecord>
+          </div>
+        </div>
+      </div>
+      <!-- Object Management -->
+      <div class="card" *ngIf="RoleType == 2">
+        <div class="card-header">
+          <h4 class="m-b-0">{{ formHeading }}</h4>
+        </div>
+        <div class="card-body">
+          <app-loader *ngIf="showLoader"></app-loader>
+          <div *ngIf="!showLoader">
+            <div class="m-b-10 m-t-10">
+              <button
+                (click)="addObject()"
+                type="button"
+                class="btn btn-dark  m-r-5"
+              >
+                <i class="fa fa-plus"></i> Add Object
+              </button>
+            </div>
+            <div *ngIf="ObjectList.length > 0">
+              <div class="table-responsive">
+                <table
+                  class="table table-bordered table-hover table-striped no-wrap"
+                >
+                  <thead>
+                    <tr>
+                      <th class="text-nowrap">
+                        Name
+                      </th>
+                      <th class="text-nowrap">
+                        Key
+                      </th>
+                      <th class="text-nowrap">
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      [hidden]="item.isdeleted"
+                      *ngFor="let item of ObjectList; let i = index"
+                    >
+                      <td>
+                        <h4>{{ item.objectname }}</h4>
+                        <div [innerHTML]="item.description"></div>
+                      </td>
+                      <td>
+                        {{ item.uniqueid }}
+                      </td>
+                      <td class="text-nowrap">
+                        <a
+                          href="#"
+                          (click)="editObject(item, $event); (false)"
+                          data-toggle="tooltip"
+                          data-original-title="Edit"
+                        >
+                          <i class="fa fa-pencil text-inverse m-r-10"></i>
+                        </a>
+                        <a
+                          (click)="deleteObject(item, i, $event); (false)"
+                          href="#"
+                          data-toggle="tooltip"
+                          data-original-title="Close"
+                        >
+                          <i class="fa fa-close text-danger"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <app-norecord *ngIf="ObjectList.length === 0"></app-norecord>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

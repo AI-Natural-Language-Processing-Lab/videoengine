@@ -1,0 +1,80 @@
+﻿
+@{
+    Layout = null;
+}
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Settings.General> generalSettings
+@inject IStringLocalizer<GeneralResource> GeneralResource
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/admin/">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.png">
+    <title>Control Panel</title>
+
+    <link rel="stylesheet" href="~/css/bootswatch/flatly/bootstrap.min.css">
+    <link rel="stylesheet" href="~/css/bootswatch/flatly/theme.css">
+    <link rel="stylesheet" href="~/plugins/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/css/style.css">
+
+</head>
+
+<body>
+
+    @{
+        var info = await UserManager.GetUserAsync(User);
+        var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    }
+    <script>
+        var URL = '@SiteConfiguration.URL'; // API URL
+        var Ang_UID = '@info.Id';
+        var Ang_Culture = '@requestCulture.RequestCulture.UICulture.Name'
+        var AppType = 'admin';
+        var setupType = 0;
+        var ImageDirectory = '/images/';
+        var AppTitle = '@generalSettings.Value.website_title';
+        // search parameters
+        var SearchParams = {
+            term: '',
+            type: ''
+        };
+        var SerachContentType = 0;
+    </script>
+    <app-root>
+        <div id="loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="loading"></div>
+        </div>
+    </app-root>
+
+    <script src="~/tinymce/tinymce.min.js"></script>
+
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/plugins/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+
+    <script src="/app/angular/runtime-es2015.js" type="module"></script>
+    <script src="/app/angular/runtime-es5.js" nomodule defer></script>
+    <script src="/app/angular/polyfills-es5.js" nomodule defer></script>
+    <script src="/app/angular/polyfills-es2015.js" type="module"></script>
+    <script src="/app/angular/scripts.js" defer></script>
+    <script src="/app/angular/main-es2015.js" type="module"></script>
+    <script src="/app/angular/main-es5.js" nomodule defer></script>
+</body>
+</html>

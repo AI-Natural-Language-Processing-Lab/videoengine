@@ -1,0 +1,18 @@
+﻿@using Jugnoon.Utility;
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IStringLocalizer<GeneralResource> GeneralResource
+@inject IHtmlLocalizer<GeneralResource> HtmlSharedLocalizer
+
+@{
+    ViewData["Title"] = GeneralResource["_account_activation"].Value;
+}
+
+<div class="row">
+    <div class="col-md-8 mx-auto m-t-30 m-b-30">
+        <h2 class="m-b-20">@GeneralResource["_account_activation"].Value</h2>
+
+        @Html.Raw(System.Net.WebUtility.HtmlDecode(HtmlSharedLocalizer["_account_activation_msg"].Value))
+
+    </div>
+</div>
+

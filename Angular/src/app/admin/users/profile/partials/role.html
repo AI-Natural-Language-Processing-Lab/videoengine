@@ -1,0 +1,26 @@
+<div class="card">
+  <div class="card-header">
+    <h3>Update Control Panel Role</h3>
+  </div>
+  <app-loader *ngIf="isLoading"></app-loader>
+  <div *ngIf="!isLoading">
+    <div class="card-body">
+      <p>
+        Note: This is not user identity roles, its updates control panel own
+        role &amp; permissions to access resources.
+      </p>
+      <div class="form-group">
+        <select [(ngModel)]="Info.roleid" class="form-control">
+          <option *ngFor="let role of roles$ | async" value="{{ role.id }}">{{
+            role.rolename
+          }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary" (click)="updateRole()">
+        Update Role
+      </button>
+    </div>
+  </div>
+</div>

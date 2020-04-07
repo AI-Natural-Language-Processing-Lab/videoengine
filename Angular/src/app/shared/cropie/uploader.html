@@ -1,0 +1,14 @@
+<div class="">
+  <img class="img-responsive img-thumbnail" src="{{ Info.img_url }}" alt="" />
+  <div class="m-t-10">
+    <label for="file-upload">
+      <span class="btn btn-primary text-center">Change</span>
+      <input
+        style="display: none;"
+        id="file-upload"
+        type="file"
+        (change)="changeListener($event)"
+      />
+    </label>
+  </div>
+</div>

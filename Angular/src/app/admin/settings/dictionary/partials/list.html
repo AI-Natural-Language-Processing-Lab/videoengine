@@ -1,0 +1,155 @@
+<alert></alert>
+<app-loader *ngIf="loading$ | async"></app-loader>
+
+<div *ngIf="!(loading$ | async)">
+  <div *ngIf="(Data$ | async).length > 0">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-striped no-wrap">
+        <thead>
+          <tr>
+            <th>
+              <div class="checkbox">
+                <input
+                  [(ngModel)]="selectall"
+                  (ngModelChange)="processChange()"
+                  id="selectall"
+                  type="checkbox"
+                />
+                <label class="p-b-0 p-t-0" for="selectall"></label>
+              </div>
+            </th>
+            <th
+              (click)="Sort('value')"
+              style="cursor: pointer;"
+              [ngClass]="fieldstates.value ? 'selected-sort-option' : ''"
+            >
+              <span class="m-r-5">Value</span>
+              <i
+                [ngClass]="
+                  fieldstates.value && sortedFields['value'].direction === 'asc'
+                    ? 'fa fa-sort-asc'
+                    : fieldstates.value &&
+                      sortedFields['value'].direction === 'desc'
+                    ? 'fa fa-sort-desc'
+                    : 'fa fa-sort'
+                "
+                aria-hidden="true"
+              ></i>
+            </th>
+            <th
+              (click)="Sort('type')"
+              style="cursor: pointer;"
+              [ngClass]="fieldstates.type ? 'selected-sort-option' : ''"
+            >
+              <span class="m-r-5">Type</span>
+              <i
+                [ngClass]="
+                  fieldstates.type && sortedFields['type'].direction === 'asc'
+                    ? 'fa fa-sort-asc'
+                    : fieldstates.type &&
+                      sortedFields['type'].direction === 'desc'
+                    ? 'fa fa-sort-desc'
+                    : 'fa fa-sort'
+                "
+                aria-hidden="true"
+              ></i>
+            </th>
+            <th class="text-nowrap">
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            [@fadeIn]="''"
+            [hidden]="item.isdeleted"
+            *ngFor="let item of Data$ | async; trackBy: getKey; let i = index"
+          >
+            <td style="width:5%;">
+              <div class="checkbox">
+                <input
+                  [(ngModel)]="item.Selected"
+                  id="{{ item.id }}"
+                  (ngModelChange)="checkChange()"
+                  type="checkbox"
+                />
+                <label for="{{ item.id }}"></label>
+              </div>
+            </td>
+            <td>
+              <div *ngIf="item.editview">
+                <div class="card">
+                  <div class="card-body">
+                    <div>
+                      <input
+                        type="text"
+                        [(ngModel)]="item.value"
+                        class="form-control"
+                        placeholder="Update Value"
+                      />
+                    </div>
+                    <div class="m-t-5">
+                      <button
+                        class="btn btn-sm btn-success "
+                        (click)="_UpdateRecord(item)"
+                      >
+                        Save
+                      </button>
+                      <button
+                        class="btn btn-sm btn-danger "
+                        (click)="toggleEditView(item, $event)"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="!item.editview">
+                {{ item.value }}
+              </div>
+            </td>
+
+            <td>
+              <span *ngIf="item.type == 0" class="badge badge-danger"
+                >Screening Word</span
+              >
+              <span *ngIf="item.type == 1" class="badge badge-warning"
+                >Restricted UserName</span
+              >
+            </td>
+            <td class="text-nowrap">
+              <a
+                (click)="toggleEditView(item, $event); (false)"
+                href="#"
+                data-toggle="tooltip"
+                data-original-title="Edit"
+              >
+                <i class="fa fa-pencil text-inverse m-r-10"></i>
+              </a>
+              <a
+                (click)="delete(item, i, $event); (false)"
+                href="#"
+                data-toggle="tooltip"
+                data-original-title="Close"
+              >
+                <i class="fa fa-close text-danger"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <app-norecord *ngIf="(Data$ | async).length === 0"></app-norecord>
+</div>
+
+<div class="text-center content-group-lg pt-20">
+  <pagination
+    [currentPage]="(pagination$ | async).currentPage"
+    [totalRecords]="(pagination$ | async).totalRecords"
+    [pageSize]="(pagination$ | async).pageSize"
+    (OnSelection)="PaginationChange($event)"
+  >
+  </pagination>
+</div>

@@ -1,0 +1,24 @@
+﻿@model Jugnoon.Videos.Models.VideoPreviewViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Preview</title>
+</head>
+<body style="background:#000">
+
+    @if (Model.isExist)
+    {
+        <video id="preview" style="width:100%; height:100%" autoplay muted>
+            <source src="@Model.previewUrl" type="video/mp4" />
+        </video>
+    }
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+﻿@model Jugnoon.Models.CategoryItemViewModel
+
+@using Jugnoon.Utility;
+
+@*
+    Item Thumbnail Processing
+*@
+
+@{
+    var ImageUrl = Model.Data.picturename;
+    if (!ImageUrl.StartsWith("http"))
+    {
+        ImageUrl = CategoryUrlConfig.getDefaultImageUrl();
+    }
+}
+<div class="item-thumbnail">
+    <img src="@ImageUrl" alt="@Model.Data.title" title="@Model.Data.title" />
+</div>

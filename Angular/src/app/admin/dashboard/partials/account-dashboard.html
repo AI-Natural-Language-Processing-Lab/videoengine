@@ -1,0 +1,43 @@
+<div class="card">
+  <div class="card-body">
+    <div class="m-t-10 m-b-10">
+      <div class="row m-b-10">
+        <div class="col-md-4" *ngIf="(configs$ | async).general.media">
+          <app-banneruploader
+            [Info]="User"
+            [MediaSettings]="(configs$ | async).general.media"
+            (OnCropped)="onImageUploaded($event)"
+          ></app-banneruploader>
+        </div>
+        <div class="col-md-8">
+          <h3
+            class="m-b-10"
+            *ngIf="User.firstname !== null"
+          >
+            {{ User.firstname }} {{ User.lastname }}
+          </h3>
+          <h3
+            class="m-b-10"
+            *ngIf="User.firstname === null || User.firstname === ''"
+          >
+            My Account
+          </h3>
+          <hr />
+          <p class="m-t-0 m-b-5" *ngIf="User.last_login">
+            Last Login: {{ User.customize_last_login }}
+          </p>
+          <p class="m-t-0 m-b-5" *ngIf="User.last_login">
+            Register: {{ User.customize_register_date }}
+          </p>
+         
+        </div>
+      </div>
+
+      <div *ngIf="(configs$ | async).general.features.enable_videos">
+          <app-smvideo-list [type]="0" [mediaType]="0" [stats]="User.stats.stat_videos" [title]="'My Videos'" [rout_url]="'/my-videos/'" [browse_url]="'/my-videos'"></app-smvideo-list>
+          <!--<app-smvideo-list [type]="1" [mediaType]="0" [title]="'My Favorited Videos'" [browse_url]="'/my-videos/favorites'"></app-smvideo-list>-->
+      </div>
+     
+    </div>
+  </div>
+</div>

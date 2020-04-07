@@ -1,0 +1,20 @@
+﻿@model SearchListModel
+@if (Model.showButton)
+{
+    // search bar with button bar
+    <div class="clearfix search-panel">
+        <div class="float-left search-bar">
+            <partial name="_searchBar" />
+        </div>
+
+        <div class="float-right button-bar">
+            <a href="@Model.ButtonUrl" class="btn btn-large btn-danger btn-block"><i class="@Model.ButtonIcon"></i>&nbsp;@Model.ButtonText</a>
+        </div>
+    </div>
+}
+else
+{
+    // only search bar
+    <partial name="_searchBar" />
+}
+

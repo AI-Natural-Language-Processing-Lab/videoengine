@@ -1,0 +1,27 @@
+<div *ngIf="(auth$ | async).isAuthenticated">
+  <div *ngIf="config.getGlobalVar('apptype') === 'account'">
+    <!-- Account Home Page -->
+    <app-account-dashboard></app-account-dashboard>
+  </div>
+  <div *ngIf="config.getGlobalVar('apptype') === 'admin'">
+    <!-- Admin Home Page -->
+    <app-admin-dashboard></app-admin-dashboard>
+  </div>
+</div>
+
+<div *ngIf="!(auth$ | async).isAuthenticated">
+  <div *ngIf="config.getGlobalVar('apptype') === 'setup'">
+    <app-setup-dashboard></app-setup-dashboard>
+  </div>
+  <div *ngIf="config.getGlobalVar('apptype') === 'search'">
+    <app-search></app-search>
+  </div>
+  <div
+    *ngIf="
+      config.getGlobalVar('apptype') !== 'setup' &&
+      config.getGlobalVar('apptype') !== 'search'
+    "
+  >
+    Not Authenticated
+  </div>
+</div>

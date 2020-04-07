@@ -1,0 +1,86 @@
+﻿@model Jugnoon.Videos.Models.VideoItemViewModel
+@inject Microsoft.Extensions.Options.IOptions<Jugnoon.Videos.Settings.General> generalVideoSettings
+@using Jugnoon.Videos
+@using Jugnoon.Videos.Models
+@using System.Net;
+@*
+    Item Thumbnail Processing
+*@
+
+@{
+    var ImageUrl = "";
+    // if video not published yet
+    if (Model.Data.ispublished == 0)
+    {
+        ImageUrl = VideoUrlConfig.get_Unpublished_Media_Url();
+    }
+    else
+    {
+        bool isaudio = false;
+        if (Model.Data.type == 1)
+        {
+            isaudio = true;
+        }
+
+        ImageUrl = VideoUtil.ProcessVideoThumb(Model.ProfileUrl, Model.Data, isaudio, Model.ListObject);
+    }
+}
+
+@if (Model.Data.isexternal == 1)
+{
+    // external source
+    <div class="item-thumbnail">
+        <a href="@Model.ProfileUrl">
+            <img class="img-responsive" src="@ImageUrl" alt="@Model.Data.title" title="@Model.Data.title" />
+        </a>
+    </div>
+}
+else
+{
+    // website own source
+    switch (generalVideoSettings.Value.thumbnail_rotator_option)
+    {
+        case 0:
+            // Thumb Rotator
+            <div class="item-thumbnail">
+                <a href="@Model.ProfileUrl">
+                    <img class="img-responsive thumbpreview" src="@ImageUrl" alt="@Model.Data.title" title="@Model.Data.title" />
+                </a>
+            </div>
+            break;
+        case 1:
+            // No Rotator ( video-thumbnail )
+            <div class="item-thumbnail">
+                <a href="@Model.ProfileUrl">
+                    <img  class="img-responsive" src="@ImageUrl" alt="@Model.Data.title" title="@Model.Data.title" />
+                </a>
+            </div>
+            break;
+        case 2:
+            // Video Preview Rotator
+            if (Model.Data.thumb_preview != null && Model.Data.thumb_preview != "")
+            {
+                var previewUrl = Config.GetUrl("videoframe/preview?url=" + WebUtility.UrlEncode(Model.Data.thumb_preview));
+                <div class="item-thumbnail video-thumbnail videopreview"
+                     data-id="preview_@Model.Data.id"
+                     data-imgid="vd_img_@Model.Data.id"
+                     data-preview="@previewUrl">
+                    <a href="@Model.ProfileUrl">
+                        <img id="vd_img_@Model.Data.id" src="@ImageUrl" alt="@Model.Data.title" title="@Model.Data.title" />
+                        <iframe scrolling="no" id="preview_@Model.Data.id" style="width:100%; height:auto; display:none; overflow: hidden;"></iframe>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="item-thumbnail video-thumbnail">
+                    <a href="@Model.ProfileUrl">
+                        <img id="vd_img_@Model.Data.id" src="@ImageUrl" alt="@Model.Data.title" title="@Model.Data.title" />
+                    </a>
+                </div>
+            }
+            break;
+    }
+}
+
+

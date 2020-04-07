@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div *ngIf="!isAccessGranted">
+        <h2 class="m-b-40 m-t-40 text-center">Access Denied</h2>
+      </div>
+      <div *ngIf="isAccessGranted">
+        <div class="row">
+          <div class="col-md-3">
+            <app-navigation-v2
+              [FilterOptions]="FilterOptions"
+              [Options]="SearchOptions"
+              (SearchSelection)="FindRecords($event)"
+            >
+            </app-navigation-v2>
+          </div>
+          <div class="col-md-9">
+            <app-toolbar-v2
+              [Options]="ToolbarOptions"
+              [isItemsSelected]="isItemsSelected"
+            ></app-toolbar-v2>
+
+            <div class="card-body">
+              <app-list
+                (View)="ProcessActions($event)"
+                [isActionGranded]="isActionGranded"
+              ></app-list>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

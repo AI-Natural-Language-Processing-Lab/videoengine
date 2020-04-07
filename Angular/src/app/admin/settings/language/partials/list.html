@@ -1,0 +1,101 @@
+<alert></alert>
+<app-loader *ngIf="loading$ | async"></app-loader>
+
+<div *ngIf="!(loading$ | async)">
+  <div *ngIf="(Data$ | async).length > 0">
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover table-striped no-wrap">
+        <thead>
+          <tr>
+            <th
+              (click)="Sort('culturename')"
+              style="cursor: pointer;"
+              [ngClass]="fieldstates.culturename ? 'selected-sort-option' : ''"
+            >
+              <span class="m-r-5">Culture</span>
+              <i
+                [ngClass]="
+                  fieldstates.culturename &&
+                  sortedFields['culturename'].direction === 'asc'
+                    ? 'fa fa-sort-asc'
+                    : fieldstates.culturename &&
+                      sortedFields['culturename'].direction === 'desc'
+                    ? 'fa fa-sort-desc'
+                    : 'fa fa-sort'
+                "
+                aria-hidden="true"
+              ></i>
+            </th>
+            <th
+              (click)="Sort('region')"
+              style="cursor: pointer;"
+              [ngClass]="fieldstates.region ? 'selected-sort-option' : ''"
+            >
+              <span class="m-r-5">Region</span>
+              <i
+                [ngClass]="
+                  fieldstates.region &&
+                  sortedFields['region'].direction === 'asc'
+                    ? 'fa fa-sort-asc'
+                    : 'fa fa-sort'
+                "
+                aria-hidden="true"
+              ></i>
+            </th>
+            <th class="text-nowrap">
+              Default
+            </th>
+            <th class="text-nowrap">
+              Selected
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            [@fadeIn]="''"
+            [hidden]="item.isdeleted"
+            *ngFor="let item of Data$ | async; trackBy: getKey; let i = index"
+          >
+            <td>
+              {{ item.culturename }}
+            </td>
+            <td>
+              {{ item.region }}
+            </td>
+            <td>
+              <button
+                class="btn "
+                [ngClass]="item.isdefault === 1 ? 'btn-success' : 'btn-danger'"
+                (click)="triggleAction(item, 'default')"
+              >
+                <span *ngIf="item.isdefault === 1">On</span>
+                <span *ngIf="item.isdefault === 0">Off</span>
+              </button>
+            </td>
+            <td>
+              <button
+                class="btn "
+                [ngClass]="item.isselected === 1 ? 'btn-success' : 'btn-danger'"
+                (click)="triggleAction(item, 'selected')"
+              >
+                <span *ngIf="item.isselected === 1">On</span>
+                <span *ngIf="item.isselected === 0">Off</span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <app-norecord *ngIf="(Data$ | async).length === 0"></app-norecord>
+</div>
+
+<div class="text-center content-group-lg pt-20">
+  <pagination
+    [currentPage]="(pagination$ | async).currentPage"
+    [totalRecords]="(pagination$ | async).totalRecords"
+    [pageSize]="(pagination$ | async).pageSize"
+    (OnSelection)="PaginationChange($event)"
+  >
+  </pagination>
+</div>

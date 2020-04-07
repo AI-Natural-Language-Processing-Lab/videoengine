@@ -1,0 +1,24 @@
+﻿@model Jugnoon.Models.CategoryItemViewModel
+
+@*
+    Grid Item Design
+*@
+@{
+    var hoverCss = "";
+    if (Model.ListObject.isHover)
+    {
+        hoverCss = "item-hover";
+    }
+    var PartialPath = "~/Views/partials/category";
+
+}
+
+<div class="@Model.ListObject.ColWidth">
+
+    <div class="list-item @hoverCss">
+        @await Html.PartialAsync(PartialPath + "/item/thumbnail.cshtml", Model)
+        @await Html.PartialAsync(PartialPath + "/item/content.cshtml", Model)
+    </div>
+
+</div>
+
