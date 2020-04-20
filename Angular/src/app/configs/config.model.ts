@@ -7,4 +7,5 @@
 /* -------------------------------------------------------------------------- */
 export interface IAPIOptions {
   load: string;
+  load_admin: string;
 }

@@ -257,12 +257,14 @@ namespace VideoEngine.Controllers
                                 type = "application/x-mpegURL"
                             });
                         }*/
+                        // temporary replace private url with public url
+                        var url = _list[0].pub_url.Replace(Jugnoon.Videos.Configs.AwsSettings.private_url, Jugnoon.Videos.Configs.AwsSettings.public_url);
                         if (option == "mp4_480")
                         {
                             model.Player.VideoFeed.Add(new SupportedVideos()
                             {
                                 //src = CloudFront.CreateCannedPrivateURL(_list[0].pub_url.Replace("d1fpw0dove1bub.cloudfront.net", "d16gr1zx2upz2x.cloudfront.net") + "menifest_480.mp4",900),
-                                src = _list[0].pub_url.Replace(Jugnoon.Videos.Configs.AwsSettings.private_url, Jugnoon.Videos.Configs.AwsSettings.public_url) + "menifest_480.mp4",
+                                src = url + "menifest_480.mp4",
                                 type = "video/mp4"
                             });
                         }

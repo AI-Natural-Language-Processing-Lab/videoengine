@@ -26,9 +26,11 @@ export class ConfigDataService {
   /* -------------------------------------------------------------------------- */
   /*                           Core load data api call                          */
   /* -------------------------------------------------------------------------- */
-  LoadRecords(FilterOptions) {
-    const URL = this.settings.getApiOptions().load;
-
+  LoadRecords(FilterOptions, apptype) {
+    let URL = this.settings.getApiOptions().load;
+    if (apptype === 'admin') {
+      URL = this.settings.getApiOptions().load_admin;
+    }
     this.actions.loadStarted();
     this.http.post(URL, JSON.stringify(FilterOptions)).subscribe(
       (data: any) => {

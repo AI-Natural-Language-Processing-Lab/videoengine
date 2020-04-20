@@ -188,8 +188,8 @@ namespace VideoEngine.Areas.api.Controllers
             });
         }
 
-        [HttpPost("load_settings")]
-        public ActionResult load_settings()
+        [HttpPost("load_settings_admin")]
+        public ActionResult load_settings_admin()
         {
             // Pass only settings may be needed in front application.
             return Ok(new
@@ -205,6 +205,35 @@ namespace VideoEngine.Areas.api.Controllers
                         category = ((CategoryBLL.Types[])Enum.GetValues(typeof(CategoryBLL.Types))).ToDictionary(k => k.ToString(), v => (int)v),
                         tag = ((TagsBLL.Types[])Enum.GetValues(typeof(TagsBLL.Types))).ToDictionary(k => k.ToString(), v => (int)v),
                         mailtemplates = ((MailTemplateTypes[])Enum.GetValues(typeof(MailTemplateTypes))).ToDictionary(k => k.ToString(), v => (int)v)
+                    },
+                    videos = new
+                    {
+                        general = _videos_general_Settings,
+                        aws = _videos_aws_Settings,
+                        ffmpeg = _videos_ffmpeg_Settings,
+                        youtube = _videos_youtube_Settings,
+                        direct = _videos_direct_Settings,
+                        movie = _videos_movie_Settings,
+                        player = _videos_player_Settings
+                    }
+                }
+            });
+        }
+
+        [HttpPost("load_settings")]
+        public ActionResult load_settings()
+        {
+            // Pass only settings may be needed in front application.
+            return Ok(new
+            {
+                configurations = new
+                {
+                    general = new
+                    {
+                        //general = _generalSettings,
+                        features = _featureSettings,
+                        listings = _listingSettings,
+                        media = _mediaSettings
                     },
                     videos = new
                     {

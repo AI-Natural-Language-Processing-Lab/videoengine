@@ -102,7 +102,7 @@ export class AppComponent implements OnInit {
         // enable global loader
         this.coreAction.toggleLoader(true);
         // load application settings
-        this.configdata.LoadRecords({});
+        this.configdata.LoadRecords({}, this.config.getGlobalVar("apptype"));
         // load & authorize user info
         this.userService.AuthorizeUser(this.config.getGlobalVar("userid"));
       }

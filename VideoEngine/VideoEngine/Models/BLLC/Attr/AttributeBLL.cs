@@ -42,6 +42,10 @@ namespace Jugnoon.Attributes
                 variable_type = entity.variable_type,
                 min = entity.min,
                 max = entity.max,
+                postfix = UtilityBLL.processNull(entity.postfix, 0),
+                prefix = UtilityBLL.processNull(entity.prefix, 0),
+                tooltip = UtilityBLL.processNull(entity.tooltip, 0),
+                url = UtilityBLL.processNull(entity.url, 0),
                 helpblock = UtilityBLL.processNull(entity.helpblock, 0),
                 icon = entity.icon
             };
@@ -72,6 +76,10 @@ namespace Jugnoon.Attributes
                     item.icon = entity.icon;
                     item.min = entity.min;
                     item.max = entity.max;
+                    item.postfix = UtilityBLL.processNull(entity.postfix, 0);
+                    item.prefix = UtilityBLL.processNull(entity.prefix, 0);
+                    item.tooltip = UtilityBLL.processNull(entity.tooltip, 0);
+                    item.url = UtilityBLL.processNull(entity.url, 0);
                     item.helpblock = UtilityBLL.processNull(entity.helpblock, 0);
                     context.Entry(item).State = EntityState.Modified;
                     await context.SaveChangesAsync();
@@ -193,6 +201,10 @@ namespace Jugnoon.Attributes
                 helpblock = p.helpblock,
                 min = p.min,
                 max = p.max,
+                postfix = p.postfix,
+                prefix = p.prefix,
+                tooltip = p.tooltip,
+                url = p.url,
                 icon = p.icon
             }).ToListAsync();
         }

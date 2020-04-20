@@ -63,17 +63,21 @@ export class FormService {
     controls.push(
       new Controls.Dropdown({
         key: "showsection",
-        label: "Display Section",
+        label: "Display Attributes",
         required: true,
         value: entity.showsection.toString(),
         options: [
           {
             key: 0,
-            value: "No"
+            value: "Without Section"
           },
           {
             key: 1,
-            value: "Yes"
+            value: "With Section  [Both Controls + Display]"
+          },
+          {
+            key: 2,
+            value: "With Section  [Only Controls]"
           }
         ],
         order: 2,
@@ -208,6 +212,10 @@ export class FormService {
           {
             key: 1,
             value: "Number"
+          },
+          {
+            key: 2,
+            value: "Year"
           }
         ],
         order: 6
@@ -259,6 +267,50 @@ export class FormService {
         pattern:  "[0-9]+",
         helpblock: `Maximum no of characters (validation purpose), 0: unlimited`,
         order: 10
+      })
+    );
+
+    controls.push(
+      new Controls.Textbox({
+        key: "postfix",
+        label: "Postfix",
+        value: entity.postfix,
+        required: false,
+        helpblock: `Add some characters after actual value e.g km -> 100km`,
+        order: 11
+      })
+    );
+
+    controls.push(
+      new Controls.Textbox({
+        key: "prefix",
+        label: "Prefix",
+        value: entity.prefix,
+        required: false,
+        helpblock: `Add some characters before actual value e.g Mr -> Mr Shane`,
+        order: 12
+      })
+    );
+
+    controls.push(
+      new Controls.Textbox({
+        key: "tooltip",
+        label: "Tooltip",
+        value: entity.tooltip,
+        required: false,
+        helpblock: `Add optional tooltip message when mouse over on display time.`,
+        order: 13
+      })
+    );
+
+    controls.push(
+      new Controls.Textbox({
+        key: "url",
+        label: "Url",
+        value: entity.url,
+        required: false,
+        helpblock: `Add url if you want to link the display with internal or external link`,
+        order: 14
       })
     );
 

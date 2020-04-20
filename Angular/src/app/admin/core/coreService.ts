@@ -290,7 +290,8 @@ export class CoreService {
     if (options.length > 0) {
       let orderIndex = 100;
       for (let option of options) {
-        if (option.showsection === 1) {
+        console.log('show section is ' + option.showsection);
+        if (option.showsection === 1 || option.showsection === 2) {
           controls.push(
             new Controls.SectionHeader({
               key: "section_" + orderIndex,
@@ -388,25 +389,42 @@ export class CoreService {
               break;
             case 2:
               // dropdown
-              if (attr.options !== "") {
-                var nameArr = attr.options.split(",");
-                let options = [];
-                options.push({ key: "", value: "Select " + attr.title });
-                for (let item of nameArr) {
-                  options.push({ key: item, value: item });
+              let options = [];
+              options.push({ key: "", value: "Select " + attr.title });
+              if (attr.variable_type === 2) {
+                  // year dropdown
+                  let max_year: number = attr.max;
+                  let min_year: number = attr.min;
+                  if (attr.max === 0) {
+                     max_year = new Date().getFullYear()
+                  }
+                  if (attr.min === 0) {
+                    min_year = max_year - 20;
+                  }
+                 
+                  for (let i = max_year; i >= min_year; i--) {
+                    options.push({ key: i.toString(), value: i.toString() });
+                  }
+                  
+              } else {
+                if (attr.options !== "") {
+                  var nameArr = attr.options.split(",");
+                  for (let item of nameArr) {
+                    options.push({ key: item, value: item });
+                  }
                 }
-                controls.push(
-                  new Controls.Dropdown({
-                    key: "attr_" + attr.id,
-                    label: attr.title,
-                    required: isRquired,
-                    value: ElementValue,
-                    options: options,
-                    order: Order,
-                    helpblock: attr.helpblock
-                  })
-                );
               }
+              controls.push(
+                new Controls.Dropdown({
+                  key: "attr_" + attr.id,
+                  label: attr.title,
+                  required: isRquired,
+                  value: ElementValue,
+                  options: options,
+                  order: Order,
+                  helpblock: attr.helpblock
+                })
+              );
 
               break;
             case 3:

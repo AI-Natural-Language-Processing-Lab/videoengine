@@ -19,7 +19,8 @@ export class ConfigSettingsService {
   constructor(private coreService: CoreService, public config: AppConfig) {
     const APIURL = config.getConfig("host");
     this.apiOptions = {
-      load: APIURL + "api/configuration/load_settings"
+      load: APIURL + "api/configuration/load_settings",
+      load_admin: APIURL + "api/configuration/load_settings_admin"
     };
   }
 

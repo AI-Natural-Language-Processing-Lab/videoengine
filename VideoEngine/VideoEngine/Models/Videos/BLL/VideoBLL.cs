@@ -1477,10 +1477,10 @@ namespace Jugnoon.Videos
                             await RemoveVideo(context, entity.id, (int)entity.type);
                             break;
                         case "delete_fav":
-                            await FavoriteBLL.Delete(context, entity.id, entity.userid, (byte)entity.type, 0);
+                            await FavoriteBLL.Delete(context, entity.id, entity.userid, (byte)entity.type, (byte)FavoriteBLL.Types.Videos);
                             break;
                         case "delete_like":
-                            await UserRatingsBLL.Delete(context, entity.id, entity.userid, (byte)0);
+                            await UserRatingsBLL.Delete(context, entity.id, entity.userid, (byte)UserRatingsBLL.Types.Videos);
                             break;
                         case "delete_playlist":
                             await PlayListBLL.Delete(context, entity.id);
