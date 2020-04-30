@@ -197,25 +197,7 @@ namespace Jugnoon.BLL
         private static IQueryable<JGN_Languages> processOptionalConditions(IQueryable<JGN_Languages> collectionQuery, LanguageEntity query)
         {
             if (query.order != "")
-            {
-                var orderlist = query.order.Split(char.Parse(","));
-                foreach (var orderItem in orderlist)
-                {
-                    if (orderItem.Contains("asc") || orderItem.Contains("desc"))
-                    {
-                        var ordersplit = query.order.Split(char.Parse(" "));
-                        if (ordersplit.Length > 1)
-                        {
-                            collectionQuery = AddSortOption(collectionQuery, ordersplit[0], ordersplit[1]);
-                        }
-                    }
-                    else
-                    {
-                        collectionQuery = AddSortOption(collectionQuery, orderItem, "");
-                    }
-                }
-
-            }
+                collectionQuery = (IQueryable<JGN_Languages>)collectionQuery.Sort(query.order);
             if (query.id == 0)
             {
                 // skip logic
@@ -228,15 +210,6 @@ namespace Jugnoon.BLL
             return collectionQuery;
         }
 
-        private static IQueryable<JGN_Languages> AddSortOption(IQueryable<JGN_Languages> collectionQuery, string field, string direction)
-        {
-            var reverse = false;
-            if (direction == "desc")
-                reverse = true;
-
-            return (IQueryable<JGN_Languages>)collectionQuery.Sort(field, reverse);
-
-        }
         private static System.Linq.Expressions.Expression<Func<JGN_Languages, bool>> returnWhereClause(LanguageEntity entity)
         {
             var where_clause = PredicateBuilder.New<JGN_Languages>(true);

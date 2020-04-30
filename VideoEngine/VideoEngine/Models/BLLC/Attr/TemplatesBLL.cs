@@ -92,25 +92,7 @@ namespace Jugnoon.Attributes
         private static IQueryable<JGN_Attr_Templates> processOptionalConditions(IQueryable<JGN_Attr_Templates> collectionQuery, AttrTemplateEntity query)
         {
             if (query.order != "")
-            {
-                var orderlist = query.order.Split(char.Parse(","));
-                foreach (var orderItem in orderlist)
-                {
-                    if (orderItem.Contains("asc") || orderItem.Contains("desc"))
-                    {
-                        var ordersplit = query.order.Split(char.Parse(" "));
-                        if (ordersplit.Length > 1)
-                        {
-                            collectionQuery = AddSortOption(collectionQuery, ordersplit[0], ordersplit[1]);
-                        }
-                    }
-                    else
-                    {
-                        collectionQuery = AddSortOption(collectionQuery, orderItem, "");
-                    }
-                }
-
-            }
+                collectionQuery = (IQueryable<JGN_Attr_Templates>)collectionQuery.Sort(query.order);
             // skip logic
             if (query.pagenumber > 1)
                 collectionQuery = collectionQuery.Skip(query.pagesize * (query.pagenumber - 1));
@@ -122,15 +104,6 @@ namespace Jugnoon.Attributes
             return collectionQuery;
         }
 
-        private static IQueryable<JGN_Attr_Templates> AddSortOption(IQueryable<JGN_Attr_Templates> collectionQuery, string field, string direction)
-        {
-            var reverse = false;
-            if (direction == "desc")
-                reverse = true;
-
-            return (IQueryable<JGN_Attr_Templates>)collectionQuery.Sort(field, reverse);
-
-        }
         private static System.Linq.Expressions.Expression<Func<JGN_Attr_Templates, bool>> returnWhereClause(AttrTemplateEntity entity)
         {
             var where_clause = PredicateBuilder.New<JGN_Attr_Templates>(true);

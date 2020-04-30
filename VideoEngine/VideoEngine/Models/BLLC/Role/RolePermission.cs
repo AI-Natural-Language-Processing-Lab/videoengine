@@ -106,25 +106,7 @@ namespace Jugnoon.BLL
         private static IQueryable<RoleObjectPermission> processOptionalConditions(IQueryable<RoleObjectPermission> collectionQuery, RoleDPermissionEntity query)
         {
             if (query.order != "")
-            {
-                var orderlist = query.order.Split(char.Parse(","));
-                foreach (var orderItem in orderlist)
-                {
-                    if (orderItem.Contains("asc") || orderItem.Contains("desc"))
-                    {
-                        var ordersplit = query.order.Split(char.Parse(" "));
-                        if (ordersplit.Length > 1)
-                        {
-                            collectionQuery = AddSortOption(collectionQuery, ordersplit[0], ordersplit[1]);
-                        }
-                    }
-                    else
-                    {
-                        collectionQuery = AddSortOption(collectionQuery, orderItem, "");
-                    }
-                }
-
-            }
+                collectionQuery = (IQueryable<RoleObjectPermission>)collectionQuery.Sort(query.order);
             // skip logic
             if (query.pagenumber > 1)
                 collectionQuery = collectionQuery.Skip(query.pagesize * (query.pagenumber - 1));
@@ -136,15 +118,6 @@ namespace Jugnoon.BLL
             return collectionQuery;
         }
 
-        private static IQueryable<RoleObjectPermission> AddSortOption(IQueryable<RoleObjectPermission> collectionQuery, string field, string direction)
-        {
-            var reverse = false;
-            if (direction == "desc")
-                reverse = true;
-
-            return (IQueryable<RoleObjectPermission>)collectionQuery.Sort(field, reverse);
-
-        }
         private static System.Linq.Expressions.Expression<Func<RoleObjectPermission, bool>> returnWhereClause(RoleDPermissionEntity entity)
         {
             var where_clause = PredicateBuilder.New<RoleObjectPermission>(true);

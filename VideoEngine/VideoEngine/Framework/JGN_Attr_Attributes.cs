@@ -24,6 +24,10 @@ namespace Jugnoon.Framework
         public string helpblock { get; set; }
         public short min { get; set; }
         public short max { get; set; }
+        public string postfix { get; set; }
+        public string prefix { get; set; }
+        public string tooltip { get; set; }
+        public string url { get; set; }
         [NotMapped]
         public bool isdeleted { get; set; }
     }

@@ -1,5 +1,5 @@
 /* -------------------------------------------------------------------------- */
-/*                          Product Name: VideoEngine                         */
+/*                          Product Name: VideoEngine                    */
 /*                            Author: Mediasoftpro                            */
 /*                       Email: support@mediasoftpro.com                      */
 /*       License: Read license.txt located on root of your application.       */

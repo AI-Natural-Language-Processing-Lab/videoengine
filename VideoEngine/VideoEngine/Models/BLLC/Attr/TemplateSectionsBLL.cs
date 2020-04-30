@@ -136,25 +136,7 @@ namespace Jugnoon.Attributes
         private static IQueryable<JGN_Attr_TemplateSections> processOptionalConditions(IQueryable<JGN_Attr_TemplateSections> collectionQuery, AttrTemplateSectionEntity query)
         {
             if (query.order != "")
-            {
-                var orderlist = query.order.Split(char.Parse(","));
-                foreach (var orderItem in orderlist)
-                {
-                    if (orderItem.Contains("asc") || orderItem.Contains("desc"))
-                    {
-                        var ordersplit = query.order.Split(char.Parse(" "));
-                        if (ordersplit.Length > 1)
-                        {
-                            collectionQuery = AddSortOption(collectionQuery, ordersplit[0], ordersplit[1]);
-                        }
-                    }
-                    else
-                    {
-                        collectionQuery = AddSortOption(collectionQuery, orderItem, "");
-                    }
-                }
-
-            }
+                collectionQuery = (IQueryable<JGN_Attr_TemplateSections>)collectionQuery.Sort(query.order);
             // skip logic
             if (query.pagenumber > 1)
                 collectionQuery = collectionQuery.Skip(query.pagesize * (query.pagenumber - 1));
@@ -166,15 +148,6 @@ namespace Jugnoon.Attributes
             return collectionQuery;
         }
 
-        private static IQueryable<JGN_Attr_TemplateSections> AddSortOption(IQueryable<JGN_Attr_TemplateSections> collectionQuery, string field, string direction)
-        {
-            var reverse = false;
-            if (direction == "desc")
-                reverse = true;
-
-            return (IQueryable<JGN_Attr_TemplateSections>)collectionQuery.Sort(field, reverse);
-
-        }
         private static System.Linq.Expressions.Expression<Func<JGN_Attr_TemplateSections, bool>> returnWhereClause(AttrTemplateSectionEntity entity)
         {
             var where_clause = PredicateBuilder.New<JGN_Attr_TemplateSections>(true);
