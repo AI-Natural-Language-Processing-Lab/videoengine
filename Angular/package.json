@@ -48,7 +48,7 @@
     "rxjs": "~6.5.4",
     "rxjs-compat": "^6.5.4",
     "tassign": "^1.0.0",
-    "tinymce": "^5.2.0",
+    "tinymce": "^5.2.2",
     "tslib": "^1.11.1",
     "zone.js": "~0.10.2"
   },
